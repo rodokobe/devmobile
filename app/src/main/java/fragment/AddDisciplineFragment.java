@@ -148,7 +148,6 @@ public class AddDisciplineFragment extends Fragment implements IFirebaseLoadDone
                 idCourseSelected = coursesList.get(position).getIdCourse();
                 nameCourseSelected = coursesList.get(position).getCourseName();
 
-
             }
 
             @Override

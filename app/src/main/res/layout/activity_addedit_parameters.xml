@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:background="@drawable/bg_add_edit_brown"
-    tools:context=".AddEditParametersAvtivity">
+    tools:context=".AddEditParametersActivity">
 
     <LinearLayout
         android:id="@+id/linearGeral"
@@ -70,14 +70,14 @@
         <LinearLayout
             android:id="@+id/linearFrame"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="@color/colorBright"
             android:orientation="horizontal">
 
             <FrameLayout
                 android:id="@+id/frameAddEditParameters"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="1dp"
                 android:background="@drawable/bg_add_edit_brown"
@@ -89,7 +89,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="180dp"
-                    android:layout_marginTop="270dp"
+                    android:layout_marginTop="70dp"
                     android:gravity="right"
                     android:orientation="vertical">
 
@@ -179,7 +179,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="340dp"
-                    android:layout_marginTop="260dp"
+                    android:layout_marginTop="60dp"
                     android:layout_marginBottom="20dp"
                     android:orientation="vertical">
 
@@ -258,17 +258,22 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:backgroundTint="@color/colorButtonBrown"
-                        android:outlineSpotShadowColor="@color/colorBackGroundGreen"
+                        android:tint="@color/colorButtonBrown"
                         app:fabSize="normal"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:srcCompat="@drawable/ic_add_white_24dp" />
 
                 </LinearLayout>
+                <include
+                    android:id="@+id/bottomNavigation"
+                    layout="@layout/bottom_register_navigation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom" />
             </FrameLayout>
         </LinearLayout>
 
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

@@ -28,7 +28,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginTop="-14dp"
             android:text="Admin Person"
-            android:textColor="@color/colorFont"
+            android:textColor="@color/colorGray"
             android:textSize="40sp"
             android:textStyle="bold" />
 
@@ -87,7 +87,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="Select a course"
-                android:textColor="@color/colorFont"
+                android:textColor="@color/colorGray"
                 android:textSize="16sp" />
 
             <Spinner

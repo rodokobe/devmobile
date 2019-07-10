@@ -1,6 +1,5 @@
 package activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
@@ -13,17 +12,16 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.projeto.academicplanner.R;
 
 import fragment.AddAdmPersonFragment;
-import fragment.DisciplineMainFragment;
 import fragment.AddEditMainFragment;
 import fragment.AddEventTypeFragment;
 import fragment.AddStudentFragment;
 import fragment.CourseMainFragment;
+import fragment.DisciplineMainFragment;
 import fragment.UniversityMainFragment;
 
 public class AddEditParametersActivity extends AppCompatActivity implements View.OnClickListener {
 
     //create objects as 'x'Fragment classes for display fragments on main Fragment
-
     private FloatingActionButton addMainFab, addAdmPersonFab, addStudentFab, addEventTypeFab, addDisciplineFab, addCourseFab, addUniversityFab, backSysPrefHomeFab;
     private float translationY = 100f;
     private Boolean isMenuOpen = false;
@@ -226,9 +224,10 @@ public class AddEditParametersActivity extends AppCompatActivity implements View
 
     public void backSysPrefHome(View view) {
 
-        Intent backPreferences = new Intent(getApplicationContext(), AddEditParametersActivity.class);
-        startActivity(backPreferences);
-        finish();
+        backSysPrefHomeF = new AddEditMainFragment();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frameAddEditParameters, backSysPrefHomeF);
+        transaction.commit();
 
     }
 

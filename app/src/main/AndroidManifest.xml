@@ -3,6 +3,10 @@
     xmlns:dist="http://schemas.android.com/apk/distribution"
     package="com.projeto.academicplanner">
 
+    //permissões gerais que não precisam de aprovação
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
+    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
+
     <dist:module dist:instant="true" />
 
     <application

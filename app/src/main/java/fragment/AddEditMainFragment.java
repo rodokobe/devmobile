@@ -11,14 +11,22 @@ import com.projeto.academicplanner.R;
 
 public class AddEditMainFragment extends Fragment {
 
+    private static final String TAG = "AddEditParametersActivity";
+
     public AddEditMainFragment() {
         // Required empty public constructor
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
-        View addEditMain = inflater.inflate(R.layout.fragment_add_edit_main, container, false);
+        final View addEditMain = inflater.inflate(R.layout.fragment_add_edit_main, container, false);
+
+
+
+
+
+
 
         return addEditMain;
     }

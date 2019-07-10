@@ -28,7 +28,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginTop="-14dp"
             android:text="Event Type"
-            android:textColor="@color/colorFont"
+            android:textColor="@color/colorGray"
             android:textSize="40sp"
             android:textStyle="bold" />
 
