@@ -23,7 +23,7 @@ public class AddUniversityFragment extends Fragment {
     //general variables
     private EditText universityName, universityAcronym;
     private Button buttonUniversity;
-    private TextView backText;
+    private TextView backToAddEditMain;
     private String idUserLoged;
 
     private UniversityMainFragment universityMainFragment;
@@ -41,7 +41,7 @@ public class AddUniversityFragment extends Fragment {
         universityName = addUniversity.findViewById(R.id.universityName);
         universityAcronym = addUniversity.findViewById(R.id.universityAcronym);
         buttonUniversity = addUniversity.findViewById(R.id.buttonUniversity);
-        backText = addUniversity.findViewById(R.id.backText);
+        backToAddEditMain = addUniversity.findViewById(R.id.backToAddEditMain);
 
 
         //recovery loged user ID
@@ -60,7 +60,7 @@ public class AddUniversityFragment extends Fragment {
 
         });
 
-        backText.setOnClickListener(new View.OnClickListener() {
+        backToAddEditMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 backToMain();

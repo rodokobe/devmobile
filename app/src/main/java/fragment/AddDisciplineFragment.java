@@ -36,7 +36,7 @@ import model.Discipline;
 public class AddDisciplineFragment extends Fragment implements IFirebaseLoadDoneCourse {
 
     private EditText disciplineName, acronymDiscipline, disciplineYear;
-    private TextView backText;
+    private TextView backToAddEditMain;
     private SearchableSpinner spinnerUniversity;
     private Switch switchSemester;
     private Button buttonDisciplines;
@@ -59,7 +59,7 @@ public class AddDisciplineFragment extends Fragment implements IFirebaseLoadDone
         disciplineName = addDiscipline.findViewById(R.id.disciplineName);
         acronymDiscipline = addDiscipline.findViewById(R.id.acronymDiscipline);
         disciplineYear = addDiscipline.findViewById(R.id.disciplineYear);
-        backText = addDiscipline.findViewById(R.id.backText);
+        backToAddEditMain = addDiscipline.findViewById(R.id.backToAddEditMain);
         spinnerUniversity = addDiscipline.findViewById(R.id.spinnerUniversity);
         switchSemester = addDiscipline.findViewById(R.id.switchSemester);
         buttonDisciplines = addDiscipline.findViewById(R.id.buttonDisciplines);
@@ -78,10 +78,10 @@ public class AddDisciplineFragment extends Fragment implements IFirebaseLoadDone
                 String disciplineSaveName = disciplineName.getText().toString();
                 String disciplineSaveAcronym = acronymDiscipline.getText().toString();
                 String disciplineSaveYear = disciplineYear.getText().toString();
-                String disciplineSaveSemester = "1º Semester";
+                String disciplineSaveSemester = "1/"+disciplineSaveYear;
 
                 if (switchSemester.isChecked()) {
-                    disciplineSaveSemester = "2º Semester";
+                    disciplineSaveSemester = "2/"+disciplineSaveYear;
                 }
 
 
@@ -114,7 +114,7 @@ public class AddDisciplineFragment extends Fragment implements IFirebaseLoadDone
         });
 
 
-        backText.setOnClickListener(new View.OnClickListener() {
+        backToAddEditMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 backToMain();
@@ -193,6 +193,13 @@ public class AddDisciplineFragment extends Fragment implements IFirebaseLoadDone
 
     }
 
+    public void backToMain() {
+        disciplineMainFragmentF = new DisciplineMainFragment();
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frameAddEditParameters, disciplineMainFragmentF);
+        transaction.commit();
+    }
+
 
     public void toastMsg(String text) {
 
@@ -202,15 +209,5 @@ public class AddDisciplineFragment extends Fragment implements IFirebaseLoadDone
         toastError.show();
 
     }
-
-    public void backToMain() {
-        disciplineMainFragmentF = new DisciplineMainFragment();
-        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameAddEditParameters, disciplineMainFragmentF);
-        transaction.commit();
-    }
-
-
-
 
 }

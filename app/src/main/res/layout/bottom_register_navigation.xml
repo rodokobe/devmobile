@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
-    android:background="@android:color/white"
-    app:itemIconTint="@android:color/darker_gray"
-    app:itemTextColor="@android:color/black"
+    android:background="@color/colorBackGroundBrown"
+    app:itemIconTint="@color/colorGray"
+    app:itemTextColor="@color/colorBright"
     app:menu="@menu/menu_bottom_register_navigation" />

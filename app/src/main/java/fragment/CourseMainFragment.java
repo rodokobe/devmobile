@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -33,9 +34,11 @@ public class CourseMainFragment extends Fragment {
 
     //general variables
     private Button buttonCourses;
+    private TextView backToAddEditMain;
     private String idUserLoged;
     private List<Course> courses = new ArrayList<>();
     private AddCourseFragment addCourseFragmentF;
+    private AddEditMainFragment fragmentMain;
 
     //recycler view variables
     private RecyclerView recylcerCourses;
@@ -58,6 +61,7 @@ public class CourseMainFragment extends Fragment {
 
         //start configurations
         buttonCourses = mainCourses.findViewById(R.id.buttonCourses);
+        backToAddEditMain = mainCourses.findViewById(R.id.backToAddEditMain);
         recylcerCourses = mainCourses.findViewById(R.id.recylcerCourses);
 
         //recovery loged user ID
@@ -73,10 +77,14 @@ public class CourseMainFragment extends Fragment {
         buttonCourses.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addCourseFragmentF = new AddCourseFragment();
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frameAddEditParameters, addCourseFragmentF);
-                transaction.commit();
+                goToNewFragment();
+            }
+        });
+
+        backToAddEditMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goBackToMain();
             }
         });
 
@@ -201,6 +209,22 @@ public class CourseMainFragment extends Fragment {
                 deleteDialogAlert.cancel();
             }
         });
+    }
+
+    public void goToNewFragment() {
+        addCourseFragmentF = new AddCourseFragment();
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frameAddEditParameters, addCourseFragmentF);
+        transaction.commit();
+    }
+
+    public void goBackToMain() {
+
+        fragmentMain = new AddEditMainFragment();
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frameAddEditParameters, fragmentMain);
+        transaction.commit();
+
     }
 
     public void toastMsg(String text) {

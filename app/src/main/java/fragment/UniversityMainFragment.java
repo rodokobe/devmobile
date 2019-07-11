@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -32,9 +33,11 @@ public class UniversityMainFragment extends Fragment {
 
     //general variables
     private Button buttonUniversity;
+    private TextView backToAddEditMain;
     private String idUserLoged;
     private List<University> universities = new ArrayList<>();
     private AddUniversityFragment addUniversityFragmentF;
+    private AddEditMainFragment fragmentMain;
 
     //recycler view variables
     private RecyclerView recylcerUniversities;
@@ -57,6 +60,7 @@ public class UniversityMainFragment extends Fragment {
 
         //start configurations
         buttonUniversity = mainUniversity.findViewById(R.id.buttonUniversity);
+        backToAddEditMain = mainUniversity.findViewById(R.id.backToAddEditMain);
         recylcerUniversities = mainUniversity.findViewById(R.id.recylcerUniversities);
 
         //recovery loged user ID
@@ -72,12 +76,17 @@ public class UniversityMainFragment extends Fragment {
         buttonUniversity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addUniversityFragmentF = new AddUniversityFragment();
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frameAddEditParameters, addUniversityFragmentF);
-                transaction.commit();
+                goToNewFragment();
             }
         });
+
+        backToAddEditMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goBackToMain();
+            }
+        });
+
 
         return mainUniversity;
 
@@ -197,6 +206,22 @@ public class UniversityMainFragment extends Fragment {
                 deleteDialogAlert.cancel();
             }
         });
+    }
+
+    public void goToNewFragment() {
+        addUniversityFragmentF = new AddUniversityFragment();
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frameAddEditParameters, addUniversityFragmentF);
+        transaction.commit();
+    }
+
+    public void goBackToMain() {
+
+        fragmentMain = new AddEditMainFragment();
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frameAddEditParameters, fragmentMain);
+        transaction.commit();
+
     }
 
     public void toastMsg(String text) {

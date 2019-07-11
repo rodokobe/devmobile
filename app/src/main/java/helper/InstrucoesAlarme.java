@@ -6,6 +6,11 @@ public class InstrucoesAlarme {
     //https://stackoverflow.com/questions/5976098/how-to-set-a-reminder-in-android
 
 
+        //permissões gerais que não precisam de aprovação
+        // <uses-permission android:name="android.permission.READ_CALENDAR" />
+        // <uses-permission android:name="android.permission.WRITE_CALENDAR" />
+
+
     //private String[] permissoesNecessarias = new String[]{
     //        Manifest.permission.READ_CALENDAR,
     //        Manifest.permission.WRITE_CALENDAR,

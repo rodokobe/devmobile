@@ -11,13 +11,88 @@
         android:layout_height="match_parent"
         android:layout_marginStart="30dp"
         android:layout_marginTop="30dp"
-        android:orientation="vertical" >
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/divider4"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider"
+            android:padding="5dp" />
+
+        <TextView
+            android:id="@+id/universityCrudMain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_crud_universities"
+            android:gravity="center|start"
+            android:padding="10dp"
+            android:text="  Universities"
+            android:textColor="@color/colorBright"
+            android:textSize="18sp" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider"
+            android:padding="5dp" />
+
+        <TextView
+            android:id="@+id/coursesCrudMain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_crud_courses"
+            android:gravity="center|start"
+            android:padding="10dp"
+            android:text="  Courses"
+            android:textColor="@color/colorBright"
+            android:textSize="18sp" />
+
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider"
+            android:padding="5dp" />
+
+        <TextView
+            android:id="@+id/disciplinesCrudMain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_crud_disciplines"
+            android:gravity="center|start"
+            android:padding="10dp"
+            android:text="  Disciplines/Years"
+            android:textColor="@color/colorBright"
+            android:textSize="18sp" />
+
+        <View
+            android:id="@+id/divider3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider"
+            android:padding="5dp" />
+
+        <TextView
+            android:id="@+id/eventsCrudMain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_crud_events"
+            android:gravity="center|start"
+            android:padding="10dp"
+            android:text="  Events"
+            android:textColor="@color/colorBright"
+            android:textSize="18sp" />
+
+        <View
+            android:id="@+id/divider5"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider"
+            android:padding="5dp" />
 
     </LinearLayout>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
 
 
 </FrameLayout>

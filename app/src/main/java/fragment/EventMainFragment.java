@@ -29,7 +29,7 @@ import adapter.Adapter_Disciplines;
 import helper.ConfigFirebase;
 import model.Discipline;
 
-public class DisciplineMainFragment extends Fragment {
+public class EventMainFragment extends Fragment {
 
 
     //general variables
@@ -48,7 +48,7 @@ public class DisciplineMainFragment extends Fragment {
     private static final String TAG = "AddEditParametersActivity";
 
 
-    public DisciplineMainFragment() {
+    public EventMainFragment() {
         // Required empty public constructor
     }
 

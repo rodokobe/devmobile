@@ -4,12 +4,21 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.projeto.academicplanner.R;
 
 public class AddEditMainFragment extends Fragment {
+
+    private TextView universityCrudMain, coursesCrudMain, disciplinesCrudMain, eventsCrudMain;
+
+    private UniversityMainFragment universityMain;
+    private CourseMainFragment courseMain;
+    private DisciplineMainFragment disciplineMain;
+    private EventMainFragment eventMain;
 
     private static final String TAG = "AddEditParametersActivity";
 
@@ -22,13 +31,77 @@ public class AddEditMainFragment extends Fragment {
                              Bundle savedInstanceState) {
         final View addEditMain = inflater.inflate(R.layout.fragment_add_edit_main, container, false);
 
+        universityCrudMain = addEditMain.findViewById(R.id.universityCrudMain);
+        coursesCrudMain = addEditMain.findViewById(R.id.coursesCrudMain);
+        disciplinesCrudMain = addEditMain.findViewById(R.id.disciplinesCrudMain);
+        eventsCrudMain = addEditMain.findViewById(R.id.eventsCrudMain);
 
+        universityCrudMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToUniversityMain(v);
 
+            }
+        });
 
+        coursesCrudMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToCourseMain(v);
+            }
+        });
 
+        disciplinesCrudMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToDisciplineMain(v);
+            }
+        });
 
+        eventsCrudMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToEventMain(v);
+            }
+        });
 
         return addEditMain;
+    }
+
+    public void goToUniversityMain(View view) {
+
+        universityMain = new UniversityMainFragment();
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frameAddEditParameters, universityMain);
+        transaction.commit();
+
+    }
+
+    public void goToCourseMain(View view) {
+
+        courseMain = new CourseMainFragment();
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frameAddEditParameters, courseMain);
+        transaction.commit();
+
+    }
+
+    public void goToDisciplineMain(View view) {
+
+        disciplineMain = new DisciplineMainFragment();
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frameAddEditParameters, disciplineMain);
+        transaction.commit();
+
+    }
+
+    public void goToEventMain(View view) {
+
+        eventMain = new EventMainFragment();
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frameAddEditParameters, eventMain);
+        transaction.commit();
+
     }
 
 }

@@ -50,5 +50,8 @@ dependencies {
     //searcheble spinner
     implementation "com.toptoche.searchablespinner:searchablespinnerlibrary:1.3.1"
 
+    //multidex error
+    implementation 'androidx.multidex:multidex:2.0.1'
+
 }
 apply plugin: 'com.google.gms.google-services'

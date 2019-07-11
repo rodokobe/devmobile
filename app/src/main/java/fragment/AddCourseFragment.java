@@ -35,7 +35,7 @@ import model.University;
 public class AddCourseFragment extends Fragment implements IFirebaseLoadDoneUniversity {
 
     private EditText courseName, courseAcronym;
-    private TextView backText;
+    private TextView backToAddEditMain;
     private SearchableSpinner spinnerUniversity;
     private Button buttonCourse;
     private String idUserLoged, idUniversitySelected, nameUniversitySelected;
@@ -54,7 +54,7 @@ public class AddCourseFragment extends Fragment implements IFirebaseLoadDoneUniv
         View addCourse = inflater.inflate(R.layout.fragment_add_course, container, false);
 
         //configurações iniciais
-        backText = addCourse.findViewById(R.id.backText);
+        backToAddEditMain = addCourse.findViewById(R.id.backToAddEditMain);
         courseName = addCourse.findViewById(R.id.courseName);
         courseAcronym = addCourse.findViewById(R.id.courseAcronym);
         spinnerUniversity = addCourse.findViewById(R.id.spinnerUniversity);
@@ -77,7 +77,7 @@ public class AddCourseFragment extends Fragment implements IFirebaseLoadDoneUniv
                 }
         });
 
-        backText.setOnClickListener(new View.OnClickListener() {
+        backToAddEditMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 backToMain();
@@ -166,6 +166,13 @@ public class AddCourseFragment extends Fragment implements IFirebaseLoadDoneUniv
 
     }
 
+    public void backToMain() {
+        courseMainFragmentF = new CourseMainFragment();
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frameAddEditParameters, courseMainFragmentF);
+        transaction.commit();
+    }
+
     public void toastMsg(String text) {
 
         //show toast parameters
@@ -173,13 +180,6 @@ public class AddCourseFragment extends Fragment implements IFirebaseLoadDoneUniv
         toastError.setGravity(Gravity.CENTER, 0, 800);
         toastError.show();
 
-    }
-
-    public void backToMain() {
-        courseMainFragmentF = new CourseMainFragment();
-        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameAddEditParameters, courseMainFragmentF);
-        transaction.commit();
     }
 
 }

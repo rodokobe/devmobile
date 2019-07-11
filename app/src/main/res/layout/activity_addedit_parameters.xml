@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/bg_add_edit_brown"
-    tools:context=".AddEditParametersActivity">
+    android:background="@drawable/bg_add_edit_brown">
 
     <LinearLayout
         android:id="@+id/linearGeral"
@@ -84,193 +83,13 @@
                 android:foregroundGravity="center">
 
 
-                <LinearLayout
-                    android:id="@+id/textLayout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="180dp"
-                    android:layout_marginTop="70dp"
-                    android:gravity="right"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/textUniversity"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="right"
-                        android:text="University"
-                        android:textColor="@color/colorBright" />
-
-                    <TextView
-                        android:id="@+id/textAdmPerson"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="30dp"
-                        android:layout_weight="1"
-                        android:gravity="right"
-                        android:text="Adm Person"
-                        android:textColor="@color/colorBright" />
-
-                    <TextView
-                        android:id="@+id/textCourse"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="32dp"
-                        android:layout_weight="1"
-                        android:gravity="right"
-                        android:text="Course"
-                        android:textColor="@color/colorBright" />
-
-                    <TextView
-                        android:id="@+id/textDiscipline"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="32dp"
-                        android:layout_weight="1"
-                        android:gravity="right"
-                        android:text="Discipline"
-                        android:textColor="@color/colorBright" />
-
-                    <TextView
-                        android:id="@+id/textEventType"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="32dp"
-                        android:layout_weight="1"
-                        android:gravity="right"
-                        android:text="Event Type"
-                        android:textColor="@color/colorBright" />
-
-                    <TextView
-                        android:id="@+id/textStudent"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="30dp"
-                        android:layout_weight="1"
-                        android:gravity="right"
-                        android:text="Student"
-                        android:textColor="@color/colorBright" />
-
-                    <TextView
-                        android:id="@+id/textBack"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="30dp"
-                        android:layout_weight="1"
-                        android:gravity="right"
-                        android:text="Back to main"
-                        android:textColor="@color/colorBright" />
-
-                    <TextView
-                        android:id="@+id/textView5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="40dp"
-                        android:layout_marginRight="5dp"
-                        android:layout_weight="1"
-                        android:gravity="right"
-                        android:text="@string/mainButton"
-                        android:textColor="@color/colorBright" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/linearTitle1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="340dp"
-                    android:layout_marginTop="60dp"
-                    android:layout_marginBottom="20dp"
-                    android:orientation="vertical">
-
-                    <com.google.android.material.floatingactionbutton.FloatingActionButton
-                        android:id="@+id/addUniversityFab"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:tint="@color/colorButtonBrown"
-                        app:fabSize="mini"
-                        app:srcCompat="@drawable/ic_add_white_24dp" />
-
-                    <com.google.android.material.floatingactionbutton.FloatingActionButton
-                        android:id="@+id/addAdmPersonFab"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="10dp"
-                        android:tint="@color/colorButtonBrown"
-                        app:fabSize="mini"
-                        app:srcCompat="@drawable/ic_add_white_24dp" />
-
-                    <com.google.android.material.floatingactionbutton.FloatingActionButton
-                        android:id="@+id/addCourseFab"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="10dp"
-                        android:tint="@color/colorButtonBrown"
-                        app:fabSize="mini"
-                        app:srcCompat="@drawable/ic_add_white_24dp" />
-
-                    <com.google.android.material.floatingactionbutton.FloatingActionButton
-                        android:id="@+id/addDisciplineFab"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="10dp"
-                        android:tint="@color/colorButtonBrown"
-                        app:fabSize="mini"
-                        app:srcCompat="@drawable/ic_add_white_24dp" />
-
-                    <com.google.android.material.floatingactionbutton.FloatingActionButton
-                        android:id="@+id/addEventTypeFab"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="10dp"
-                        android:tint="@color/colorButtonBrown"
-                        app:fabSize="mini"
-                        app:srcCompat="@drawable/ic_add_white_24dp" />
-
-                    <com.google.android.material.floatingactionbutton.FloatingActionButton
-                        android:id="@+id/addStudentFab"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="10dp"
-                        android:tint="@color/colorButtonBrown"
-                        app:fabSize="mini"
-                        app:srcCompat="@drawable/ic_add_white_24dp" />
-
-                    <com.google.android.material.floatingactionbutton.FloatingActionButton
-                        android:id="@+id/backSysPrefHomeFab"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="10dp"
-                        android:tint="@color/colorButtonBrown"
-                        app:fabSize="mini"
-                        app:srcCompat="@drawable/ic_add_white_24dp" />
-
-
-                    <com.google.android.material.floatingactionbutton.FloatingActionButton
-                        android:id="@+id/addMainFab"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:tint="@color/colorButtonBrown"
-                        app:fabSize="normal"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:srcCompat="@drawable/ic_add_white_24dp" />
-
-                </LinearLayout>
                 <include
                     android:id="@+id/bottomNavigation"
                     layout="@layout/bottom_register_navigation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="bottom" />
+                    android:layout_gravity="bottom"
+                    android:background="@color/colorAccent" />
             </FrameLayout>
         </LinearLayout>
 
