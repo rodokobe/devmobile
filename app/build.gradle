@@ -39,7 +39,9 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 
 
-    //firebase
+    /**
+     * firebase
+     */
     implementation 'com.google.firebase:firebase-core:16.0.9'
     implementation 'com.google.firebase:firebase-auth:17.0.0'
     implementation 'com.google.firebase:firebase-firestore:19.0.0'
@@ -47,16 +49,31 @@ dependencies {
     implementation 'com.google.firebase:firebase-database:17.0.0'
     implementation 'com.google.firebase:firebase-config:17.0.0'
 
-    //bottom navigation + fab
+    /**
+     * bottom navigation + fab
+     */
     implementation 'com.github.ittianyu:BottomNavigationViewEx:2.0.4'
     implementation "com.android.support:design:28.0.0"
 
-
-    //searcheble spinner
+    /**
+     * searchable spinner
+     */
     implementation "com.toptoche.searchablespinner:searchablespinnerlibrary:1.3.1"
 
-    //multidex error
+    /**
+     * multidex error
+     */
     implementation 'androidx.multidex:multidex:2.0.1'
+
+    /**
+     * Circle ImageView used in profile
+     */
+    implementation 'de.hdodenhof:circleimageview:3.0.0'
+
+    /**
+     * Picasso library
+     */
+    implementation 'com.squareup.picasso:picasso:2.71828'
 
 }
 apply plugin: 'com.google.gms.google-services'

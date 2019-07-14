@@ -12,7 +12,7 @@ import java.util.List;
 
 public class Permissao {
 
-    public static boolean validarPermissoes(String[] permissoes, Activity activity, int requesCode) {
+    public static boolean validarPermissoes(String[] permissoes, Activity activity, int requestCode) {
 
         if (Build.VERSION.SDK_INT >= 23){
             List<String> listaPermissoes = new ArrayList<>();
@@ -26,10 +26,9 @@ public class Permissao {
             String[] novasPermissoes = new String[listaPermissoes.size()];
             listaPermissoes.toArray(novasPermissoes);
 
-            ActivityCompat.requestPermissions(activity, novasPermissoes, requesCode);
+            ActivityCompat.requestPermissions(activity, novasPermissoes, requestCode);
 
         }
-
 
         return true;
     }

@@ -2,38 +2,29 @@ package activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
-import com.google.firebase.auth.FirebaseUser;
 import com.projeto.academicplanner.R;
 
 import helper.ConfigFirebase;
-import model.User;
+import model.UserProfile;
 
 public class CreateAccountActivity extends AppCompatActivity {
 
-    private FirebaseAuth authentication;
+    private FirebaseAuth auth;
 
     private EditText userFirstName;
     private EditText userLastName;
     private EditText userEmail;
     private EditText userPassword;
     private Button buttonCreate;
-    private User userCreate;
+    private String urlImagemSelecionada = "https://firebasestorage.googleapis.com/v0/b/academicplanner2019.appspot.com/o/images%2Fdefault%2Fperfil.jpg?alt=media&token=646cf32b-bd9f-4eb3-bda4-30bdc5d6b022";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,50 +33,42 @@ public class CreateAccountActivity extends AppCompatActivity {
 
         startComponents();
 
-        buttonCreate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                userCreate = new User();
-                userCreate.setUserFirstName(userFirstName.getText().toString());
-                userCreate.setUserLastName(userLastName.getText().toString());
-                userCreate.setUserEmail(userEmail.getText().toString());
-                userCreate.setUserPassword(userPassword.getText().toString());
-
+        buttonCreate.setOnClickListener( v -> {
                 createAccount();
-            }
-
         });
 
     }
 
     private void createAccount() {
 
-        String firstNameCheck = userFirstName.getText().toString();
-        String lastNameCheck = userLastName.getText().toString();
-        String emailCheck = userEmail.getText().toString();
-        String passWordCheck = userPassword.getText().toString();
+        String firstname = userFirstName.getText().toString();
+        String lastname = userLastName.getText().toString();
+        String email = userEmail.getText().toString();
+        String senha = userPassword.getText().toString();
 
-        if (!firstNameCheck.isEmpty()) {
-            if (!lastNameCheck.isEmpty()) {
-                if (!emailCheck.isEmpty()) {
-                    if (!passWordCheck.isEmpty()) {
+        if (!firstname.isEmpty()) {
+            if (!lastname.isEmpty()) {
+                if (!email.isEmpty()) {
+                    if (!senha.isEmpty()) {
 
-                        authentication.createUserWithEmailAndPassword(
-                                userCreate.getUserEmail(),
-                                userCreate.getUserPassword()
-                        ).addOnCompleteListener(CreateAccountActivity.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
+                        auth.createUserWithEmailAndPassword(
+                                email,
+                                senha
+                        ).addOnCompleteListener( task ->  {
 
                                 if (task.isSuccessful()) {
 
-                                    FirebaseUser userFirebase = task.getResult().getUser();
-                                    userCreate.setIdUser(userFirebase.getUid());
-                                    userCreate.saveUserData();
-                                    toastMsg("User created successfully");
+                                    UserProfile user = new UserProfile();
+                                    user.setFirstname(firstname);
+                                    user.setLastname(lastname);
+                                    user.setEmail(email);
+                                    user.setUrlProfile(urlImagemSelecionada);
+                                    user.setIdUser(ConfigFirebase.getUserId());
+                                    user.save();
 
-                                    Intent back = new Intent(CreateAccountActivity.this, LoginActivity.class);
-                                    startActivity(back);
+                                    toastMessageLong("User created successfully");
+
+                                    openMainScreen();
 
                                 } else {
 
@@ -104,18 +87,21 @@ public class CreateAccountActivity extends AppCompatActivity {
                                         e.printStackTrace();
                                     }
 
-                                    Toast.makeText(CreateAccountActivity.this, "Error found: " + errorException, Toast.LENGTH_LONG).show();
+                                    toastMessageLong("Error found: " + errorException);
                                 }
-                            }
                         });
-                    } else { toastMsg("Enter a valid password"); }
+                    } else { toastMessageLong("Enter a valid password"); }
 
-                } else { toastMsg("Enter a valid e-mail"); }
+                } else { toastMessageLong("Enter a valid e-mail"); }
 
-            } else { toastMsg("Enter a Last Name"); }
+            } else { toastMessageLong("Enter a Last Name"); }
 
-        } else { toastMsg("Enter a First Name"); }
+        } else { toastMessageLong("Enter a First Name"); }
 
+    }
+
+    private void openMainScreen(){
+        startActivity(new Intent(getApplicationContext(), AddEditParametersActivity.class));
     }
 
     public void startComponents() {
@@ -126,16 +112,18 @@ public class CreateAccountActivity extends AppCompatActivity {
         userPassword = findViewById(R.id.userPassword);
         buttonCreate = findViewById(R.id.buttonCreate);
 
-        authentication = ConfigFirebase.getReferenciaAutenticacao();
+        auth = ConfigFirebase.getReferenciaAutenticacao();
 
     }
 
-    public void toastMsg(String text) {
+    private void toastMessageShort(String msg) {
+        Toast.makeText(getApplicationContext(), msg,
+                Toast.LENGTH_SHORT).show();
+    }
 
-        Toast toastError = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG);
-        toastError.setGravity(Gravity.CENTER, 0, 800);
-        toastError.show();
-
+    private void toastMessageLong(String msg) {
+        Toast.makeText(getApplicationContext(), msg,
+                Toast.LENGTH_LONG).show();
     }
 
 }
