@@ -105,10 +105,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="Select an university"
+                android:text="Select an university:"
                 android:textColor="@color/colorGray"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textSize="14sp" />
 
             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                 android:id="@+id/spinnerUniversity"
@@ -127,10 +126,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:layout_weight="1"
-                android:text="Administrative Contact Person"
+                android:text="Administrative Contact Person:"
                 android:textColor="@color/colorGray"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textSize="14sp" />
 
             <EditText
                 android:id="@+id/adminName"

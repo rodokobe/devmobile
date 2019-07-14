@@ -106,8 +106,7 @@
                 android:layout_marginTop="20dp"
                 android:text="Select an university / course:"
                 android:textColor="@color/colorGray"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textSize="14sp" />
 
             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                 android:id="@+id/spinnerUniversity"
@@ -189,8 +188,7 @@
                 android:layout_weight="1"
                 android:text="Student contact:"
                 android:textColor="@color/colorGray"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textSize="14sp" />
 
             <EditText
                 android:id="@+id/studentName"
