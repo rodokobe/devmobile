@@ -13,12 +13,13 @@ import com.projeto.academicplanner.R;
 
 public class AddEditMainFragment extends Fragment {
 
-    private TextView universityCrudMain, coursesCrudMain, disciplinesCrudMain, eventsCrudMain;
+    private TextView universityCrudMain, coursesCrudMain, disciplinesCrudMain, eventsCrudMain, studentsCrudMain;
 
     private UniversityMainFragment universityMain;
     private CourseMainFragment courseMain;
     private DisciplineMainFragment disciplineMain;
     private EventMainFragment eventMain;
+    private StudentMainFragment studentMain;
 
     private static final String TAG = "AddEditParametersActivity";
 
@@ -35,6 +36,8 @@ public class AddEditMainFragment extends Fragment {
         coursesCrudMain = addEditMain.findViewById(R.id.coursesCrudMain);
         disciplinesCrudMain = addEditMain.findViewById(R.id.disciplinesCrudMain);
         eventsCrudMain = addEditMain.findViewById(R.id.eventsCrudMain);
+        studentsCrudMain = addEditMain.findViewById(R.id.studentsCrudMain);
+
 
         universityCrudMain.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,6 +66,11 @@ public class AddEditMainFragment extends Fragment {
             public void onClick(View v) {
                 goToEventMain(v);
             }
+        });
+
+        studentsCrudMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { goToStudentMain(v);}
         });
 
         return addEditMain;
@@ -103,5 +111,15 @@ public class AddEditMainFragment extends Fragment {
         transaction.commit();
 
     }
+
+    public void goToStudentMain(View view) {
+
+        studentMain = new StudentMainFragment();
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frameAddEditParameters, studentMain);
+        transaction.commit();
+
+    }
+
 
 }

@@ -92,6 +92,24 @@
             android:background="?android:attr/listDivider"
             android:padding="5dp" />
 
+        <TextView
+            android:id="@+id/studentsCrudMain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_crud_student"
+            android:gravity="center|start"
+            android:padding="10dp"
+            android:text="  Students"
+            android:textColor="@color/colorBright"
+            android:textSize="18sp" />
+
+        <View
+            android:id="@+id/divider12"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider"
+            android:padding="5dp" />
+
     </LinearLayout>
 
 
