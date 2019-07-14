@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextView createAccount;
     private ImageView imageFaceLogin, imageGoogleLogin, imageAbout;
 
-    private FirebaseAuth authentication;
+    private FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +37,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         startComponents();
+        auth = ConfigFirebase.getReferenciaAutenticacao();
 
         checkLoggedInUser();
 
@@ -44,40 +45,28 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 signIn();
-                //authentication.signInAnonymously();
+                //auth.signInAnonymously();
                 //startActivity(new Intent(getApplicationContext(), AddEditParametersActivity.class));
             }
         });
 
 
-        imageFaceLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        imageFaceLogin.setOnClickListener( v ->  {
                 toastMsgLong("Realizar o login com uma conta do FACEBOOK");
-            }
         });
 
-        imageGoogleLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        imageGoogleLogin.setOnClickListener( v ->  {
                 toastMsgLong("Realizar o login com uma conta do GOOGLE");
-            }
         });
 
-        imageAbout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        imageAbout.setOnClickListener( v ->  {
                 Intent about = new Intent(LoginActivity.this, AboutActivity.class);
                 startActivity(about);
-            }
         });
 
-        createAccount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        createAccount.setOnClickListener( v ->  {
                 Intent createUserAccount = new Intent(LoginActivity.this, CreateAccountActivity.class);
                 startActivity(createUserAccount);
-            }
         });
 
     }
@@ -90,15 +79,13 @@ public class LoginActivity extends AppCompatActivity {
         if (!email.isEmpty()) {
             if (!senha.isEmpty()) {
 
-                authentication.signInWithEmailAndPassword(email, senha).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            toastMsgLong("Login efetuado com sucesso");
-                            openMainScreen();
-                        } else {
-                            toastMsgLong("Favor preencher os campos com credenciais válidas");
-                        }
+                auth.signInWithEmailAndPassword(email, senha).addOnCompleteListener( task -> {
+                    if (task.isSuccessful()){
+                        toastMsgLong("Login realizado com sucesso");
+                        openMainScreen();
+
+                    } else {
+                        toastMsgLong("Erro ao fazer login" + task.getException());
                     }
                 });
             } else {
@@ -110,11 +97,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void openMainScreen(){
-        startActivity(new Intent(getApplicationContext(), PlannerMainActivity.class));
+        startActivity(new Intent(getApplicationContext(), AddEditParametersActivity.class));
     }
 
     private void checkLoggedInUser(){
-        FirebaseUser user = authentication.getCurrentUser();
+        FirebaseUser user = auth.getCurrentUser();
 
         if(user != null){
             openMainScreen();
@@ -131,8 +118,6 @@ public class LoginActivity extends AppCompatActivity {
         imageFaceLogin = findViewById(R.id.imageFaceLogin);
         imageGoogleLogin = findViewById(R.id.imageGoogleLogin);
         imageAbout = findViewById(R.id.imageAbout);
-
-        authentication = ConfigFirebase.getReferenciaAutenticacao();
 
     }
 
