@@ -20,12 +20,9 @@ public class DetalheActivity extends AppCompatActivity {
 
         botaoVoltar = findViewById(R.id.botaoVoltar);
 
-        botaoVoltar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        botaoVoltar.setOnClickListener( v-> {
                 Intent voltar = new Intent(DetalheActivity.this, PlannerMainActivity.class);
                 startActivity(voltar);
-            }
         });
 
     }
