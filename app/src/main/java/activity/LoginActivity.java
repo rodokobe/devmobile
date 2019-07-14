@@ -41,13 +41,8 @@ public class LoginActivity extends AppCompatActivity {
 
         checkLoggedInUser();
 
-        botaoLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        botaoLogin.setOnClickListener( v -> {
                 signIn();
-                //auth.signInAnonymously();
-                //startActivity(new Intent(getApplicationContext(), AddEditParametersActivity.class));
-            }
         });
 
 
