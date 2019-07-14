@@ -38,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
 
         startComponents();
 
-        //checkLoggedInUser();
+        checkLoggedInUser();
 
         botaoLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,7 +95,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             toastMsgLong("Login efetuado com sucesso");
-                            startActivity(new Intent(getApplicationContext(), AddEditParametersActivity.class));
+                            openMainScreen();
                         } else {
                             toastMsgLong("Favor preencher os campos com credenciais válidas");
                         }
