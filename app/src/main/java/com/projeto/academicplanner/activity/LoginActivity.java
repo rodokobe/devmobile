@@ -74,7 +74,7 @@ public class LoginActivity extends AppCompatActivity {
                         openMainScreen();
 
                     } else {
-                        toastMsgLong("Erro ao fazer login" + task.getException());
+                        toastMsgLong("Erro ao fazer login: " + task.getException().getMessage());
                     }
                 });
             } else {
