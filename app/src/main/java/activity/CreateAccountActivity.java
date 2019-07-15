@@ -24,7 +24,7 @@ public class CreateAccountActivity extends AppCompatActivity {
     private EditText userEmail;
     private EditText userPassword;
     private Button buttonCreate;
-    private String urlImagemSelecionada = "https://firebasestorage.googleapis.com/v0/b/academicplanner2019.appspot.com/o/images%2Fdefault%2Fperfil.jpg?alt=media&token=646cf32b-bd9f-4eb3-bda4-30bdc5d6b022";
+    private String urlImagemSelecionada;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +62,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                                     user.setFirstname(firstname);
                                     user.setLastname(lastname);
                                     user.setEmail(email);
-                                    user.setUrlProfile(urlImagemSelecionada);
+                                    user.setUrlProfile("https://firebasestorage.googleapis.com/v0/b/academicplanner2019.appspot.com/o/images%2Fdefault%2Fperfil.jpg?alt=media&token=646cf32b-bd9f-4eb3-bda4-30bdc5d6b022");
                                     user.setIdUser(ConfigFirebase.getUserId());
                                     user.save();
 
