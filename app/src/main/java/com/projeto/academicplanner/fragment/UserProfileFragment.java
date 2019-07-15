@@ -117,7 +117,13 @@ public class UserProfileFragment extends Fragment {
                     String firstName = userProfile.getFirstname();
                     String lastname = userProfile.getLastname();
 
-                    String name = firstName + " " + lastname;
+                    String name;
+
+                    if( firstName.isEmpty() || lastname.isEmpty() ){
+                        name = "Sem nome";
+                    } else{
+                        name = firstName + " " + lastname;
+                    }
 
                     txtName.setText(name);
                     txtEmail.setText(auth.getCurrentUser().getEmail());
