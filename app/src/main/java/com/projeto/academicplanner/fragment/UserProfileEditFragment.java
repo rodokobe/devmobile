@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -46,7 +47,8 @@ public class UserProfileEditFragment extends Fragment {
     private StorageReference storageReference;
     private DatabaseReference firebaseRef;
 
-    private EditText firstname, lastname, emailText, backToUserProfile;
+    private TextView backToUserProfile;
+    private EditText firstname, lastname, emailText;
     private Button btnSave;
     private ImageView profile_image;
 
