@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:background="@color/colorBackGroundGreen"
         android:orientation="vertical"
-        tools:context="activity.PlannerMainActivity"
+        tools:context=".activity.PlannerMainActivity"
         tools:layout_editor_absoluteX="210dp"
         tools:layout_editor_absoluteY="0dp">
 
