@@ -119,9 +119,13 @@ public class UserProfileFragment extends Fragment {
 
                     String name;
 
-                    if( firstName.isEmpty() || lastname.isEmpty() ){
-                        name = "Sem nome";
-                    } else{
+                    if (firstName == null ){
+                        name = "Sem nome e " + lastname;
+                    } else if ( lastname == null ) {
+                        name = firstName + " e sem apelido";
+                    } else if ( firstName == null && lastname == null) {
+                        name = "Fulano de tal";
+                    } else {
                         name = firstName + " " + lastname;
                     }
 
