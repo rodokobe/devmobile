@@ -13,6 +13,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
+import com.projeto.academicplanner.R;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -98,6 +99,7 @@ public class NavMainActivity extends AppCompatActivity
         } else if (id == R.id.nav_send) {
 
         }
+
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
