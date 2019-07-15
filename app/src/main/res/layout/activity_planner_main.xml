@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorBackGroundBrown"
     android:orientation="vertical"
-    tools:context="activity.PlannerMainActivity">
+    tools:context=".activity.PlannerMainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -89,9 +89,10 @@
         android:layout_height="match_parent"
         android:layout_weight="1">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+        <CalendarView
+            android:id="@+id/calendarView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </FrameLayout>
 
     <include

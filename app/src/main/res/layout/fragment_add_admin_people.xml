@@ -1,0 +1,140 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".fragment.AddAdminPeopleFragment">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="310dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView6"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Admin People"
+                        android:textColor="@color/colorGray"
+                        android:textSize="40sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textView4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="-10dp"
+                        android:text="add new"
+                        android:textColor="@color/colorBright"
+                        android:textSize="14sp" />
+
+                    <View
+                        android:id="@+id/divider6"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="5dp"
+                        android:background="?android:attr/listDivider" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/backToAddEditMain"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_seta_voltar_24dp"
+                    android:gravity="center"
+                    android:paddingTop="20dp"
+                    android:text="back"
+                    android:textColor="@color/colorBright"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <EditText
+                    android:id="@+id/nameAdminPeople"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_edit_text"
+                    android:ems="10"
+                    android:hint="admin name"
+                    android:inputType="textPersonName"
+                    android:padding="10dp"
+                    android:textColorHint="@color/colorLightGray"
+                    android:textSize="14sp"
+                    android:theme="@style/editTextPadrao" />
+
+                <EditText
+                    android:id="@+id/emailAdminPeople"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_edit_text"
+                    android:ems="10"
+                    android:hint="admin e-mail"
+                    android:inputType="textPersonName"
+                    android:padding="10dp"
+                    android:textColorHint="@color/colorLightGray"
+                    android:textSize="14sp"
+                    android:theme="@style/editTextPadrao" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="Select an university / course:"
+                    android:textColor="@color/colorGray"
+                    android:textSize="14sp" />
+
+                <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                    android:id="@+id/spinnerUniversityCourse"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_edit_text"
+                    android:dropDownWidth="wrap_content"
+                    android:outlineSpotShadowColor="@color/colorGray"
+                    android:padding="10dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"/>
+
+                <Button
+                    android:id="@+id/btnEditProfileFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:layout_weight="1"
+                    android:text="ADD"
+                    android:theme="@style/botaoPadraoGreen" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </FrameLayout>

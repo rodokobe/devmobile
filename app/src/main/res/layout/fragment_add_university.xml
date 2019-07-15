@@ -2,43 +2,72 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="fragment.AddUniversityFragment">
+    tools:context=".fragment.AddUniversityFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="30dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/textView14"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:text="University"
-            android:textColor="@color/colorGray"
-            android:textSize="40sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textView15"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="-10dp"
-            android:text="add"
-            android:textColor="@color/colorBright"
-            android:textSize="14sp" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="20dp">
 
         <LinearLayout
-            android:layout_width="319dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="10dp"
-            android:orientation="vertical">
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="310dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView14"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="University"
+                    android:textColor="@color/colorGray"
+                    android:textSize="40sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textView15"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="-10dp"
+                    android:text="add"
+                    android:textColor="@color/colorBright"
+                    android:textSize="14sp" />
+
+                <View
+                    android:id="@+id/divider9"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="5dp"
+                    android:background="?android:attr/listDivider" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/backToAddEditMain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_seta_voltar_24dp"
+                android:gravity="center"
+                android:paddingTop="20dp"
+                android:text="back"
+                android:textColor="@color/colorBright"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
 
             <EditText
                 android:id="@+id/universityName"
@@ -49,6 +78,7 @@
                 android:background="@drawable/bg_edit_text"
                 android:ems="10"
                 android:hint="university name"
+                android:textColorHint="@color/colorLightGray"
                 android:inputType="textPersonName"
                 android:paddingStart="10dp"
                 android:textSize="16sp"
@@ -63,6 +93,7 @@
                 android:background="@drawable/bg_edit_text"
                 android:ems="10"
                 android:hint="university acronym"
+                android:textColorHint="@color/colorLightGray"
                 android:inputType="textPersonName"
                 android:paddingStart="10dp"
                 android:textSize="16sp"
@@ -76,15 +107,6 @@
                 android:layout_weight="1"
                 android:text="ADD"
                 android:theme="@style/botaoPadraoGreen" />
-
-            <TextView
-                android:id="@+id/backText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:paddingTop="10dp"
-                android:text="back to main Universities page"
-                android:textAlignment="center" />
 
         </LinearLayout>
 
