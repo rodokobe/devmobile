@@ -3,6 +3,7 @@ package com.projeto.academicplanner.activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.core.view.GravityCompat;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 
@@ -10,14 +11,25 @@ import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import com.projeto.academicplanner.R;
+import com.projeto.academicplanner.fragment.UserProfileFragment;
+import com.projeto.academicplanner.helper.ConfigFirebase;
+import com.projeto.academicplanner.model.UserProfile;
+import com.squareup.picasso.Picasso;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.Menu;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class NavMainActivity extends AppCompatActivity
@@ -25,8 +37,12 @@ public class NavMainActivity extends AppCompatActivity
 
     private FirebaseAuth auth;
 
-    private String userIdLogged;
+    private String userIdLoged;
     private TextView nameText;
+    private String urlImagemSelecionada = "";
+
+    private DatabaseReference firebaseRef;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +51,6 @@ public class NavMainActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -43,6 +58,59 @@ public class NavMainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+
+        View headerView = navigationView.getHeaderView(0);
+
+        firebaseRef = ConfigFirebase.getReferenciaFirebase();
+        userIdLoged = UserFirebase.getUserId();
+
+        /**
+         * Setting name on NavigationView
+         */
+        TextView nameNav = headerView.findViewById(R.id.navNameText);
+        ImageView photoProfileNav = headerView.findViewById(R.id.imageViewProfile);
+
+        DatabaseReference userProfileRef = firebaseRef
+                .child("users")
+                .child( userIdLoged );
+        userProfileRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                UserProfile userProfile = dataSnapshot.getValue(UserProfile.class);
+
+                /*String firstname = userProfile.getFirstname().toString();
+                String lastname = userProfile.getLastname().toString();
+
+                String name = firstname + " " + lastname;
+
+                if(dataSnapshot.getValue() != null){
+
+                    nameNav.setText(name);
+                    urlImagemSelecionada = userProfile.getUrlProfile();
+                }
+
+                if(urlImagemSelecionada != ""){
+                    Picasso.get()
+                            .load(urlImagemSelecionada)
+                            .into(photoProfileNav);
+                }*/
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        /**
+         * Setting email on NavigationView
+         */
+
+        TextView emailNav = headerView.findViewById(R.id.textViewEmail);
+
+
+    //        String email = auth.getCurrentUser().getEmail();
+  //      emailNav.setText(email);
     }
 
     @Override
@@ -93,7 +161,9 @@ public class NavMainActivity extends AppCompatActivity
 
             startActivity( new Intent(getApplicationContext(), AddEditParametersActivity.class) );
 
-        } else if (id == R.id.nav_about) {
+        } else if (id == R.id.nav_profile) {
+
+            startActivity( new Intent(getApplicationContext(), UserProfileActivity.class) );
 
         } else if (id == R.id.nav_logout) {
 
@@ -108,9 +178,14 @@ public class NavMainActivity extends AppCompatActivity
         return true;
     }
 
+
+
     private void initializingComponents(){
+
         nameText = findViewById(R.id.navNameText);
     }
+
+
 
     private void userLogout(){
         try {

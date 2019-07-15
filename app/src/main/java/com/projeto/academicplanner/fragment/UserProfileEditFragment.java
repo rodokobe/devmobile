@@ -2,7 +2,6 @@ package com.projeto.academicplanner.fragment;
 
 
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -89,7 +88,6 @@ public class UserProfileEditFragment extends Fragment {
          * Setting onClick action to change image profile
          */
         profile_image.setOnClickListener( view -> {
-
             Intent i = new Intent(
                     Intent.ACTION_PICK,
                     MediaStore.Images.Media.EXTERNAL_CONTENT_URI
@@ -97,7 +95,6 @@ public class UserProfileEditFragment extends Fragment {
             if (i.resolveActivity(getActivity().getPackageManager()) != null ){
                 startActivityForResult(i, SELECAO_GALERIA);
             }
-
         });
 
         /**
@@ -252,7 +249,7 @@ public class UserProfileEditFragment extends Fragment {
         email = v.findViewById(R.id.editTextEmail);
         firstname = v.findViewById(R.id.editTextFirstname);
         lastname = v.findViewById(R.id.editTextLastname);
-        btnSave = v.findViewById(R.id.btnSaveProfile);
+        btnSave = v.findViewById(R.id.btnEditProfileFragment);
 
     }
 

@@ -39,7 +39,7 @@ public class UserProfileFragment extends Fragment {
     private String userIdLogged;
     private String urlImagemSelecionada;
 
-    private FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+    private UserProfileEditFragment userProfileEditFragment;
 
     public UserProfileFragment() {
         // Required empty public constructor
@@ -77,12 +77,9 @@ public class UserProfileFragment extends Fragment {
         /**
          * Go to edit user profile
          */
-
         btnEditUserProfile.setOnClickListener( view ->  {
 
-            UserProfileEditFragment editUserProfileFragment = new UserProfileEditFragment();
-            transaction.replace(R.id.frameAddEditUserProfile, editUserProfileFragment);
-            transaction.commit();
+            showUserProfileEditFragment();
 
         });
 
@@ -132,12 +129,20 @@ public class UserProfileFragment extends Fragment {
         });
     }
 
+    private void showUserProfileEditFragment(){
+
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        userProfileEditFragment = new UserProfileEditFragment();
+        transaction.replace(R.id.frameAddEditUserProfile, userProfileEditFragment);
+        transaction.commit();
+    }
+
     private void initializingComponents(View v){
 
         imgProfile = v.findViewById(R.id.imgProfile);
         txtEmail = v.findViewById(R.id.txtEmail);
         txtName = v.findViewById(R.id.txtName);
-        btnEditUserProfile = v.findViewById(R.id.btnSaveProfile);
+        btnEditUserProfile = v.findViewById(R.id.btnEditProfileFragment);
 
     }
 

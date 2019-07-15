@@ -53,7 +53,7 @@ public class AdminPeopleMainFragment extends Fragment {
         final View mainAdminPeople = inflater.inflate(R.layout.fragment_adminpeople_main, container, false);
 
         //start configurations
-        buttonAdminPeople = mainAdminPeople.findViewById(R.id.btnSaveProfile);
+        buttonAdminPeople = mainAdminPeople.findViewById(R.id.btnEditProfileFragment);
         backToAddEditMain = mainAdminPeople.findViewById(R.id.backToAddEditMain);
         recylcerAdminPeople = mainAdminPeople.findViewById(R.id.recylcerAdminPeople);
 
