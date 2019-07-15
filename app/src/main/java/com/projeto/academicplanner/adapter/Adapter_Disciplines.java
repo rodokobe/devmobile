@@ -38,7 +38,7 @@ public class Adapter_Disciplines extends RecyclerView.Adapter<Adapter_Discipline
     public Adapter_Disciplines.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View itemList = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.lista_recycle_disciplines, parent, false);
+                .inflate(R.layout.lista_recycler_disciplines, parent, false);
 
         MyViewHolder showList = new MyViewHolder(itemList, this);
         return showList;

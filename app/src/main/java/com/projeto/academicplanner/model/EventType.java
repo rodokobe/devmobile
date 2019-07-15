@@ -1,22 +1,87 @@
 package com.projeto.academicplanner.model;
 
+import com.google.firebase.database.DatabaseReference;
+import com.projeto.academicplanner.helper.ConfigFirebase;
+
 public class EventType {
 
+    private String idUser;
     private String idEventType;
-    private String typeEventType;
     private String eventTypeName;
+    private String eventTypeDescription;
+
+    private DatabaseReference firebaseRef = ConfigFirebase.getReferenciaFirebase();
 
     public EventType() {
 
-    }
-
-    public EventType(String idEventTypeP, String typeEventTypeP, String eventTypeNameP) {
-
-        this.idEventType = idEventTypeP;
-        this.typeEventType = typeEventTypeP;
-        this.eventTypeName = eventTypeNameP;
+        DatabaseReference eventTypeRef = firebaseRef
+                .child("eventType");
+        setIdEventType(eventTypeRef.push().getKey());
 
     }
+
+    public void save() {
+
+        DatabaseReference eventTypeRef = firebaseRef
+                .child("eventType")
+                .child(getIdUser())
+                .child(getIdEventType());
+        eventTypeRef.setValue(this);
+
+    }
+
+    public void update(EventType objectToUpdate) {
+
+        DatabaseReference eventTypeRef = firebaseRef
+                .child("eventType")
+                .child(getIdUser())
+                .child(getIdEventType());
+        eventTypeRef.setValue(objectToUpdate);
+
+    }
+
+    public void delete() {
+
+        DatabaseReference eventTypeRef = firebaseRef
+                .child("eventType")
+                .child(getIdUser())
+                .child(getIdEventType());
+        eventTypeRef.removeValue();
+    }
+
+    /*public void recovery(String idUserLoged, final List<EventType> eventsType, final Adapter_EventsType adapter) {
+
+        DatabaseReference eventTypeRef = firebaseRef
+                .child("eventsType")
+                .child(idUserLoged);
+
+        eventTypeRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                eventsType.clear();
+
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+
+                    eventsType.add(ds.getValue(EventType.class));
+
+                }
+
+                //put the item added to the top
+                Collections.reverse(eventsType);
+                adapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+    }*/
+
+    public String getIdUser() { return idUser; }
+
+    public void setIdUser(String idUser) { this.idUser = idUser; }
 
     public String getIdEventType() {
         return idEventType;
@@ -26,13 +91,9 @@ public class EventType {
         this.idEventType = idEventType;
     }
 
-    public String getTypeEventType() {
-        return typeEventType;
-    }
+    public String getEventTypeDescription() { return eventTypeDescription; }
 
-    public void setTypeEventType(String typeEventType) {
-        this.typeEventType = typeEventType;
-    }
+    public void setEventTypeDescription(String eventTypeDescription) { this.eventTypeDescription = eventTypeDescription; }
 
     public String getEventTypeName() {
         return eventTypeName;

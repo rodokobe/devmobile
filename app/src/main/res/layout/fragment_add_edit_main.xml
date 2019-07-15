@@ -21,6 +21,24 @@
             android:padding="5dp" />
 
         <TextView
+            android:id="@+id/homeActivity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_crud_home"
+            android:gravity="center|start"
+            android:padding="10dp"
+            android:text="  Home"
+            android:textColor="@color/colorBright"
+            android:textSize="18sp" />
+
+        <View
+            android:id="@+id/divider14"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider"
+            android:padding="5dp" />
+
+        <TextView
             android:id="@+id/universityCrudMain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -75,13 +93,13 @@
             android:padding="5dp" />
 
         <TextView
-            android:id="@+id/eventsCrudMain"
+            android:id="@+id/eventsTypeCrudMain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_crud_events"
+            android:drawableLeft="@drawable/ic_crud_events_type"
             android:gravity="center|start"
             android:padding="10dp"
-            android:text="  Events"
+            android:text="  Events Type"
             android:textColor="@color/colorBright"
             android:textSize="18sp" />
 

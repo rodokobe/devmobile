@@ -1,83 +1,113 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".fragment.AddEventTypeFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-
-    <LinearLayout
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="30dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="add new"
-            android:textColor="@color/colorBright"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="-14dp"
-            android:text="Event Type"
-            android:textColor="@color/colorGray"
-            android:textSize="40sp"
-            android:textStyle="bold" />
+        tools:context=".fragment.AddEventTypeFragment">
 
         <LinearLayout
-            android:layout_width="319dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="10dp"
-            android:orientation="vertical">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="20dp">
 
-            <EditText
-                android:id="@+id/courseName"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_marginTop="10dp"
-                android:layout_weight="1"
-                android:background="@drawable/bg_edit_text"
-                android:ems="10"
-                android:hint="event type"
-                android:inputType="textPersonName"
-                android:paddingStart="10dp"
-                android:textSize="14sp"
-                android:theme="@style/editTextPadrao" />
-
-            <EditText
-                android:id="@+id/acronymCourse"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_marginTop="20dp"
-                android:layout_weight="1"
-                android:background="@drawable/bg_edit_text"
-                android:ems="10"
-                android:hint="event type name"
-                android:inputType="textPersonName"
-                android:paddingStart="10dp"
-                android:textSize="14sp"
-                android:theme="@style/editTextPadrao" />
-
-            <Button
-                android:id="@+id/buttonDialog"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:layout_weight="1"
-                android:text="ADD"
-                android:theme="@style/botaoPadraoGreen" />
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="310dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView6"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Event Type"
+                        android:textColor="@color/colorGray"
+                        android:textSize="40sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textView4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="-10dp"
+                        android:text="add new"
+                        android:textColor="@color/colorBright"
+                        android:textSize="14sp" />
+
+                    <View
+                        android:id="@+id/divider6"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="5dp"
+                        android:background="?android:attr/listDivider" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/backToAddEditMain"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_seta_voltar_24dp"
+                    android:gravity="center"
+                    android:paddingTop="20dp"
+                    android:text="back"
+                    android:textColor="@color/colorBright"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <EditText
+                    android:id="@+id/eventTypeName"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_edit_text"
+                    android:ems="10"
+                    android:hint="event type name"
+                    android:inputType="textPersonName"
+                    android:padding="10dp"
+                    android:textColorHint="@color/colorLightGray"
+                    android:textSize="14sp"
+                    android:theme="@style/editTextPadrao" />
+
+                <EditText
+                    android:id="@+id/eventTypeDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_edit_text"
+                    android:ems="10"
+                    android:hint="event type description"
+                    android:inputType="textPersonName"
+                    android:padding="10dp"
+                    android:textColorHint="@color/colorLightGray"
+                    android:textSize="14sp"
+                    android:theme="@style/editTextPadrao" />
+
+                <Button
+                    android:id="@+id/buttonEventsType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:layout_weight="1"
+                    android:text="ADD"
+                    android:theme="@style/botaoPadraoGreen" />
+
+            </LinearLayout>
 
         </LinearLayout>
-    </LinearLayout>
 
-</FrameLayout>
-
+    </FrameLayout>
