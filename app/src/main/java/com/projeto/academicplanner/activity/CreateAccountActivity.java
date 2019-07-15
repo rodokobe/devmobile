@@ -100,7 +100,7 @@ public class CreateAccountActivity extends AppCompatActivity {
     }
 
     private void openMainScreen(){
-        startActivity(new Intent(getApplicationContext(), NavMenuActivity.class));
+        startActivity(new Intent(getApplicationContext(), NavMainActivity.class));
     }
 
     public void startComponents() {

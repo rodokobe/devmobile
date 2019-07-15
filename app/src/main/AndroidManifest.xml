@@ -12,6 +12,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".activity.NavMainActivity"
+            android:label="@string/title_activity_nav_main"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".activity.UserProfileActivity" />
         <activity
             android:name=".activity.CreateAccountActivity"
