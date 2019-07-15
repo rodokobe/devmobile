@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="fragment.StudentMainFragment">
+    tools:context="fragment.AdminPeopleMainFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,7 +24,7 @@
                     android:id="@+id/textView6"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Student"
+                    android:text="Admin People"
                     android:textColor="@color/colorGray"
                     android:textSize="40sp"
                     android:textStyle="bold" />
@@ -69,16 +69,16 @@
             android:padding="10dp">
 
             <TextView
-                android:id="@+id/textListUniversities"
+                android:id="@+id/textListAdminPeople"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:gravity="start"
-                android:text="Students List"
+                android:text="Admin People List"
                 android:textSize="14sp" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recylcerStudents"
+                android:id="@+id/recylcerAdminPeople"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="6dp"
@@ -95,7 +95,7 @@
             android:orientation="vertical">
 
             <Button
-                android:id="@+id/buttonStudents"
+                android:id="@+id/buttonAdminPeople"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"

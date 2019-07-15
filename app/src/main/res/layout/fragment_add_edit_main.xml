@@ -110,6 +110,24 @@
             android:background="?android:attr/listDivider"
             android:padding="5dp" />
 
+        <TextView
+            android:id="@+id/adminPeopleCrudMain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_crud_adminpeople"
+            android:gravity="center|start"
+            android:padding="10dp"
+            android:text="  Admin People"
+            android:textColor="@color/colorBright"
+            android:textSize="18sp" />
+
+        <View
+            android:id="@+id/divider13"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider"
+            android:padding="5dp" />
+
     </LinearLayout>
 
 

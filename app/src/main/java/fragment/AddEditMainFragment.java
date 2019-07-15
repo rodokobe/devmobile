@@ -13,13 +13,14 @@ import com.projeto.academicplanner.R;
 
 public class AddEditMainFragment extends Fragment {
 
-    private TextView universityCrudMain, coursesCrudMain, disciplinesCrudMain, eventsCrudMain, studentsCrudMain;
+    private TextView universityCrudMain, coursesCrudMain, disciplinesCrudMain, eventsCrudMain, studentsCrudMain, adminPeopleCrudMain;
 
     private UniversityMainFragment universityMain;
     private CourseMainFragment courseMain;
     private DisciplineMainFragment disciplineMain;
     private EventMainFragment eventMain;
     private StudentMainFragment studentMain;
+    private AdminPeopleMainFragment adminPeopleMain;
 
     private static final String TAG = "AddEditParametersActivity";
 
@@ -37,14 +38,12 @@ public class AddEditMainFragment extends Fragment {
         disciplinesCrudMain = addEditMain.findViewById(R.id.disciplinesCrudMain);
         eventsCrudMain = addEditMain.findViewById(R.id.eventsCrudMain);
         studentsCrudMain = addEditMain.findViewById(R.id.studentsCrudMain);
+        adminPeopleCrudMain = addEditMain.findViewById(R.id.adminPeopleCrudMain);
 
 
         universityCrudMain.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                goToUniversityMain(v);
-
-            }
+            public void onClick(View v) { goToUniversityMain(v); }
         });
 
         coursesCrudMain.setOnClickListener(new View.OnClickListener() {
@@ -71,6 +70,11 @@ public class AddEditMainFragment extends Fragment {
         studentsCrudMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) { goToStudentMain(v);}
+        });
+
+        adminPeopleCrudMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { goToAdminPeopleMain(v);}
         });
 
         return addEditMain;
@@ -117,6 +121,16 @@ public class AddEditMainFragment extends Fragment {
         studentMain = new StudentMainFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frameAddEditParameters, studentMain);
+        transaction.commit();
+
+    }
+
+
+    public void goToAdminPeopleMain(View view) {
+
+        adminPeopleMain = new AdminPeopleMainFragment();
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frameAddEditParameters, adminPeopleMain);
         transaction.commit();
 
     }

@@ -180,46 +180,6 @@
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/textView22"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_weight="1"
-                android:text="Student contact:"
-                android:textColor="@color/colorGray"
-                android:textSize="14sp" />
-
-            <EditText
-                android:id="@+id/studentName"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:layout_weight="1"
-                android:background="@drawable/bg_edit_text"
-                android:ems="10"
-                android:hint="student name"
-                android:inputType="textPersonName"
-                android:padding="10dp"
-                android:textColorHint="@color/colorLightGray"
-                android:textSize="14sp"
-                android:theme="@style/editTextPadrao" />
-
-            <EditText
-                android:id="@+id/studentEmail"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:layout_weight="1"
-                android:background="@drawable/bg_edit_text"
-                android:ems="10"
-                android:hint="student e-mail"
-                android:inputType="textPersonName"
-                android:padding="10dp"
-                android:textColorHint="@color/colorLightGray"
-                android:textSize="14sp"
-                android:theme="@style/editTextPadrao" />
-
             <Button
                 android:id="@+id/buttonDisciplines"
                 android:layout_width="match_parent"

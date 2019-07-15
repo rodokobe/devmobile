@@ -24,15 +24,12 @@ altera layout dos objetos
 
 
 
-
-
-
     Classe com o FAB original
 
     public class AddEditParametersActivityBackup extends AppCompatActivity implements View.OnClickListener {
 
     //create objects as 'x'Fragment classes for display fragments on main Fragment
-    private FloatingActionButton addMainFab, addAdmPersonFab, addStudentFab, addEventTypeFab, addDisciplineFab, addCourseFab, addUniversityFab, backSysPrefHomeFab;
+    private FloatingActionButton addMainFab, addAdmPeopleFab, addStudentFab, addEventTypeFab, addDisciplineFab, addCourseFab, addUniversityFab, backSysPrefHomeFab;
     private float translationY = 100f;
     private Boolean isMenuOpen = false;
 
@@ -47,7 +44,7 @@ altera layout dos objetos
     private DisciplineMainFragment addDisciplineF;
     private AddEventTypeFragment addEventTypeF;
     private AddStudentFragment addStudentF;
-    private AddAdmPersonFragment addAdmPersonF;
+    private AddAdmPeopleFragment addAdmPeopleF;
     private LinearLayout textLayout;
 
     @Override
@@ -62,7 +59,7 @@ altera layout dos objetos
     private void montaFab() {
 
         addMainFab = findViewById(R.id.addMainFab);
-        addAdmPersonFab = findViewById(R.id.addAdmPersonFab);
+        addAdmPeopleFab = findViewById(R.id.addAdmPeoplenFab);
         addStudentFab = findViewById(R.id.addStudentFab);
         addEventTypeFab = findViewById(R.id.addEventTypeFab);
         addDisciplineFab = findViewById(R.id.addDisciplineFab);
@@ -71,7 +68,7 @@ altera layout dos objetos
         backSysPrefHomeFab = findViewById(R.id.backSysPrefHomeFab);
         textLayout = findViewById(R.id.textLayout);
 
-        addAdmPersonFab.setAlpha(0f);
+        addAdmPeopleFab.setAlpha(0f);
         addStudentFab.setAlpha(0f);
         addEventTypeFab.setAlpha(0f);
         addDisciplineFab.setAlpha(0f);
@@ -80,7 +77,7 @@ altera layout dos objetos
         backSysPrefHomeFab.setAlpha(0f);
         textLayout.setVisibility(View.GONE);
 
-        addAdmPersonFab.setTranslationY(translationY);
+        addAdmPeopleFab.setTranslationY(translationY);
         addStudentFab.setTranslationY(translationY);
         addEventTypeFab.setTranslationY(translationY);
         addDisciplineFab.setTranslationY(translationY);
@@ -89,7 +86,7 @@ altera layout dos objetos
         backSysPrefHomeFab.setTranslationY(translationY);
 
         addMainFab.setOnClickListener(this);
-        addAdmPersonFab.setOnClickListener(this);
+        addAdmPeopleFab.setOnClickListener(this);
         addStudentFab.setOnClickListener(this);
         addEventTypeFab.setOnClickListener(this);
         addDisciplineFab.setOnClickListener(this);
@@ -105,7 +102,7 @@ altera layout dos objetos
 
         addMainFab.animate().setInterpolator(interpolator).rotation(45f).setDuration(300).start();
 
-        addAdmPersonFab.animate().translationY(0f).alpha(1f).setInterpolator(interpolator).setDuration(300).start();
+        addAdmPeropleFab.animate().translationY(0f).alpha(1f).setInterpolator(interpolator).setDuration(300).start();
         addStudentFab.animate().translationY(0f).alpha(1f).setInterpolator(interpolator).setDuration(300).start();
         addEventTypeFab.animate().translationY(0f).alpha(1f).setInterpolator(interpolator).setDuration(300).start();
         addDisciplineFab.animate().translationY(0f).alpha(1f).setInterpolator(interpolator).setDuration(300).start();
@@ -123,7 +120,7 @@ altera layout dos objetos
 
         addMainFab.animate().setInterpolator(interpolator).rotation(0f).setDuration(300).start();
 
-        addAdmPersonFab.animate().translationY(translationY).alpha(0f).setInterpolator(interpolator).setDuration(300).start();
+        addAdmPeopleFab.animate().translationY(translationY).alpha(0f).setInterpolator(interpolator).setDuration(300).start();
         addStudentFab.animate().translationY(translationY).alpha(0f).setInterpolator(interpolator).setDuration(300).start();
         addEventTypeFab.animate().translationY(translationY).alpha(0f).setInterpolator(interpolator).setDuration(300).start();
         addDisciplineFab.animate().translationY(translationY).alpha(0f).setInterpolator(interpolator).setDuration(300).start();
@@ -145,8 +142,8 @@ altera layout dos objetos
                     openMenu();
                 }
                 break;
-            case R.id.addAdmPersonFab:
-                addAdmPerson(v);
+            case R.id.addAdmPeopleFab:
+                addAdmPeople(v);
                 closeMenu();
                 break;
             case R.id.addStudentFab:
@@ -178,11 +175,11 @@ altera layout dos objetos
 
     }
 
-    public void addAdmPerson(View view) {
+    public void addAdmPeople(View view) {
 
-        addAdmPersonF = new AddAdmPersonFragment();
+        addAdmPeopleF = new AddAdmPeopleFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameAddEditParameters, addAdmPersonF);
+        transaction.replace(R.id.frameAddEditParameters, addAdmPeopleF);
         transaction.commit();
 
     }

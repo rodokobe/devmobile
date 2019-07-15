@@ -1,6 +1,6 @@
 package model;
 
-public class AdminPerson {
+public class AdminPeople {
 
     private String idCourse;
     private String idAdminPerson;
@@ -9,11 +9,11 @@ public class AdminPerson {
     private String adminPersonEmail;
     private String adminPersonCourse;
 
-    public AdminPerson() {
+    public AdminPeople() {
 
     }
 
-    public AdminPerson(String idCourseP, String idAdminPersonP,
+    public AdminPeople(String idCourseP, String idAdminPersonP,
                        String adminPersonFirstNameP, String adminPersonLastNameP,
                        String adminPersonEmailP, String adminPersonCourseP){
 
