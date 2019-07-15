@@ -119,12 +119,12 @@ public class UserProfileFragment extends Fragment {
 
                     String name;
 
-                    if (firstName == null ){
+                    if ( firstName == null && lastname == null) {
+                        name = "Fulano de tal";
+                    } else if (firstName == null ){
                         name = "Sem nome e " + lastname;
                     } else if ( lastname == null ) {
                         name = firstName + " e sem apelido";
-                    } else if ( firstName == null && lastname == null) {
-                        name = "Fulano de tal";
                     } else {
                         name = firstName + " " + lastname;
                     }
