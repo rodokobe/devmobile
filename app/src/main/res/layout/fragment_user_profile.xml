@@ -1,8 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.AdminPeopleMainFragment">
+    tools:context=".fragment.UserProfileFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,23 +26,13 @@
                     android:id="@+id/textView6"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Admin People"
+                    android:text="User Profile"
                     android:textColor="@color/colorGray"
                     android:textSize="40sp"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/textView4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="-10dp"
-                    android:text="add/edit/remove"
-                    android:textColor="@color/colorBright"
-                    android:textSize="14sp" />
-
                 <View
-                    android:id="@+id/divider8"
+                    android:id="@+id/divider6"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="5dp"
@@ -62,45 +54,53 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/linearLayoutRecycler"
             android:layout_width="match_parent"
-            android:layout_height="360dp"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="10dp">
 
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imgProfile"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_marginTop="50dp"
+                android:layout_marginBottom="32dp"
+                android:src="@drawable/profile"
+                app:civ_border_color="#FFFFFF"
+                app:civ_border_width="2dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <TextView
-                android:id="@+id/textListAdminPeople"
+                android:id="@+id/txtName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="start"
-                android:text="Admin People List"
-                android:textSize="14sp" />
+                android:padding="10dp"
+                android:text="TextView"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recylcerAdminPeople"
+            <TextView
+                android:id="@+id/txtEmail"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="6dp"
-                android:background="@drawable/bg_recyclerview"
-                android:padding="6dp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/linerLayoutAddGroup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="TextView"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textSize="18sp" />
 
             <Button
                 android:id="@+id/btnSaveProfile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="30dp"
                 android:layout_weight="1"
-                android:text="ADD NEW"
+                android:text="EDIT PROFILE"
                 android:theme="@style/botaoPadraoGreen" />
 
         </LinearLayout>

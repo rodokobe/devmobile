@@ -44,7 +44,7 @@ public class AddAdminPeopleFragment extends Fragment {
 
         adminPeopleMainFragmentF = new AdminPeopleMainFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameAddEditParameters, adminPeopleMainFragmentF);
+        transaction.replace(R.id.frameAddEditUserProfile, adminPeopleMainFragmentF);
         transaction.commit();
 
     }

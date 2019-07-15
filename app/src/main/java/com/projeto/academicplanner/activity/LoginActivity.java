@@ -86,7 +86,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void openMainScreen(){
-        startActivity(new Intent(getApplicationContext(), AddEditParametersActivity.class));
+        startActivity(new Intent(getApplicationContext(), NavMenuActivity.class));
     }
 
     private void checkLoggedInUser(){

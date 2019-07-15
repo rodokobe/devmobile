@@ -195,7 +195,7 @@ public class AddDisciplineFragment extends Fragment implements IFirebaseLoadDone
     public void backToMain() {
         disciplineMainFragmentF = new DisciplineMainFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameAddEditParameters, disciplineMainFragmentF);
+        transaction.replace(R.id.frameAddEditUserProfile, disciplineMainFragmentF);
         transaction.commit();
     }
 

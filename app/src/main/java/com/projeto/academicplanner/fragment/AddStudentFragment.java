@@ -44,7 +44,7 @@ public class AddStudentFragment extends Fragment {
 
         studentMainFragmentF = new StudentMainFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameAddEditParameters, studentMainFragmentF);
+        transaction.replace(R.id.frameAddEditUserProfile, studentMainFragmentF);
         transaction.commit();
 
     }

@@ -84,7 +84,7 @@ public class AddEditMainFragment extends Fragment {
 
         universityMain = new UniversityMainFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameAddEditParameters, universityMain);
+        transaction.replace(R.id.frameAddEditUserProfile, universityMain);
         transaction.commit();
 
     }
@@ -93,7 +93,7 @@ public class AddEditMainFragment extends Fragment {
 
         courseMain = new CourseMainFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameAddEditParameters, courseMain);
+        transaction.replace(R.id.frameAddEditUserProfile, courseMain);
         transaction.commit();
 
     }
@@ -102,7 +102,7 @@ public class AddEditMainFragment extends Fragment {
 
         disciplineMain = new DisciplineMainFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameAddEditParameters, disciplineMain);
+        transaction.replace(R.id.frameAddEditUserProfile, disciplineMain);
         transaction.commit();
 
     }
@@ -111,7 +111,7 @@ public class AddEditMainFragment extends Fragment {
 
         eventMain = new EventMainFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameAddEditParameters, eventMain);
+        transaction.replace(R.id.frameAddEditUserProfile, eventMain);
         transaction.commit();
 
     }
@@ -120,7 +120,7 @@ public class AddEditMainFragment extends Fragment {
 
         studentMain = new StudentMainFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameAddEditParameters, studentMain);
+        transaction.replace(R.id.frameAddEditUserProfile, studentMain);
         transaction.commit();
 
     }
@@ -130,7 +130,7 @@ public class AddEditMainFragment extends Fragment {
 
         adminPeopleMain = new AdminPeopleMainFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameAddEditParameters, adminPeopleMain);
+        transaction.replace(R.id.frameAddEditUserProfile, adminPeopleMain);
         transaction.commit();
 
     }

@@ -53,7 +53,7 @@ public class AdminPeopleMainFragment extends Fragment {
         final View mainAdminPeople = inflater.inflate(R.layout.fragment_adminpeople_main, container, false);
 
         //start configurations
-        buttonAdminPeople = mainAdminPeople.findViewById(R.id.buttonAdminPeople);
+        buttonAdminPeople = mainAdminPeople.findViewById(R.id.btnSaveProfile);
         backToAddEditMain = mainAdminPeople.findViewById(R.id.backToAddEditMain);
         recylcerAdminPeople = mainAdminPeople.findViewById(R.id.recylcerAdminPeople);
 
@@ -205,7 +205,7 @@ public class AdminPeopleMainFragment extends Fragment {
     public void goToNewFragment() {
         addAdminPeopleFragmentF = new AddAdminPeopleFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameAddEditParameters, addAdminPeopleFragmentF);
+        transaction.replace(R.id.frameAddEditUserProfile, addAdminPeopleFragmentF);
         transaction.commit();
     }
 
@@ -213,7 +213,7 @@ public class AdminPeopleMainFragment extends Fragment {
 
         fragmentMain = new AddEditMainFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameAddEditParameters, fragmentMain);
+        transaction.replace(R.id.frameAddEditUserProfile, fragmentMain);
         transaction.commit();
 
     }

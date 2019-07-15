@@ -168,7 +168,7 @@ public class AddCourseFragment extends Fragment implements IFirebaseLoadDoneUniv
     public void backToMain() {
         courseMainFragmentF = new CourseMainFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameAddEditParameters, courseMainFragmentF);
+        transaction.replace(R.id.frameAddEditUserProfile, courseMainFragmentF);
         transaction.commit();
     }
 

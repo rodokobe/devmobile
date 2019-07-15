@@ -29,7 +29,7 @@ public class AddEditParametersActivity extends AppCompatActivity implements View
 
         fragmentMain = new AddEditMainFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameAddEditParameters, fragmentMain);
+        transaction.replace(R.id.frameAddEditUserProfile, fragmentMain);
         transaction.commit();
 
     }

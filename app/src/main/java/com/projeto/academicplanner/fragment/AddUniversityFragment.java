@@ -109,7 +109,7 @@ public class AddUniversityFragment extends Fragment {
     public void backToMain() {
         universityMainFragment = new UniversityMainFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameAddEditParameters, universityMainFragment);
+        transaction.replace(R.id.frameAddEditUserProfile, universityMainFragment);
         transaction.commit();
     }
 

@@ -213,7 +213,7 @@ public class CourseMainFragment extends Fragment {
     public void goToNewFragment() {
         addCourseFragmentF = new AddCourseFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameAddEditParameters, addCourseFragmentF);
+        transaction.replace(R.id.frameAddEditUserProfile, addCourseFragmentF);
         transaction.commit();
     }
 
@@ -221,7 +221,7 @@ public class CourseMainFragment extends Fragment {
 
         fragmentMain = new AddEditMainFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameAddEditParameters, fragmentMain);
+        transaction.replace(R.id.frameAddEditUserProfile, fragmentMain);
         transaction.commit();
 
     }
