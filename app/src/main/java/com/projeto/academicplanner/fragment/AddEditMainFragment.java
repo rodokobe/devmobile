@@ -1,5 +1,6 @@
 package com.projeto.academicplanner.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,15 +11,17 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.projeto.academicplanner.R;
+import com.projeto.academicplanner.activity.NavMainActivity;
 
 public class AddEditMainFragment extends Fragment {
 
-    private TextView universityCrudMain, coursesCrudMain, disciplinesCrudMain, eventsCrudMain, studentsCrudMain, adminPeopleCrudMain;
+    private TextView homeActivity, universityCrudMain, coursesCrudMain, disciplinesCrudMain, eventsTypeCrudMain, studentsCrudMain, adminPeopleCrudMain;
 
+    private NavMainActivity navMain;
     private UniversityMainFragment universityMain;
     private CourseMainFragment courseMain;
     private DisciplineMainFragment disciplineMain;
-    private EventMainFragment eventMain;
+    private EventTypeMainFragment eventTypeMain;
     private StudentMainFragment studentMain;
     private AdminPeopleMainFragment adminPeopleMain;
 
@@ -33,13 +36,18 @@ public class AddEditMainFragment extends Fragment {
                              Bundle savedInstanceState) {
         final View addEditMain = inflater.inflate(R.layout.fragment_add_edit_main, container, false);
 
+        homeActivity = addEditMain.findViewById(R.id.homeActivity);
         universityCrudMain = addEditMain.findViewById(R.id.universityCrudMain);
         coursesCrudMain = addEditMain.findViewById(R.id.coursesCrudMain);
         disciplinesCrudMain = addEditMain.findViewById(R.id.disciplinesCrudMain);
-        eventsCrudMain = addEditMain.findViewById(R.id.eventsCrudMain);
+        eventsTypeCrudMain = addEditMain.findViewById(R.id.eventsTypeCrudMain);
         studentsCrudMain = addEditMain.findViewById(R.id.studentsCrudMain);
         adminPeopleCrudMain = addEditMain.findViewById(R.id.adminPeopleCrudMain);
 
+        homeActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { goToNavMain(v); }
+        });
 
         universityCrudMain.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,10 +68,10 @@ public class AddEditMainFragment extends Fragment {
             }
         });
 
-        eventsCrudMain.setOnClickListener(new View.OnClickListener() {
+        eventsTypeCrudMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToEventMain(v);
+                goToEventTypeMain(v);
             }
         });
 
@@ -78,6 +86,13 @@ public class AddEditMainFragment extends Fragment {
         });
 
         return addEditMain;
+    }
+
+    public void goToNavMain(View view) {
+
+        Intent navMain = new Intent(getContext(), NavMainActivity.class);
+        startActivity(navMain);
+
     }
 
     public void goToUniversityMain(View view) {
@@ -107,11 +122,11 @@ public class AddEditMainFragment extends Fragment {
 
     }
 
-    public void goToEventMain(View view) {
+    public void goToEventTypeMain(View view) {
 
-        eventMain = new EventMainFragment();
+        eventTypeMain = new EventTypeMainFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameAddEditUserProfile, eventMain);
+        transaction.replace(R.id.frameAddEditUserProfile, eventTypeMain);
         transaction.commit();
 
     }

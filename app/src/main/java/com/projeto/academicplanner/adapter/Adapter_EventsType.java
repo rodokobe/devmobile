@@ -11,33 +11,33 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.projeto.academicplanner.R;
-import com.projeto.academicplanner.model.Course;
+import com.projeto.academicplanner.model.EventType;
 
 import java.util.List;
 
-public class Adapter_Courses extends RecyclerView.Adapter<Adapter_Courses.MyViewHolder> {
+public class Adapter_EventsType extends RecyclerView.Adapter<Adapter_EventsType.MyViewHolder> {
 
-    private List<Course> courses;
+    private List<EventType> eventsType;
     private static ClickListener clickListener;
     private Context context;
 
-    public Adapter_Courses(List<Course> courses, Context context) {
+    public Adapter_EventsType(List<EventType> eventsType, Context context) {
 
-        this.courses = courses;
+        this.eventsType = eventsType;
         this.context = context;
 
     }
 
-    public List<Course> getCourses() {
-        return courses;
+    public List<EventType> getEventsType() {
+        return eventsType;
     }
 
     @NonNull
     @Override
-    public Adapter_Courses.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public Adapter_EventsType.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View itemList = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.lista_recycler_courses, parent, false);
+                .inflate(R.layout.lista_recycler_events_type, parent, false);
 
         MyViewHolder showList = new MyViewHolder(itemList, this);
         return showList;
@@ -46,10 +46,9 @@ public class Adapter_Courses extends RecyclerView.Adapter<Adapter_Courses.MyView
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
-        Course course = courses.get(position);
-        holder.nameUniversity1.setText(course.getUniversityName());
-        holder.nameCourse1.setText(course.getCourseName());
-        holder.acronCourse1.setText(course.getAcronymCourse());
+        EventType eventType = eventsType.get(position);
+        holder.eventTypeName.setText(eventType.getEventTypeName());
+        holder.eventTypeDescription.setText(eventType.getEventTypeDescription());
         holder.imageEdit1.setImageResource(R.drawable.ic_edit_white_24dp);
         holder.imageDelete1.setImageResource(R.drawable.ic_delete_white_24dp);
 
@@ -57,28 +56,28 @@ public class Adapter_Courses extends RecyclerView.Adapter<Adapter_Courses.MyView
 
     @Override
     public int getItemCount() {
-        return courses.size();
+        return eventsType.size();
     }
+
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView nameUniversity1;
-        TextView nameCourse1;
-        TextView acronCourse1;
+        TextView eventTypeName;
+        TextView eventTypeDescription;
         ImageView imageEdit1;
         ImageView imageDelete1;
-        Adapter_Courses adapterRef;
+        Adapter_EventsType adapterRef;
 
-        public MyViewHolder(@NonNull View itemView, Adapter_Courses ref) {
+        public MyViewHolder(@NonNull View itemView, Adapter_EventsType ref) {
             super(itemView);
 
-            nameUniversity1 = itemView.findViewById(R.id.nameUniversity);
-            nameCourse1 = itemView.findViewById(R.id.nameCourse);
-            acronCourse1 = itemView.findViewById(R.id.acronCourse);
+            eventTypeName = itemView.findViewById(R.id.nameUni);
+            eventTypeDescription = itemView.findViewById(R.id.acronUni);
             imageEdit1 = itemView.findViewById(R.id.imageEdit);
             imageDelete1 = itemView.findViewById(R.id.imageDelete);
             adapterRef = ref;
             itemView.setOnClickListener(this);
+
         }
 
         public void onClick(View v) {
@@ -90,11 +89,11 @@ public class Adapter_Courses extends RecyclerView.Adapter<Adapter_Courses.MyView
     }
 
     public interface ClickListener {
-        void onItemClick(Adapter_Courses adapter_courses, View v, int position);
+        void onItemClick(Adapter_EventsType adapter_universities, View v, int position);
     }
 
     public void setOnItemClickListener(ClickListener clickListener) {
-        Adapter_Courses.clickListener = clickListener;
+        Adapter_EventsType.clickListener = clickListener;
     }
 
 }

@@ -11,10 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.projeto.academicplanner.R;
+import com.projeto.academicplanner.model.University;
 
 import java.util.List;
-
-import com.projeto.academicplanner.model.University;
 
 public class Adapter_Universities extends RecyclerView.Adapter<Adapter_Universities.MyViewHolder> {
 
@@ -38,7 +37,7 @@ public class Adapter_Universities extends RecyclerView.Adapter<Adapter_Universit
     public Adapter_Universities.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View itemList = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.lista_recycle_universities, parent, false);
+                .inflate(R.layout.lista_recycler_universities, parent, false);
 
         MyViewHolder showList = new MyViewHolder(itemList, this);
         return showList;
