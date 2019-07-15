@@ -1,11 +1,7 @@
 package com.projeto.academicplanner.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
-import android.view.View;
 
 import androidx.core.view.GravityCompat;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -13,6 +9,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.projeto.academicplanner.R;
 
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -21,9 +18,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
+import android.widget.TextView;
 
 public class NavMainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private FirebaseAuth auth;
+
+    private String userIdLogged;
+    private TextView nameText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,14 +34,8 @@ public class NavMainActivity extends AppCompatActivity
         setContentView(R.layout.activity_nav_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -92,11 +89,16 @@ public class NavMainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_slideshow) {
 
-        } else if (id == R.id.nav_tools) {
+        } else if (id == R.id.nav_settings) {
 
-        } else if (id == R.id.nav_share) {
+            startActivity( new Intent(getApplicationContext(), AddEditParametersActivity.class) );
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_about) {
+
+        } else if (id == R.id.nav_logout) {
+
+            userLogout();
+            finish();
 
         }
 
@@ -104,5 +106,17 @@ public class NavMainActivity extends AppCompatActivity
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void initializingComponents(){
+        nameText = findViewById(R.id.navNameText);
+    }
+
+    private void userLogout(){
+        try {
+            auth.signOut();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
