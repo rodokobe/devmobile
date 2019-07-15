@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
@@ -18,7 +19,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,6 +27,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.projeto.academicplanner.R;
+import com.projeto.academicplanner.activity.UserFirebase;
+import com.projeto.academicplanner.activity.UserProfileActivity;
 import com.projeto.academicplanner.helper.ConfigFirebase;
 import com.projeto.academicplanner.model.UserProfile;
 import com.squareup.picasso.Picasso;
@@ -44,12 +46,14 @@ public class UserProfileEditFragment extends Fragment {
     private StorageReference storageReference;
     private DatabaseReference firebaseRef;
 
-    private EditText firstname, lastname, email;
+    private EditText firstname, lastname, emailText, backToUserProfile;
     private Button btnSave;
     private ImageView profile_image;
 
     private String urlImagemSelecionada;
     private String userIdLogged;
+
+    private UserProfileFragment userProfileFragment;
 
     private static final int SELECAO_GALERIA = 200;
 
@@ -65,7 +69,7 @@ public class UserProfileEditFragment extends Fragment {
         /**
          * Inflate the layout for this fragment
          */
-        View v =  inflater.inflate(R.layout.fragment_user_profile, container, false);
+        View v = inflater.inflate(R.layout.fragment_user_profile_edit, container, false);
 
 
         /**
@@ -73,6 +77,11 @@ public class UserProfileEditFragment extends Fragment {
          */
         auth = ConfigFirebase.getReferenciaAutenticacao();
         firebaseRef = ConfigFirebase.getReferenciaFirebase();
+
+        storageReference = ConfigFirebase.getReferenciaStorage();
+        userIdLogged = UserFirebase.getUserId();
+
+
         userIdLogged = ConfigFirebase.getUserId();
 
 
@@ -80,8 +89,8 @@ public class UserProfileEditFragment extends Fragment {
          * Initializing components from activity
          */
         initializingComponents(v);
-        email.setText(auth.getCurrentUser().getEmail());
-        email.setEnabled(false);
+        emailText.setText(auth.getCurrentUser().getEmail());
+        emailText.setEnabled(false);
 
 
         /**
@@ -101,6 +110,20 @@ public class UserProfileEditFragment extends Fragment {
          * Recovering user profile data
          */
         userDataRecovery();
+
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                validateAndSave(v);
+            }
+        });
+
+        backToUserProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showUserProfileFragment();
+            }
+        });
 
 
         return v;
@@ -140,7 +163,7 @@ public class UserProfileEditFragment extends Fragment {
         });
     }
 
-    public void validateUserData(){
+    public void validateAndSave(View view){
 
         String thisFirstname = firstname.getText().toString();
         String thisLastname = lastname.getText().toString();
@@ -216,25 +239,13 @@ public class UserProfileEditFragment extends Fragment {
 
                     uploadTask.addOnFailureListener(exception -> {
                         toastMessageShort("Erro ao fazer upload da imagem");
-                    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    }).addOnSuccessListener(taskSnapshot -> {
 
                             imagemRef.getDownloadUrl().addOnSuccessListener(uri -> {
                                 urlImagemSelecionada = uri.toString();
                                 toastMessageShort("Sucesso ao fazer upload da imagem");
 
-
                             });
-
-                            /*addOnSuccessListener(UserProfileEditFragment.this, taskSnapshot -> {
-                        imagemRef.getDownloadUrl().addOnSuccessListener(uri -> {
-                            urlImagemSelecionada = uri.toString();
-                            toastMessageShort("Sucesso ao fazer upload da imagem");
-
-                        });*/
-
-                        }
                     });
                 }
             } catch (Exception e){
@@ -243,13 +254,21 @@ public class UserProfileEditFragment extends Fragment {
         }
     }
 
+    private void showUserProfileFragment(){
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        userProfileFragment = new UserProfileFragment();
+        transaction.replace(R.id.frameAddEditUserProfile, userProfileFragment);
+        transaction.commit();
+    }
+
     private void initializingComponents(View v){
 
         profile_image = v.findViewById(R.id.imgProfile);
-        email = v.findViewById(R.id.editTextEmail);
+        emailText = v.findViewById(R.id.editTextEmail1);
         firstname = v.findViewById(R.id.editTextFirstname);
         lastname = v.findViewById(R.id.editTextLastname);
-        btnSave = v.findViewById(R.id.btnEditProfileFragment);
+        btnSave = v.findViewById(R.id.btnSaveUserProfileFragment);
+        backToUserProfile = v.findViewById(R.id.backToUserProfile);
 
     }
 

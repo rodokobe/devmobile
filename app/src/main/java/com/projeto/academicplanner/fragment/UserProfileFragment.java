@@ -1,6 +1,7 @@
 package com.projeto.academicplanner.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -20,6 +21,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.projeto.academicplanner.R;
+import com.projeto.academicplanner.activity.NavMainActivity;
 import com.projeto.academicplanner.helper.ConfigFirebase;
 import com.projeto.academicplanner.model.UserProfile;
 import com.squareup.picasso.Picasso;
@@ -29,7 +31,7 @@ import com.squareup.picasso.Picasso;
  */
 public class UserProfileFragment extends Fragment {
 
-    private TextView txtName, txtEmail;
+    private TextView txtName, txtEmail, backToHome;
     private ImageView imgProfile;
     private Button btnEditUserProfile;
 
@@ -81,6 +83,16 @@ public class UserProfileFragment extends Fragment {
 
             showUserProfileEditFragment();
 
+        });
+
+        /**
+         * Back to home
+         */
+        backToHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), NavMainActivity.class));
+            }
         });
 
 
@@ -142,7 +154,8 @@ public class UserProfileFragment extends Fragment {
         imgProfile = v.findViewById(R.id.imgProfile);
         txtEmail = v.findViewById(R.id.txtEmail);
         txtName = v.findViewById(R.id.txtName);
-        btnEditUserProfile = v.findViewById(R.id.btnEditProfileFragment);
+        btnEditUserProfile = v.findViewById(R.id.btnGoToNextFragment);
+        backToHome = v.findViewById(R.id.backToHome);
 
     }
 

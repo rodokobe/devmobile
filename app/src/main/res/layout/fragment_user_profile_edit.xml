@@ -41,7 +41,7 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/backToAddEditMain"
+                android:id="@+id/backToUserProfile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/ic_seta_voltar_24dp"
@@ -88,25 +88,23 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="Digite seu apelido"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:textSize="18sp" />
 
             <EditText
-                android:id="@+id/editTextEmail"
+                android:id="@+id/editTextEmail1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:ems="10"
                 android:inputType="textEmailAddress"
-                android:textSize="14sp" />
+                android:textSize="18sp" />
 
             <Button
-                android:id="@+id/btnEditProfileFragment"
+                android:id="@+id/btnSaveUserProfileFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:layout_weight="1"
-                android:text="Save"
-                android:theme="@style/botaoPadraoGreen" />
+                android:text="Save" />
 
         </LinearLayout>
 

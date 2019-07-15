@@ -16,7 +16,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.projeto.academicplanner.R;
-import com.projeto.academicplanner.fragment.UserProfileFragment;
 import com.projeto.academicplanner.helper.ConfigFirebase;
 import com.projeto.academicplanner.model.UserProfile;
 import com.squareup.picasso.Picasso;
@@ -25,7 +24,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.view.Menu;
 import android.view.View;
@@ -37,7 +35,7 @@ public class NavMainActivity extends AppCompatActivity
 
     private FirebaseAuth auth;
 
-    private String userIdLoged;
+    private String userIdLogged;
     private TextView nameText;
     private String urlImagemSelecionada = "";
 
@@ -51,6 +49,8 @@ public class NavMainActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        auth = ConfigFirebase.getReferenciaAutenticacao();
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -62,7 +62,9 @@ public class NavMainActivity extends AppCompatActivity
         View headerView = navigationView.getHeaderView(0);
 
         firebaseRef = ConfigFirebase.getReferenciaFirebase();
-        userIdLoged = UserFirebase.getUserId();
+        userIdLogged = UserFirebase.getUserId();
+
+        initializingComponents();
 
         /**
          * Setting name on NavigationView
@@ -72,14 +74,14 @@ public class NavMainActivity extends AppCompatActivity
 
         DatabaseReference userProfileRef = firebaseRef
                 .child("users")
-                .child( userIdLoged );
+                .child(userIdLogged);
         userProfileRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 UserProfile userProfile = dataSnapshot.getValue(UserProfile.class);
 
-                /*String firstname = userProfile.getFirstname().toString();
-                String lastname = userProfile.getLastname().toString();
+                String firstname = userProfile.getFirstname();
+                String lastname = userProfile.getLastname();
 
                 String name = firstname + " " + lastname;
 
@@ -93,7 +95,7 @@ public class NavMainActivity extends AppCompatActivity
                     Picasso.get()
                             .load(urlImagemSelecionada)
                             .into(photoProfileNav);
-                }*/
+                }
             }
 
             @Override
@@ -107,10 +109,8 @@ public class NavMainActivity extends AppCompatActivity
          */
 
         TextView emailNav = headerView.findViewById(R.id.textViewEmail);
+        emailNav.setText(auth.getCurrentUser().getEmail());
 
-
-    //        String email = auth.getCurrentUser().getEmail();
-  //      emailNav.setText(email);
     }
 
     @Override
