@@ -99,7 +99,7 @@ public class UniversityMainFragment extends Fragment {
         recylcerUniversities.setAdapter(adapter);
         recylcerUniversities.setLayoutManager(layout);
         recylcerUniversities.setHasFixedSize(true);
-        recylcerUniversities.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayout.VERTICAL));
+        //recylcerUniversities.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayout.VERTICAL));
 
         adapter.setOnItemClickListener(new Adapter_Universities.ClickListener() {
             @Override
