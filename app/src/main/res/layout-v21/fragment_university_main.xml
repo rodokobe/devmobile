@@ -37,7 +37,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="-10dp"
-                    android:text="add/edit/remove"
+                    android:text="add/update/remove"
                     android:textColor="@color/colorBright"
                     android:textSize="14sp" />
 

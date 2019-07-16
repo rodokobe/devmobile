@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -17,30 +18,47 @@ import com.projeto.academicplanner.R;
 import com.projeto.academicplanner.helper.ConfigFirebase;
 import com.projeto.academicplanner.model.University;
 
-public class AddUniversityFragment extends Fragment {
+public class UpdateUniversityFragment extends Fragment {
 
     //general variables
     private EditText universityName, universityAcronym;
     private Button buttonUniversity;
-    private TextView backToAddEditMain;
-    private String idUserLoged;
+    private TextView backToAddEditMain, addEdit;
+    private String idUserLoged, universityUpdateId, universityUpdateName, universityUpdateAcronym;
 
     private UniversityMainFragment universityMainFragment;
 
-    public AddUniversityFragment() {
+
+    public UpdateUniversityFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        universityUpdateId = getArguments().getString("universityIdBundle");
+        universityUpdateName = getArguments().getString("universityNameBundle");
+        universityUpdateAcronym = getArguments().getString("universityAcronymBundle");
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View addUniversity = inflater.inflate(R.layout.fragment_add_university, container, false);
+        View editUniversity = inflater.inflate(R.layout.fragment_add_university, container, false);
 
         //start configurations
-        universityName = addUniversity.findViewById(R.id.universityName);
-        universityAcronym = addUniversity.findViewById(R.id.universityAcronym);
-        buttonUniversity = addUniversity.findViewById(R.id.buttonUniversity);
-        backToAddEditMain = addUniversity.findViewById(R.id.backToAddEditMain);
+        universityName = editUniversity.findViewById(R.id.universityName);
+        universityAcronym = editUniversity.findViewById(R.id.universityAcronym);
+        buttonUniversity = editUniversity.findViewById(R.id.buttonUniversity);
+        backToAddEditMain = editUniversity.findViewById(R.id.backToAddEditMain);
+        addEdit = editUniversity.findViewById(R.id.addEdit);
+
+        universityName.setText(universityUpdateName);
+        universityAcronym.setText(universityUpdateAcronym);
+        buttonUniversity.setText("UPDATE");
+        addEdit.setText("update");
 
 
         //recovery loged user ID
@@ -49,12 +67,7 @@ public class AddUniversityFragment extends Fragment {
         buttonUniversity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                String universitycSaveName = universityName.getText().toString();
-                String universitySaveAcronym = universityAcronym.getText().toString();
-
-                universityAddNew(universitycSaveName, universitySaveAcronym);
-
+                universityUpdate();
             }
 
         });
@@ -66,35 +79,21 @@ public class AddUniversityFragment extends Fragment {
             }
         });
 
-        return addUniversity;
+        return editUniversity;
     }
 
-    private void universityAddNew(String universitycSaveName, String universitySaveAcronym) {
+    private void universityUpdate() {
 
-        if (!universitycSaveName.isEmpty()) {
-            if (!universitySaveAcronym.isEmpty()) {
+        //method to update
+        University universityUpdate = new University();
 
-                University university = new University();
-                university.setIdUser(idUserLoged);
-                university.setUniversityName(universitycSaveName);
-                university.setUniversityAcronym(universitySaveAcronym);
-
-                university.save();
-
-                toastMsg("University " + university.getUniversityName() + " successfully added ");
-
-                universityName.setText("");
-                universityAcronym.setText("");
-
-                backToMain();
-
-            } else {
-                toastMsg("Enter an acronym to University");
-            }
-        } else {
-            toastMsg("Enter an University name");
-        }
-
+        universityUpdate.setIdUser(idUserLoged);
+        universityUpdate.setIdUniversity(universityUpdateId);
+        universityUpdate.setUniversityName(universityName.getText().toString());
+        universityUpdate.setUniversityAcronym(universityAcronym.getText().toString());
+        universityUpdate.update(universityUpdate);
+        toastMsg("University " + universityUpdate.getUniversityName() + " successfully update");
+        backToMain();
     }
 
     public void toastMsg(String text) {

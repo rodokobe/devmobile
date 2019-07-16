@@ -28,7 +28,7 @@ public class University {
 
     }
 
-    public void recoveryUniversities(String idUserLoged, final List<University> universities, final Adapter_Universities adapter) {
+    public void recovery(String idUserLoged, final List<University> universities, final Adapter_Universities adapter) {
 
         DatabaseReference universitiesRef = firebaseRef
                 .child("universities")
@@ -61,7 +61,7 @@ public class University {
 
     }
 
-    public void saveUniversityData() {
+    public void save() {
 
         DatabaseReference universityRef = firebaseRef
                 .child("universities")
@@ -70,7 +70,7 @@ public class University {
         universityRef.setValue(this);
     }
 
-    public void updateUniversityData(University objectToUpdate) {
+    public void update(University objectToUpdate) {
 
         DatabaseReference universityRef = firebaseRef
                 .child("universities")
@@ -80,7 +80,7 @@ public class University {
 
     }
 
-    public void deleteUniversityData() {
+    public void delete() {
 
         DatabaseReference universityRef = firebaseRef
                 .child("universities")

@@ -32,12 +32,12 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/textView15"
+                    android:id="@+id/addEdit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="-10dp"
-                    android:text="add"
+                    android:text="add new"
                     android:textColor="@color/colorBright"
                     android:textSize="14sp" />
 

@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -24,6 +23,7 @@ import com.projeto.academicplanner.R;
 import com.projeto.academicplanner.adapter.Adapter_Courses;
 import com.projeto.academicplanner.helper.ConfigFirebase;
 import com.projeto.academicplanner.model.Course;
+import com.projeto.academicplanner.model.University;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +37,7 @@ public class CourseMainFragment extends Fragment {
     private String idUserLoged;
     private List<Course> courses = new ArrayList<>();
     private AddCourseFragment addCourseFragmentF;
+    private UpdateCourseFragment updateCourseFragmentF;
     private AddEditMainFragment fragmentMain;
 
     //recycler view variables
@@ -123,55 +124,13 @@ public class CourseMainFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
 
-                        courseUpdate(objectToAction);
+                        goToUpdateFragment(objectToAction);
 
                     }
                 });
             }
         });
 
-    }
-
-    private void courseUpdate(final Course selectedToUpdate) {
-
-        final Course courseUpdate = new Course();
-
-        final AlertDialog.Builder updateDialog = new AlertDialog.Builder(getContext());
-
-        final View updateDialogView = getLayoutInflater().inflate(R.layout.dialog_model, null);
-
-        final EditText dialogUname = updateDialogView.findViewById(R.id.dialogName);
-        final EditText dialogUacron = updateDialogView.findViewById(R.id.dialogAcronym);
-        final Button dialogUbutton = updateDialogView.findViewById(R.id.buttonDialog);
-        dialogUbutton.setText("UPDATE");
-
-        dialogUname.setText(selectedToUpdate.getCourseName());
-        dialogUacron.setText(selectedToUpdate.getAcronymCourse());
-
-        updateDialog.setView(updateDialogView);
-        final AlertDialog updateDialogAlert = updateDialog.create();
-        updateDialogAlert.show();
-
-        dialogUbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                String courseDialogName = dialogUname.getText().toString();
-                String courseDialogAcronym = dialogUacron.getText().toString();
-
-                courseUpdate.setIdUser(idUserLoged);
-                courseUpdate.setIdCourse(selectedToUpdate.getIdCourse());
-                courseUpdate.setCourseName(courseDialogName);
-                courseUpdate.setAcronymCourse(courseDialogAcronym);
-                courseUpdate.setIdUniversity(selectedToUpdate.getIdUniversity());
-                courseUpdate.setUniversityName(selectedToUpdate.getUniversityName());
-                courseUpdate.updateCourseData(courseUpdate);
-                toastMsg("Course " + courseUpdate.getCourseName() + " successfully update");
-                adapter.notifyDataSetChanged();
-                updateDialogAlert.cancel();
-
-            }
-        });
     }
 
     private void courseDelete(final Course selectedToRemove) {
@@ -214,6 +173,20 @@ public class CourseMainFragment extends Fragment {
         addCourseFragmentF = new AddCourseFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frameAddEditUserProfile, addCourseFragmentF);
+        transaction.commit();
+    }
+
+    public void goToUpdateFragment(University objectToAction) {
+        updateCourseFragmentF = new UpdateCourseFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("universityIdBundle", objectToAction.getIdUniversity());
+        bundle.putString("universityNameBundle", objectToAction.getUniversityName());
+        bundle.putString("universityAcronymBundle", objectToAction.getUniversityAcronym());
+
+        updateCourseFragmentF.setArguments(bundle);
+
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frameAddEditUserProfile, updateCourseFragmentF);
         transaction.commit();
     }
 

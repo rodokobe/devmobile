@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -36,6 +35,7 @@ public class UniversityMainFragment extends Fragment {
     private String idUserLoged;
     private List<University> universities = new ArrayList<>();
     private AddUniversityFragment addUniversityFragmentF;
+    private UpdateUniversityFragment updateUniversityFragmentF;
     private AddEditMainFragment fragmentMain;
 
     //recycler view variables
@@ -70,7 +70,7 @@ public class UniversityMainFragment extends Fragment {
 
         //create object and fill recyclerViewUniversities
         University university = new University();
-        university.recoveryUniversities(idUserLoged, universities, adapter);
+        university.recovery(idUserLoged, universities, adapter);
 
         buttonUniversity.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,52 +123,13 @@ public class UniversityMainFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
 
-                        universityUpdate(objectToAction);
+                        goToUpdateFragment(objectToAction);
 
                     }
                 });
             }
         });
 
-    }
-
-    private void universityUpdate(final University selectedToUpdate) {
-
-        //method to update the selected object
-
-        final University universityUpdate = new University();
-
-        final AlertDialog.Builder updateDialog = new AlertDialog.Builder(getContext());
-        final View updateDialogView = getLayoutInflater().inflate(R.layout.dialog_model, null);
-        final EditText dialogUname = updateDialogView.findViewById(R.id.dialogName);
-        final EditText dialogUacron = updateDialogView.findViewById(R.id.dialogAcronym);
-        final Button dialogUbutton = updateDialogView.findViewById(R.id.buttonDialog);
-        dialogUbutton.setText("UPDATE");
-
-        dialogUname.setText(selectedToUpdate.getUniversityName());
-        dialogUacron.setText(selectedToUpdate.getUniversityAcronym());
-
-        updateDialog.setView(updateDialogView);
-        final AlertDialog updateDialogAlert = updateDialog.create();
-        updateDialogAlert.show();
-
-        dialogUbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                String universityDialogName = dialogUname.getText().toString();
-                String universityDialogAcronym = dialogUacron.getText().toString();
-
-                universityUpdate.setIdUser(idUserLoged);
-                universityUpdate.setIdUniversity(selectedToUpdate.getIdUniversity());
-                universityUpdate.setUniversityName(universityDialogName);
-                universityUpdate.setUniversityAcronym(universityDialogAcronym);
-                universityUpdate.updateUniversityData(universityUpdate);
-                toastMsg("University " + universityUpdate.getUniversityName() + " successfully update");
-                adapter.notifyDataSetChanged();
-                updateDialogAlert.cancel();
-            }
-        });
     }
 
     private void universityDelete(final University selectedToRemove) {
@@ -189,7 +150,7 @@ public class UniversityMainFragment extends Fragment {
             public void onClick(View v) {
 
                 //method to remove the selected object
-                selectedToRemove.deleteUniversityData();
+                selectedToRemove.delete();
                 toastMsg("University " + selectedToRemove.getUniversityName() + " has been removed!");
                 adapter.notifyDataSetChanged();
                 deleteDialogAlert.cancel();
@@ -211,6 +172,20 @@ public class UniversityMainFragment extends Fragment {
         addUniversityFragmentF = new AddUniversityFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frameAddEditUserProfile, addUniversityFragmentF);
+        transaction.commit();
+    }
+
+    public void goToUpdateFragment(University objectToAction) {
+        updateUniversityFragmentF = new UpdateUniversityFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("universityIdBundle", objectToAction.getIdUniversity());
+        bundle.putString("universityNameBundle", objectToAction.getUniversityName());
+        bundle.putString("universityAcronymBundle", objectToAction.getUniversityAcronym());
+
+        updateUniversityFragmentF.setArguments(bundle);
+
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frameAddEditUserProfile, updateUniversityFragmentF);
         transaction.commit();
     }
 
