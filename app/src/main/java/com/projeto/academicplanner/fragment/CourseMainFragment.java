@@ -153,6 +153,13 @@ public class CourseMainFragment extends Fragment {
                 toastMsg("Course " + selectedToRemove.getCourseName() + " has been removed!");
                 adapter.notifyDataSetChanged();
                 deleteDialogAlert.cancel();
+
+                //call methods
+                adapterConstructor();
+
+                //create object and fill recyclerViewCourses
+                Course course = new Course();
+                course.recovery(idUserLoged, courses, adapter);
             }
         });
 
