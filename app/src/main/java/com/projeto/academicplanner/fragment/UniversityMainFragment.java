@@ -154,6 +154,13 @@ public class UniversityMainFragment extends Fragment {
                 toastMsg("University " + selectedToRemove.getUniversityName() + " has been removed!");
                 adapter.notifyDataSetChanged();
                 deleteDialogAlert.cancel();
+
+                //call methods
+                adapterConstructor();
+
+                //create object and fill recyclerViewUniversities
+                University university = new University();
+                university.recovery(idUserLoged, universities, adapter);
             }
         });
 
