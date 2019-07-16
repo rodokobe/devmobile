@@ -100,7 +100,7 @@ public class AddDisciplineFragment extends Fragment implements IFirebaseLoadDone
                 for (DataSnapshot coursesSnapShot : dataSnapshot.getChildren()) {
 
                     courses.add(coursesSnapShot.getValue(Course.class));
-                    iFirebaseLoadDoneCourse.onFireBaseLoadSuccess(courses);
+                    iFirebaseLoadDoneCourse.onFireBaseLoadCourseSuccess(courses);
                 }
 
             }
@@ -108,7 +108,7 @@ public class AddDisciplineFragment extends Fragment implements IFirebaseLoadDone
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                iFirebaseLoadDoneCourse.onFireBaseLoadFailed(databaseError.getMessage());
+                iFirebaseLoadDoneCourse.onFireBaseLoadCourseFailed(databaseError.getMessage());
             }
         });
 
@@ -126,7 +126,7 @@ public class AddDisciplineFragment extends Fragment implements IFirebaseLoadDone
 
 
     @Override
-    public void onFireBaseLoadSuccess(final List<Course> coursesList) {
+    public void onFireBaseLoadCourseSuccess(final List<Course> coursesList) {
 
         //universitySpinner = universitiesList;
         final List<String> university_name = new ArrayList<>();
@@ -157,7 +157,7 @@ public class AddDisciplineFragment extends Fragment implements IFirebaseLoadDone
     }
 
     @Override
-    public void onFireBaseLoadFailed(String message) {
+    public void onFireBaseLoadCourseFailed(String message) {
     }
 
 

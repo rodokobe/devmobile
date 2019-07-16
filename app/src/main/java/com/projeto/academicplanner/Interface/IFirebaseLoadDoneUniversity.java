@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface IFirebaseLoadDoneUniversity {
 
-    void onFireBaseLoadSuccess(List<University> universitiesList);
-    void onFireBaseLoadFailed(String message);
+    void onFireBaseLoadUniversitySuccess(List<University> universitiesList);
+    void onFireBaseLoadUniversityFailed(String message);
 }

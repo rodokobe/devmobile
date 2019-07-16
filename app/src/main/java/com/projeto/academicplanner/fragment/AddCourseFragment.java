@@ -93,21 +93,21 @@ public class AddCourseFragment extends Fragment implements IFirebaseLoadDoneUniv
                 for (DataSnapshot universitiesSnapShot : dataSnapshot.getChildren()) {
 
                     universities.add(universitiesSnapShot.getValue(University.class));
-                    iFirebaseLoadDoneUniversity.onFireBaseLoadSuccess(universities);
+                    iFirebaseLoadDoneUniversity.onFireBaseLoadUniversitySuccess(universities);
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                iFirebaseLoadDoneUniversity.onFireBaseLoadFailed(databaseError.getMessage());
+                iFirebaseLoadDoneUniversity.onFireBaseLoadUniversityFailed(databaseError.getMessage());
             }
         });
         return addCourse;
     }
 
     @Override
-    public void onFireBaseLoadSuccess(final List<University> universitiesList) {
+    public void onFireBaseLoadUniversitySuccess(final List<University> universitiesList) {
 
         //universitySpinner = universitiesList;
         final List<String> university_name = new ArrayList<>();
@@ -135,7 +135,7 @@ public class AddCourseFragment extends Fragment implements IFirebaseLoadDoneUniv
     }
 
     @Override
-    public void onFireBaseLoadFailed(String message) {
+    public void onFireBaseLoadUniversityFailed(String message) {
     }
 
     private void courseAddNew(String courseDialogName, String courseDialogAcronym, String idUniversitySelected, String nameUniversitySelected) {

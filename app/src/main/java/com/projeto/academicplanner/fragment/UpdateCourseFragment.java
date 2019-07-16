@@ -109,21 +109,21 @@ public class UpdateCourseFragment extends Fragment implements IFirebaseLoadDoneU
                 for (DataSnapshot universitiesSnapShot : dataSnapshot.getChildren()) {
 
                     universities.add(universitiesSnapShot.getValue(University.class));
-                    iFirebaseLoadDoneUniversity.onFireBaseLoadSuccess(universities);
+                    iFirebaseLoadDoneUniversity.onFireBaseLoadUniversitySuccess(universities);
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                iFirebaseLoadDoneUniversity.onFireBaseLoadFailed(databaseError.getMessage());
+                iFirebaseLoadDoneUniversity.onFireBaseLoadUniversityFailed(databaseError.getMessage());
             }
         });
         return updateCourse;
     }
 
     @Override
-    public void onFireBaseLoadSuccess(final List<University> universitiesList) {
+    public void onFireBaseLoadUniversitySuccess(final List<University> universitiesList) {
 
         //universitySpinner = universitiesList;
         final List<String> university_name = new ArrayList<>();
@@ -154,7 +154,7 @@ public class UpdateCourseFragment extends Fragment implements IFirebaseLoadDoneU
     }
 
     @Override
-    public void onFireBaseLoadFailed(String message) {
+    public void onFireBaseLoadUniversityFailed(String message) {
     }
 
     private void courseUpdate() {
