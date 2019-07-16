@@ -50,7 +50,7 @@
                     android:id="@+id/cadastroid"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="App Preferences"
+                    android:text="@string/action_settings"
                     android:textSize="26sp"
                     android:typeface="sans" />
 

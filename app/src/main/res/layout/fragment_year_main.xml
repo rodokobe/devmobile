@@ -26,7 +26,7 @@
                     android:id="@+id/textView6"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="University"
+                    android:text="Year"
                     android:textColor="@color/colorGray"
                     android:textSize="40sp"
                     android:textStyle="bold" />
@@ -68,11 +68,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:gravity="start"
-                android:text="Universities List"
+                android:text="Years List"
                 android:textSize="14sp" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recylcerUniversities"
+                android:id="@+id/recyclerYears"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="6dp" />
@@ -87,7 +87,7 @@
             android:orientation="vertical">
 
             <Button
-                android:id="@+id/buttonUniversity"
+                android:id="@+id/buttonYears"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"

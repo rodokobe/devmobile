@@ -12,7 +12,7 @@
     <style name="botaoPadraoBrown" parent="Theme.AppCompat.Light">
 
         <item name="colorControlHighlight">@color/colorAccent</item>
-        <item name="colorButtonNormal">@color/colorButtonBrown</item>
+        <item name="colorButtonNormal">@color/colorButtonNewBrown</item>
         <item name="android:textColor">@color/colorBright</item>
 
     </style>

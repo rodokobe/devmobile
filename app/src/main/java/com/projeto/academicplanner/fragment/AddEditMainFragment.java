@@ -92,6 +92,13 @@ public class AddEditMainFragment extends Fragment {
             public void onClick(View v) { goToAdminPeopleMain(v);}
         });
 
+        yearCrudMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToYearMain(v);
+            }
+        });
+
         return addEditMain;
     }
 
@@ -99,6 +106,15 @@ public class AddEditMainFragment extends Fragment {
 
         Intent navMain = new Intent(getContext(), NavMainActivity.class);
         startActivity(navMain);
+
+    }
+
+    public void goToYearMain(View view) {
+
+        yearMain = new YearMainFragment();
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frameAddEditUserProfile, yearMain);
+        transaction.commit();
 
     }
 
