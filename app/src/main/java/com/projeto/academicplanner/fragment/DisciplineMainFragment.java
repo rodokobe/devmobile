@@ -71,7 +71,7 @@ public class DisciplineMainFragment extends Fragment {
 
         //create object and fill recyclerViewCourses
         Discipline discipline = new Discipline();
-        discipline.recoveryDisciplines(idUserLoged, disciplines, adapter);
+        discipline.recovery(idUserLoged, disciplines, adapter);
 
         buttonDisciplines.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -171,7 +171,7 @@ public class DisciplineMainFragment extends Fragment {
                 disciplineUpdate.setIdCourse(selectedToUpdate.getIdCourse());
                 disciplineUpdate.setCourseName(selectedToUpdate.getCourseName());
 
-                disciplineUpdate.updateCourseData(disciplineUpdate);
+                disciplineUpdate.update(disciplineUpdate);
                 toastMsg("Discipline " + disciplineUpdate.getDisciplineName() + " successfully update");
                 adapter.notifyDataSetChanged();
                 updateDialogAlert.cancel();
@@ -198,7 +198,7 @@ public class DisciplineMainFragment extends Fragment {
             public void onClick(View v) {
 
                 //method to remove the selected object
-                selectedToRemove.deleteDisciplineData();
+                selectedToRemove.delete();
                 toastMsg("Discipline " + selectedToRemove.getDisciplineName() + " has been removed!");
                 adapter.notifyDataSetChanged();
                 deleteDialogAlert.cancel();

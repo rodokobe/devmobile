@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -34,10 +35,13 @@ import java.util.List;
 public class UpdateCourseFragment extends Fragment implements IFirebaseLoadDoneUniversity {
 
     private EditText courseName, courseAcronym;
-    private TextView backToAddEditMain;
+    private TextView backToAddEditMain, addEdit;
     private SearchableSpinner spinnerUniversity;
     private Button buttonCourse;
     private String idUserLoged, idUniversitySelected, nameUniversitySelected;
+    private Course courseToUpdate;
+    private Integer cont = 0;
+    private Integer positionToSelect = 0;
 
     private DatabaseReference firebaseRefUniversity;
     private IFirebaseLoadDoneUniversity iFirebaseLoadDoneUniversity;
@@ -45,6 +49,14 @@ public class UpdateCourseFragment extends Fragment implements IFirebaseLoadDoneU
 
     public UpdateCourseFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        courseToUpdate = (Course) getArguments().getSerializable("CourseToUpdate");
+
     }
 
     @Override
@@ -58,6 +70,14 @@ public class UpdateCourseFragment extends Fragment implements IFirebaseLoadDoneU
         courseAcronym = updateCourse.findViewById(R.id.courseAcronym);
         spinnerUniversity = updateCourse.findViewById(R.id.spinnerUniversity);
         buttonCourse = updateCourse.findViewById(R.id.buttonCourse);
+        addEdit = updateCourse.findViewById(R.id.addEdit);
+
+        courseName.setText(courseToUpdate.getCourseName());
+        courseAcronym.setText(courseToUpdate.getAcronymCourse());
+
+        buttonCourse.setText("Update");
+        addEdit.setText("update");
+
 
         idUserLoged = ConfigFirebase.getUserId();
 
@@ -107,13 +127,16 @@ public class UpdateCourseFragment extends Fragment implements IFirebaseLoadDoneU
 
         //universitySpinner = universitiesList;
         final List<String> university_name = new ArrayList<>();
-        for (University university : universitiesList)
 
+        for (University university : universitiesList)
             university_name.add(university.getUniversityName());
+
 
         //Create adapter
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, university_name);
         spinnerUniversity.setAdapter(adapter);
+
+        spinnerUniversity.setSelection(positionToSelect);
 
         spinnerUniversity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -139,13 +162,13 @@ public class UpdateCourseFragment extends Fragment implements IFirebaseLoadDoneU
         Course courseUpdate = new Course();
 
         courseUpdate.setIdUser(idUserLoged);
-        //courseUpdate.setIdCourse(selectedToUpdate.getIdCourse());
-        //courseUpdate.setCourseName(courseDialogName);
-        //courseUpdate.setAcronymCourse(courseDialogAcronym);
-        //courseUpdate.setIdUniversity(selectedToUpdate.getIdUniversity());
-        //courseUpdate.setUniversityName(selectedToUpdate.getUniversityName());
-        courseUpdate.updateCourseData(courseUpdate);
-        toastMsg("Course " + courseUpdate.getCourseName() + " successfully update");
+        courseUpdate.setIdCourse(courseToUpdate.getIdCourse());
+        courseUpdate.setCourseName(courseName.getText().toString());
+        courseUpdate.setAcronymCourse(courseAcronym.getText().toString());
+        courseUpdate.setIdUniversity(idUniversitySelected);
+        courseUpdate.setUniversityName(nameUniversitySelected);
+        courseUpdate.update(courseUpdate);
+        toastMsg("Course " + courseUpdate.getCourseName() + " updated");
         backToMain();
 
     }

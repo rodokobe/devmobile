@@ -9,10 +9,11 @@ import com.google.firebase.database.ValueEventListener;
 import com.projeto.academicplanner.adapter.Adapter_Courses;
 import com.projeto.academicplanner.helper.ConfigFirebase;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
-public class Course extends University{
+public class Course extends University implements Serializable {
 
     private String idUser;
     private String idCourse;
@@ -28,7 +29,7 @@ public class Course extends University{
 
     }
 
-    public void saveCourseData() {
+    public void save() {
 
         DatabaseReference courseRef = firebaseRef
                 .child("courses")
@@ -38,7 +39,7 @@ public class Course extends University{
 
     }
 
-    public void updateCourseData(Course objectToUpdate) {
+    public void update(Course objectToUpdate) {
 
         DatabaseReference courseRef = firebaseRef
                 .child("courses")
@@ -48,7 +49,7 @@ public class Course extends University{
 
     }
 
-    public void deleteCourseData() {
+    public void delete() {
 
         DatabaseReference courseRef = firebaseRef
                 .child("courses")
@@ -57,7 +58,7 @@ public class Course extends University{
         courseRef.removeValue();
     }
 
-    public void recoveryCourses(String idUserLoged, final List<Course> courses, final Adapter_Courses adapter) {
+    public void recovery(String idUserLoged, final List<Course> courses, final Adapter_Courses adapter) {
 
         DatabaseReference courseRef = firebaseRef
                 .child("courses")

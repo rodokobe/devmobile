@@ -178,7 +178,7 @@ public class AddDisciplineFragment extends Fragment implements IFirebaseLoadDone
                 discipline.setIdCourse(idCourseSelected);
                 discipline.setCourseName(nameCourseSelected);
 
-                discipline.saveDisciplineData();
+                discipline.save();
 
                 toastMsg("Discipline " + disciplineSaveName + " added to " + nameCourseSelected + " course!");
                 backToMain();

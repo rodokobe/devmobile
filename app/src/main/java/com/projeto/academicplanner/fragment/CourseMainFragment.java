@@ -23,13 +23,11 @@ import com.projeto.academicplanner.R;
 import com.projeto.academicplanner.adapter.Adapter_Courses;
 import com.projeto.academicplanner.helper.ConfigFirebase;
 import com.projeto.academicplanner.model.Course;
-import com.projeto.academicplanner.model.University;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CourseMainFragment extends Fragment {
-
 
     //general variables
     private Button buttonCourses;
@@ -72,7 +70,7 @@ public class CourseMainFragment extends Fragment {
 
         //create object and fill recyclerViewCourses
         Course course = new Course();
-        course.recoveryCourses(idUserLoged, courses, adapter);
+        course.recovery(idUserLoged, courses, adapter);
 
         buttonCourses.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,7 +149,7 @@ public class CourseMainFragment extends Fragment {
             public void onClick(View v) {
 
                 //method to remove the selected object
-                selectedToRemove.deleteCourseData();
+                selectedToRemove.delete();
                 toastMsg("Course " + selectedToRemove.getCourseName() + " has been removed!");
                 adapter.notifyDataSetChanged();
                 deleteDialogAlert.cancel();
@@ -176,12 +174,10 @@ public class CourseMainFragment extends Fragment {
         transaction.commit();
     }
 
-    public void goToUpdateFragment(University objectToAction) {
+    public void goToUpdateFragment(Course objectToAction) {
         updateCourseFragmentF = new UpdateCourseFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("universityIdBundle", objectToAction.getIdUniversity());
-        bundle.putString("universityNameBundle", objectToAction.getUniversityName());
-        bundle.putString("universityAcronymBundle", objectToAction.getUniversityAcronym());
+        bundle.putSerializable("CourseToUpdate", objectToAction);
 
         updateCourseFragmentF.setArguments(bundle);
 

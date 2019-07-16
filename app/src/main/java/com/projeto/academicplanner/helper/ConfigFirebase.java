@@ -17,6 +17,7 @@ public class ConfigFirebase {
         if (referenciaFirebase == null) {
             referenciaFirebase = FirebaseDatabase.getInstance().getReference();
         }
+
         return referenciaFirebase;
     }
 
@@ -39,12 +40,6 @@ public class ConfigFirebase {
     public static String getUserId(){
 
         return referenciaAutenticacao.getCurrentUser().getUid();
-
-    }
-
-    public static String getUniversityId() {
-
-        return referenciaFirebase.child(getUniversityId()).getKey();
 
     }
 

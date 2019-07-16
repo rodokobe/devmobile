@@ -65,6 +65,7 @@ public class AddCourseFragment extends Fragment implements IFirebaseLoadDoneUniv
 
         iFirebaseLoadDoneUniversity = this;
 
+
         buttonCourse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -149,7 +150,7 @@ public class AddCourseFragment extends Fragment implements IFirebaseLoadDoneUniv
                 course.setIdUniversity(idUniversitySelected);
                 course.setUniversityName(nameUniversitySelected);
 
-                course.saveCourseData();
+                course.save();
 
                 courseName.setText("");
                 courseAcronym.setText("");

@@ -35,7 +35,7 @@ public class Discipline extends Course {
 
     }
 
-    public void saveDisciplineData() {
+    public void save() {
 
         DatabaseReference disciplineRef = firebaseRef
                 .child("disciplines")
@@ -45,7 +45,7 @@ public class Discipline extends Course {
 
     }
 
-    public void updateDisciplineData(Discipline objectToUpdate) {
+    public void update(Discipline objectToUpdate) {
 
         DatabaseReference disciplineRef = firebaseRef
                 .child("disciplines")
@@ -55,7 +55,7 @@ public class Discipline extends Course {
 
     }
 
-    public void deleteDisciplineData() {
+    public void delete() {
 
         DatabaseReference disciplineRef = firebaseRef
                 .child("disciplines")
@@ -64,7 +64,7 @@ public class Discipline extends Course {
         disciplineRef.removeValue();
     }
 
-    public void recoveryDisciplines(String idUserLoged, final List<Discipline> disciplines, final Adapter_Disciplines adapter) {
+    public void recovery(String idUserLoged, final List<Discipline> disciplines, final Adapter_Disciplines adapter) {
 
         DatabaseReference disciplineRef = firebaseRef
                 .child("disciplines")
