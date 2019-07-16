@@ -15,9 +15,10 @@ import com.projeto.academicplanner.activity.NavMainActivity;
 
 public class AddEditMainFragment extends Fragment {
 
-    private TextView homeActivity, universityCrudMain, coursesCrudMain, disciplinesCrudMain, eventsTypeCrudMain, studentsCrudMain, adminPeopleCrudMain;
+    private TextView homeActivity, yearCrudMain, universityCrudMain, coursesCrudMain, disciplinesCrudMain, eventsTypeCrudMain, studentsCrudMain, adminPeopleCrudMain;
 
     private NavMainActivity navMain;
+    private YearMainFragment yearMain;
     private UniversityMainFragment universityMain;
     private CourseMainFragment courseMain;
     private DisciplineMainFragment disciplineMain;
@@ -37,6 +38,7 @@ public class AddEditMainFragment extends Fragment {
         final View addEditMain = inflater.inflate(R.layout.fragment_add_edit_main, container, false);
 
         homeActivity = addEditMain.findViewById(R.id.homeActivity);
+        yearCrudMain = addEditMain.findViewById(R.id.yearCrudMain);
         universityCrudMain = addEditMain.findViewById(R.id.universityCrudMain);
         coursesCrudMain = addEditMain.findViewById(R.id.coursesCrudMain);
         disciplinesCrudMain = addEditMain.findViewById(R.id.disciplinesCrudMain);
@@ -47,6 +49,11 @@ public class AddEditMainFragment extends Fragment {
         homeActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) { goToNavMain(v); }
+        });
+
+        universityCrudMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { goToUniversityMain(v); }
         });
 
         universityCrudMain.setOnClickListener(new View.OnClickListener() {

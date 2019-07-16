@@ -32,6 +32,24 @@
             android:textSize="18sp" />
 
         <View
+            android:id="@+id/divider15"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider"
+            android:padding="5dp" />
+
+        <TextView
+            android:id="@+id/yearCrudMain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_crud_year"
+            android:gravity="center|start"
+            android:padding="10dp"
+            android:text="  Year"
+            android:textColor="@color/colorBright"
+            android:textSize="18sp" />
+
+        <View
             android:id="@+id/divider14"
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -81,7 +99,7 @@
             android:drawableLeft="@drawable/ic_crud_disciplines"
             android:gravity="center|start"
             android:padding="10dp"
-            android:text="  Disciplines/Years"
+            android:text="  Disciplines"
             android:textColor="@color/colorBright"
             android:textSize="18sp" />
 
