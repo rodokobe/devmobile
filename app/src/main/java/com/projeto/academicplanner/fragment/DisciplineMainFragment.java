@@ -202,6 +202,13 @@ public class DisciplineMainFragment extends Fragment {
                 toastMsg("Discipline " + selectedToRemove.getDisciplineName() + " has been removed!");
                 adapter.notifyDataSetChanged();
                 deleteDialogAlert.cancel();
+
+                //call methods
+                adapterConstructor();
+
+                //create object and fill recyclerViewCourses
+                Discipline discipline = new Discipline();
+                discipline.recovery(idUserLoged, disciplines, adapter);
             }
         });
 
