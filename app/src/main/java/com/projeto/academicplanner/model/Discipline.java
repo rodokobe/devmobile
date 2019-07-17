@@ -20,7 +20,8 @@ public class Discipline extends Course {
     private String idDiscipline;
     private String disciplineName;
     private String acronymDiscipline;
-    private String disciplineYear;
+    private String disciplineYearId;
+    private String disciplineYearName;
     private String disciplineSemester;
     private String universityName;
     private String courseName;
@@ -142,11 +143,16 @@ public class Discipline extends Course {
 
     public void setAcronymDiscipline(String acronymDiscipline) { this.acronymDiscipline = acronymDiscipline; }
 
-    public String getDisciplineYear() { return disciplineYear; }
+    public String getDisciplineYearId() { return disciplineYearId; }
 
-    public void setDisciplineYear(String disciplineYear) { this.disciplineYear = disciplineYear; }
+    public void setDisciplineYearId(String disciplineYearId) { this.disciplineYearId = disciplineYearId; }
+
+    public String getDisciplineYearName() { return disciplineYearName; }
+
+    public void setDisciplineYearName(String disciplineYearName) { this.disciplineYearName = disciplineYearName; }
 
     public String getDisciplineSemester() { return disciplineSemester; }
 
     public void setDisciplineSemester(String disciplineSemester) { this.disciplineSemester = disciplineSemester; }
+
 }

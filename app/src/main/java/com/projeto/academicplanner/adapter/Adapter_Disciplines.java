@@ -11,10 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.projeto.academicplanner.R;
+import com.projeto.academicplanner.model.Discipline;
 
 import java.util.List;
-
-import com.projeto.academicplanner.model.Discipline;
 
 public class Adapter_Disciplines extends RecyclerView.Adapter<Adapter_Disciplines.MyViewHolder> {
 
@@ -50,7 +49,7 @@ public class Adapter_Disciplines extends RecyclerView.Adapter<Adapter_Discipline
         Discipline discipline = disciplines.get(position);
         holder.nameDiscipline1.setText(discipline.getDisciplineName());
         holder.acronDiscipline1.setText(discipline.getAcronymDiscipline());
-        holder.disciplineYear1.setText(discipline.getDisciplineYear());
+        holder.disciplineYear1.setText(discipline.getDisciplineYearName());
         holder.disciplineSemester1.setText(discipline.getDisciplineSemester());
         holder.nameUniversity1.setText(discipline.getUniversityName());
         holder.nameCourse1.setText(discipline.getCourseName());

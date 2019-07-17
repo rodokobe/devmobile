@@ -183,10 +183,10 @@ public class CourseMainFragment extends Fragment {
 
     public void goToUpdateFragment(Course objectToAction) {
         updateCourseFragmentF = new UpdateCourseFragment();
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("CourseToUpdate", objectToAction);
+        Bundle dataToUpdate = new Bundle();
+        dataToUpdate.putSerializable("CourseToUpdate", objectToAction);
 
-        updateCourseFragmentF.setArguments(bundle);
+        updateCourseFragmentF.setArguments(dataToUpdate);
 
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frameAddEditUserProfile, updateCourseFragmentF);

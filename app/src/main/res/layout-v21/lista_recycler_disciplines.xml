@@ -50,7 +50,7 @@
                     android:id="@+id/textView33"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="1.1"
                     android:text="Acronym"
                     android:textColor="@color/colorBright"
                     android:textSize="10sp"
@@ -60,7 +60,7 @@
                     android:id="@+id/acronDiscipline"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1.08"
+                    android:layout_weight="1.2"
                     android:text="acron"
                     android:textColor="@color/colorBright"
                     android:textSize="12sp" />
@@ -71,7 +71,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1.1"
                     android:text="Year: "
-                    android:textAlignment="viewStart"
+                    android:textAlignment="center"
                     android:textColor="@color/colorBright"
                     android:textSize="10sp"
                     android:textStyle="bold" />
@@ -80,8 +80,8 @@
                     android:id="@+id/disciplineYear"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1.1"
-                    android:text="2019"
+                    android:layout_weight="1"
+                    android:text="2019-2020"
                     android:textAlignment="viewStart"
                     android:textColor="@color/colorBright"
                     android:textSize="12sp" />
@@ -90,7 +90,7 @@
                     android:id="@+id/textView29"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="1.1"
                     android:text="Semester: "
                     android:textAlignment="viewStart"
                     android:textColor="@color/colorBright"
@@ -101,8 +101,8 @@
                     android:id="@+id/disciplineSemester"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="1/2019"
+                    android:layout_weight="1.2"
+                    android:text="1"
                     android:textColor="@color/colorBright"
                     android:textSize="12sp" />
 
