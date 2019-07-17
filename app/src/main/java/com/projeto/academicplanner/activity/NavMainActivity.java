@@ -1,12 +1,16 @@
 package com.projeto.academicplanner.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.core.view.GravityCompat;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 
+import android.text.format.DateFormat;
+import android.util.Log;
+import java.util.Random;
 import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
@@ -29,6 +33,17 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
+import devs.mulham.horizontalcalendar.HorizontalCalendar;
+import devs.mulham.horizontalcalendar.HorizontalCalendarView;
+import devs.mulham.horizontalcalendar.model.CalendarEvent;
+import devs.mulham.horizontalcalendar.utils.CalendarEventsPredicate;
+import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener;
 
 public class NavMainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -37,6 +52,8 @@ public class NavMainActivity extends AppCompatActivity
 
     private String userIdLogged;
     private TextView nameText;
+    private HorizontalCalendar horizontalCalendar;
+
     private String urlImagemSelecionada = "";
 
     private DatabaseReference firebaseRef;
@@ -59,14 +76,70 @@ public class NavMainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-        navigationView.setNavigationItemSelectedListener(this);
-
-        View headerView = navigationView.getHeaderView(0);
 
         firebaseRef = ConfigFirebase.getReferenciaFirebase();
         userIdLogged = UserFirebase.getUserId();
 
         initializingComponents();
+
+        /* starts before 1 month from now */
+        Calendar startDate = Calendar.getInstance();
+        startDate.add(Calendar.MONTH, -12);
+
+        /* ends after 1 month from now */
+        Calendar endDate = Calendar.getInstance();
+        endDate.add(Calendar.MONTH, 12);
+
+        // Default Date set to Today.
+        final Calendar defaultSelectedDate = Calendar.getInstance();
+
+        horizontalCalendar = new HorizontalCalendar.Builder(this, R.id.calendarView)
+                .range(startDate, endDate)
+                .datesNumberOnScreen(5)
+                .configure()
+                .formatTopText("MMM")
+                .formatMiddleText("dd")
+                .formatBottomText("EEE")
+                .showTopText(true)
+                .showBottomText(true)
+                .textColor(Color.LTGRAY, Color.WHITE)
+                .colorTextMiddle(Color.LTGRAY, Color.parseColor("#ffd54f"))
+                .end()
+                .defaultSelectedDate(defaultSelectedDate)
+                .addEvents(new CalendarEventsPredicate() {
+
+                    Random rnd = new Random();
+
+                    @Override
+                    public List<CalendarEvent> events(Calendar date) {
+                        List<CalendarEvent> events = new ArrayList<>();
+                        int count = rnd.nextInt(6);
+
+                        /*for (int i = 0; i <= count; i++) {
+                            events.add(new CalendarEvent(Color.rgb(rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256)), "event"));
+                        }*/
+
+                        events.add(new CalendarEvent(Color.rgb( 255, 255, 0), "event"));
+
+                        return events;
+                    }
+                })
+                .build();
+
+        Log.i("Default Date", DateFormat.format("EEE, MMM d, yyyy", defaultSelectedDate).toString());
+
+        horizontalCalendar.setCalendarListener(new HorizontalCalendarListener() {
+            @Override
+            public void onDateSelected(Calendar date, int position) {
+                String selectedDateStr = DateFormat.format("EEE, MMM d, yyyy", date).toString();
+                Toast.makeText(NavMainActivity.this, selectedDateStr + " selected!", Toast.LENGTH_SHORT).show();
+                Log.i("onDateSelected", selectedDateStr + " - Position = " + position);
+            }
+        });
+
+        navigationView.setNavigationItemSelectedListener(this);
+
+        View headerView = navigationView.getHeaderView(0);
 
         /**
          * Setting name on NavigationView
@@ -104,7 +177,27 @@ public class NavMainActivity extends AppCompatActivity
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
+
         });
+
+        horizontalCalendar.setCalendarListener(new HorizontalCalendarListener() {
+            @Override
+            public void onDateSelected(Calendar date, int position) {
+
+            }
+
+            @Override
+            public void onCalendarScroll(HorizontalCalendarView calendarView,
+                                         int dx, int dy) {
+
+            }
+
+            @Override
+            public boolean onDateLongClicked(Calendar date, int position) {
+                return true;
+            }
+        });
+
 
         /**
          * Setting email on NavigationView
@@ -114,6 +207,8 @@ public class NavMainActivity extends AppCompatActivity
         emailNav.setText(auth.getCurrentUser().getEmail());
 
     }
+
+
 
     @Override
     public void onBackPressed() {
@@ -179,13 +274,9 @@ public class NavMainActivity extends AppCompatActivity
     }
 
 
-
     private void initializingComponents(){
-
         nameText = findViewById(R.id.navNameText);
     }
-
-
 
     private void userLogout(){
         try {
