@@ -8,6 +8,14 @@
     tools:context=".activity.NavMainActivity"
     tools:showIn="@layout/app_bar_nav_main">
 
+    <CalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="437dp"
+        android:layout_height="303dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/txtCards"
         android:layout_width="wrap_content"

@@ -114,8 +114,9 @@ public class AddYearFragment extends Fragment implements AdapterView.OnItemSelec
 
         ArrayList<String> years = new ArrayList<String>();
         int thisYear = Calendar.getInstance().get(Calendar.YEAR);
+        int fromYear = thisYear - 2;
 
-        for (int i = thisYear; i <= (thisYear + 5); i++) {
+        for (int i = fromYear; i <= (thisYear + 3); i++) {
             String yearOne = Integer.toString(i);
             String yearTwo = Integer.toString(i + 1);
             String AnoLetivo = yearOne + "-" + yearTwo;

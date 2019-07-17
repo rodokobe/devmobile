@@ -49,6 +49,8 @@ public class NavMainActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        getSupportActionBar().setTitle("Next Events");
+
         auth = ConfigFirebase.getReferenciaAutenticacao();
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

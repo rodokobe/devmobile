@@ -105,7 +105,7 @@ public class YearMainFragment extends Fragment {
             @Override
             public void onItemClick(Adapter_Years adapter_years, View v, final int position) {
 
-                final ImageView imageEdit = v.findViewById(R.id.imageEdit);
+                //final ImageView imageEdit = v.findViewById(R.id.imageEdit);
                 final ImageView imageDelete = v.findViewById(R.id.imageDelete);
 
                 final Years objectToAction = yearsList.get(position);
@@ -116,11 +116,11 @@ public class YearMainFragment extends Fragment {
 
                 });
 
-                imageEdit.setOnClickListener(view -> {
+                /*imageEdit.setOnClickListener(view -> {
 
-                    //goToUpdateFragment(objectToAction);
+                    goToUpdateFragment(objectToAction);
 
-                });
+                });*/
             }
         });
 
