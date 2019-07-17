@@ -164,7 +164,8 @@ public class EventMainFragment extends Fragment {
                 disciplineUpdate.setIdDiscipline(selectedToUpdate.getIdDiscipline());
                 disciplineUpdate.setDisciplineName(disciplineDialogName);
                 disciplineUpdate.setAcronymDiscipline(disciplineDialogAcronym);
-                disciplineUpdate.setDisciplineYear(selectedToUpdate.getDisciplineYear());
+                disciplineUpdate.setDisciplineYearId(selectedToUpdate.getDisciplineYearId());
+                disciplineUpdate.setDisciplineYearName(selectedToUpdate.getDisciplineYearName());
                 disciplineUpdate.setDisciplineSemester(selectedToUpdate.getDisciplineSemester());
                 disciplineUpdate.setIdUniversity(selectedToUpdate.getIdUniversity());
                 disciplineUpdate.setUniversityName(selectedToUpdate.getUniversityName());

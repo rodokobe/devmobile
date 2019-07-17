@@ -40,8 +40,6 @@ public class UpdateCourseFragment extends Fragment implements IFirebaseLoadDoneU
     private Button buttonCourse;
     private String idUserLoged, idUniversitySelected, nameUniversitySelected;
     private Course courseToUpdate;
-    private Integer cont = 0;
-    private Integer positionToSelect = 0;
 
     private DatabaseReference firebaseRefUniversity;
     private IFirebaseLoadDoneUniversity iFirebaseLoadDoneUniversity;
@@ -135,8 +133,6 @@ public class UpdateCourseFragment extends Fragment implements IFirebaseLoadDoneU
         //Create adapter
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, university_name);
         spinnerUniversity.setAdapter(adapter);
-
-        spinnerUniversity.setSelection(positionToSelect);
 
         spinnerUniversity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

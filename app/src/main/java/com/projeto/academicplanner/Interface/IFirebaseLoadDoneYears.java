@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface IFirebaseLoadDoneYears {
 
-    void onFireBaseLoadSuccess(List<Years> yearsList);
-    void onFireBaseLoadFailed(String message);
+    void onFireBaseLoadYearSuccess(List<Years> yearsList);
+    void onFireBaseLoadYearFailed(String message);
 
 }

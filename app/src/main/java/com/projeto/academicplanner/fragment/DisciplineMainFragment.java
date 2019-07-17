@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -37,6 +36,7 @@ public class DisciplineMainFragment extends Fragment {
     private String idUserLoged;
     private List<Discipline> disciplines = new ArrayList<>();
     private AddDisciplineFragment addDisciplineFragment;
+    private UpdateDisciplineFragment updateDisciplineFragment;
     private AddEditMainFragment fragmentMain;
 
     //recycler view variables
@@ -123,61 +123,13 @@ public class DisciplineMainFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
 
-                        disciplineUpdate(objectToAction);
+                        goToUpdateFragment(objectToAction);
 
                     }
                 });
             }
         });
 
-    }
-
-    private void disciplineUpdate(final Discipline selectedToUpdate) {
-
-        final Discipline disciplineUpdate = new Discipline();
-
-        final AlertDialog.Builder updateDialog = new AlertDialog.Builder(getContext());
-
-        final View updateDialogView = getLayoutInflater().inflate(R.layout.dialog_model, null);
-
-        final EditText dialogUname = updateDialogView.findViewById(R.id.dialogName);
-        final EditText dialogUacron = updateDialogView.findViewById(R.id.dialogAcronym);
-        final Button dialogUbutton = updateDialogView.findViewById(R.id.buttonDialog);
-        dialogUbutton.setText("UPDATE");
-
-        dialogUname.setText(selectedToUpdate.getDisciplineName());
-        dialogUacron.setText(selectedToUpdate.getAcronymDiscipline());
-
-
-        updateDialog.setView(updateDialogView);
-        final AlertDialog updateDialogAlert = updateDialog.create();
-        updateDialogAlert.show();
-
-        dialogUbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                String disciplineDialogName = dialogUname.getText().toString();
-                String disciplineDialogAcronym = dialogUacron.getText().toString();
-
-                disciplineUpdate.setIdUser(idUserLoged);
-                disciplineUpdate.setIdDiscipline(selectedToUpdate.getIdDiscipline());
-                disciplineUpdate.setDisciplineName(disciplineDialogName);
-                disciplineUpdate.setAcronymDiscipline(disciplineDialogAcronym);
-                disciplineUpdate.setDisciplineYear(selectedToUpdate.getDisciplineYear());
-                disciplineUpdate.setDisciplineSemester(selectedToUpdate.getDisciplineSemester());
-                disciplineUpdate.setIdUniversity(selectedToUpdate.getIdUniversity());
-                disciplineUpdate.setUniversityName(selectedToUpdate.getUniversityName());
-                disciplineUpdate.setIdCourse(selectedToUpdate.getIdCourse());
-                disciplineUpdate.setCourseName(selectedToUpdate.getCourseName());
-
-                disciplineUpdate.update(disciplineUpdate);
-                toastMsg("Discipline " + disciplineUpdate.getDisciplineName() + " successfully update");
-                adapter.notifyDataSetChanged();
-                updateDialogAlert.cancel();
-
-            }
-        });
     }
 
     private void disciplineDelete(final Discipline selectedToRemove) {
@@ -221,6 +173,20 @@ public class DisciplineMainFragment extends Fragment {
                 deleteDialogAlert.cancel();
             }
         });
+    }
+
+    public void goToUpdateFragment(Discipline objectToAction) {
+
+        updateDisciplineFragment = new UpdateDisciplineFragment();
+
+        Bundle dataToUpdate = new Bundle();
+        dataToUpdate.putSerializable("DisciplineToUpdate", objectToAction);
+
+        updateDisciplineFragment.setArguments(dataToUpdate);
+
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frameAddEditUserProfile, updateDisciplineFragment);
+        transaction.commit();
     }
 
     public void goToNewFragment() {
