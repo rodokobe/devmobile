@@ -1,7 +1,16 @@
 package com.projeto.academicplanner.model;
 
+import androidx.annotation.NonNull;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+import com.projeto.academicplanner.adapter.Adapter_EventsType;
 import com.projeto.academicplanner.helper.ConfigFirebase;
+
+import java.util.Collections;
+import java.util.List;
 
 public class EventType {
 
@@ -49,7 +58,7 @@ public class EventType {
         eventTypeRef.removeValue();
     }
 
-    /*public void recovery(String idUserLoged, final List<EventType> eventsType, final Adapter_EventsType adapter) {
+    public void recovery(String idUserLoged, final List<EventType> eventsType, final Adapter_EventsType adapter) {
 
         DatabaseReference eventTypeRef = firebaseRef
                 .child("eventsType")
@@ -77,7 +86,7 @@ public class EventType {
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
-    }*/
+    }
 
     public String getIdUser() { return idUser; }
 

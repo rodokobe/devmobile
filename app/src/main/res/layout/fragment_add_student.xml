@@ -30,7 +30,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/textView4"
+                        android:id="@+id/addEdit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
@@ -68,14 +68,14 @@
                 android:padding="10dp">
 
                 <EditText
-                    android:id="@+id/nameStudent"
+                    android:id="@+id/studentFirstName"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
                     android:background="@drawable/bg_edit_text"
                     android:ems="10"
-                    android:hint="student name"
+                    android:hint="first name"
                     android:inputType="textPersonName"
                     android:padding="10dp"
                     android:textColorHint="@color/colorLightGray"
@@ -83,39 +83,34 @@
                     android:theme="@style/editTextPadrao" />
 
                 <EditText
-                    android:id="@+id/emailStudent"
+                    android:id="@+id/studentLastName"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
                     android:background="@drawable/bg_edit_text"
                     android:ems="10"
-                    android:hint="student e-mail"
+                    android:hint="last name"
                     android:inputType="textPersonName"
                     android:padding="10dp"
                     android:textColorHint="@color/colorLightGray"
                     android:textSize="14sp"
                     android:theme="@style/editTextPadrao" />
 
-                <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:text="Select an university / course:"
-                    android:textColor="@color/colorGray"
-                    android:textSize="14sp" />
-
-                <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                    android:id="@+id/spinnerUniversityCourse"
+                <EditText
+                    android:id="@+id/studentEmail"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
                     android:background="@drawable/bg_edit_text"
-                    android:dropDownWidth="wrap_content"
-                    android:outlineSpotShadowColor="@color/colorGray"
-                    android:padding="10dp" />
+                    android:ems="10"
+                    android:hint="email"
+                    android:inputType="textPersonName"
+                    android:padding="10dp"
+                    android:textColorHint="@color/colorLightGray"
+                    android:textSize="14sp"
+                    android:theme="@style/editTextPadrao" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -136,12 +131,12 @@
                             android:layout_height="match_parent"
                             android:layout_marginTop="10dp"
                             android:layout_weight="1"
-                            android:text="Course delegate?"
+                            android:text="Is delegate?"
                             android:textColor="@color/colorGray"
                             android:textSize="14sp" />
 
                         <ToggleButton
-                            android:id="@+id/toggleButton"
+                            android:id="@+id/isDelegateButton"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -154,7 +149,7 @@
                 </LinearLayout>
 
                 <Button
-                    android:id="@+id/buttonDisciplines"
+                    android:id="@+id/buttonStudents"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"

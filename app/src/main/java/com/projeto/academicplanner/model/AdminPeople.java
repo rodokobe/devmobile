@@ -1,76 +1,131 @@
 package com.projeto.academicplanner.model;
 
-public class AdminPeople {
+import androidx.annotation.NonNull;
 
-    private String idCourse;
-    private String idAdminPerson;
-    private String adminPersonFirstName;
-    private String adminPersonLastName;
-    private String adminPersonEmail;
-    private String adminPersonCourse;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+import com.projeto.academicplanner.adapter.Adapter_AdminPeople;
+import com.projeto.academicplanner.helper.ConfigFirebase;
+
+import java.io.Serializable;
+import java.util.Collections;
+import java.util.List;
+
+public class AdminPeople implements Serializable {
+
+    private String idUser;
+    private String idAdminPeople;
+    private String adminPeopleFirstName;
+    private String adminPeopleLastName;
+    private String adminPeopleEmail;
+    private DatabaseReference firebaseRef = ConfigFirebase.getReferenciaFirebase();
 
     public AdminPeople() {
+        DatabaseReference adminPeopleRef = firebaseRef
+                .child("adminpeople");
+        setIdAdminPeople(adminPeopleRef.push().getKey());
+    }
+
+    public void recovery(String idUserLoged, final List<AdminPeople> adminPeoples, final Adapter_AdminPeople adapter) {
+
+        DatabaseReference adminPeopleRef = firebaseRef
+                .child("adminpeople")
+                .child(idUserLoged);
+
+        adminPeopleRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                adminPeoples.clear();
+
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+
+                    adminPeoples.add(ds.getValue(AdminPeople.class));
+
+                }
+
+                //put the item added to the top
+                Collections.reverse(adminPeoples);
+                adapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+
+        });
 
     }
 
-    public AdminPeople(String idCourseP, String idAdminPersonP,
-                       String adminPersonFirstNameP, String adminPersonLastNameP,
-                       String adminPersonEmailP, String adminPersonCourseP){
+    public void save() {
 
-        this.idCourse = idCourseP;
-        this.idAdminPerson = idAdminPersonP;
-        this.adminPersonFirstName = adminPersonFirstNameP;
-        this.adminPersonLastName = adminPersonLastNameP;
-        this.adminPersonEmail = adminPersonEmailP;
-        this.adminPersonCourse = adminPersonCourseP;
+        DatabaseReference adminPeopleRef = firebaseRef
+                .child("adminpeople")
+                .child(getIdUser())
+                .child(getIdAdminPeople());
+        adminPeopleRef.setValue(this);
+    }
+
+    public void update(AdminPeople objectToUpdate) {
+
+        DatabaseReference adminPeopleRef = firebaseRef
+                .child("adminpeople")
+                .child(getIdUser())
+                .child(getIdAdminPeople());
+        adminPeopleRef.setValue(objectToUpdate);
 
     }
 
-    public String getIdCourse() {
-        return idCourse;
+    public void delete() {
+
+        DatabaseReference adminPeopleRef = firebaseRef
+                .child("adminpeople")
+                .child(getIdUser())
+                .child(getIdAdminPeople());
+        adminPeopleRef.removeValue();
     }
 
-    public void setIdCourse(String idCourse) {
-        this.idCourse = idCourse;
+    public String getIdUser() {
+        return idUser;
     }
 
-    public String getIdAdminPerson() {
-        return idAdminPerson;
+    public void setIdUser(String idUser) {
+        this.idUser = idUser;
     }
 
-    public void setIdAdminPerson(String idAdminPerson) {
-        this.idAdminPerson = idAdminPerson;
+    public String getIdAdminPeople() {
+        return idAdminPeople;
     }
 
-    public String getAdminPersonFirstName() {
-        return adminPersonFirstName;
+    public void setIdAdminPeople(String idAdminPeople) {
+        this.idAdminPeople = idAdminPeople;
     }
 
-    public void setAdminPersonFirstName(String adminPersonFirstName) {
-        this.adminPersonFirstName = adminPersonFirstName;
+    public String getAdminPeopleFirstName() {
+        return adminPeopleFirstName;
     }
 
-    public String getAdminPersonLastName() {
-        return adminPersonLastName;
+    public void setAdminPeopleFirstName(String adminPeopleFirstName) {
+        this.adminPeopleFirstName = adminPeopleFirstName;
     }
 
-    public void setAdminPersonLastName(String adminPersonLastName) {
-        this.adminPersonLastName = adminPersonLastName;
+    public String getAdminPeopleLastName() {
+        return adminPeopleLastName;
     }
 
-    public String getAdminPersonEmail() {
-        return adminPersonEmail;
+    public void setAdminPeopleLastName(String adminPeopleLastName) {
+        this.adminPeopleLastName = adminPeopleLastName;
     }
 
-    public void setAdminPersonEmail(String adminPersonEmail) {
-        this.adminPersonEmail = adminPersonEmail;
+    public String getAdminPeopleEmail() {
+        return adminPeopleEmail;
     }
 
-    public String getAdminPersonCourse() {
-        return adminPersonCourse;
-    }
-
-    public void setAdminPersonCourse(String adminPersonCourse) {
-        this.adminPersonCourse = adminPersonCourse;
+    public void setAdminPeopleEmail(String adminPeopleEmail) {
+        this.adminPeopleEmail = adminPeopleEmail;
     }
 }

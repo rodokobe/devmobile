@@ -242,13 +242,10 @@ public class UpdateDisciplineFragment extends Fragment implements IFirebaseLoadD
 
         final Discipline disciplineUpdate = new Discipline();
 
-        String disciplineSaveName = disciplineName.getText().toString();
-        String disciplineSaveAcronym = acronymDiscipline.getText().toString();
-
         disciplineUpdate.setIdUser(idUserLoged);
         disciplineUpdate.setIdDiscipline(disciplineToUpdate.getIdDiscipline());
-        disciplineUpdate.setDisciplineName(disciplineSaveName);
-        disciplineUpdate.setAcronymDiscipline(disciplineSaveAcronym);
+        disciplineUpdate.setDisciplineName(disciplineName.getText().toString());
+        disciplineUpdate.setAcronymDiscipline(acronymDiscipline.getText().toString());
         disciplineUpdate.setDisciplineYearId(idYearSelected);
         disciplineUpdate.setDisciplineYearName(nameYearSelected);
         disciplineUpdate.setDisciplineSemester(disciplineSaveSemester);

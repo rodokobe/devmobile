@@ -23,7 +23,7 @@
                 android:id="@+id/eventTypeName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="nameUni"
+                android:text="eventTypeName"
                 android:textColor="@color/colorBright"
                 android:textSize="16sp"
                 android:textStyle="bold" />

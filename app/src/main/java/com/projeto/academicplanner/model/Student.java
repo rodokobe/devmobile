@@ -1,88 +1,118 @@
 package com.projeto.academicplanner.model;
 
-public class Student {
+import androidx.annotation.NonNull;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+import com.projeto.academicplanner.adapter.Adapter_Students;
+import com.projeto.academicplanner.helper.ConfigFirebase;
 
-    private String idCourse;
-    private String idDiscipline;
+import java.io.Serializable;
+import java.util.Collections;
+import java.util.List;
+
+public class Student implements Serializable {
+
+    private String idUser;
     private String idStudent;
     private String studentFirstName;
     private String studentLastName;
     private String studentEmail;
     private String studentDelegate;
+    private DatabaseReference firebaseRef = ConfigFirebase.getReferenciaFirebase();
 
     public Student() {
 
-    }
-
-    public Student(String idCourseP, String idDisciplineP,
-                   String idStudentP, String studentFirstNameP,
-                   String studentLastNameP, String studentEmailP,
-                   String studentDelegateP) {
-
-        this.idCourse = idCourseP;
-        this.idDiscipline = idDisciplineP;
-        this.idStudent = idStudentP;
-        this.studentFirstName = studentFirstNameP;
-        this.studentLastName = studentLastNameP;
-        this.studentEmail = studentEmailP;
-        this.studentDelegate = studentDelegateP;
+        DatabaseReference studentRef = firebaseRef
+                .child("students");
+        setIdStudent(studentRef.push().getKey());
 
     }
 
-    public String getIdCourse() {
-        return idCourse;
+    public void recovery(String idUserLoged, final List<Student> students, final Adapter_Students adapter) {
+
+        DatabaseReference studentsRef = firebaseRef
+                .child("students")
+                .child(idUserLoged);
+
+        studentsRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                students.clear();
+
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+
+                    students.add(ds.getValue(Student.class));
+
+                }
+
+                //put the item added to the top
+                Collections.reverse(students);
+                adapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+
+        });
+
     }
 
-    public void setIdCourse(String idCourse) {
-        this.idCourse = idCourse;
+    public void save() {
+
+        DatabaseReference studentsRef = firebaseRef
+                .child("students")
+                .child(getIdUser())
+                .child(getIdStudent());
+        studentsRef.setValue(this);
     }
 
-    public String getIdDiscipline() {
-        return idDiscipline;
+    public void update(Student objectToUpdate) {
+
+        DatabaseReference studentsRef = firebaseRef
+                .child("students")
+                .child(getIdUser())
+                .child(getIdStudent());
+        studentsRef.setValue(objectToUpdate);
+
     }
 
-    public void setIdDiscipline(String idDiscipline) {
-        this.idDiscipline = idDiscipline;
+    public void delete() {
+
+        DatabaseReference studentsRef = firebaseRef
+                .child("students")
+                .child(getIdUser())
+                .child(getIdStudent());
+        studentsRef.removeValue();
     }
 
-    public String getIdStudent() {
-        return idStudent;
-    }
+    public String getIdUser() { return idUser; }
 
-    public void setIdStudent(String idStudent) {
-        this.idStudent = idStudent;
-    }
+    public void setIdUser(String idUser) { this.idUser = idUser; }
 
-    public String getStudentFirstName() {
-        return studentFirstName;
-    }
+    public String getIdStudent() { return idStudent; }
 
-    public void setStudentFirstName(String studentFirstName) {
-        this.studentFirstName = studentFirstName;
-    }
+    public void setIdStudent(String idStudent) { this.idStudent = idStudent; }
 
-    public String getStudentLastName() {
-        return studentLastName;
-    }
+    public String getStudentFirstName() { return studentFirstName; }
 
-    public void setStudentLastName(String studentLastName) {
-        this.studentLastName = studentLastName;
-    }
+    public void setStudentFirstName(String studentFirstName) { this.studentFirstName = studentFirstName; }
 
-    public String getStudentEmail() {
-        return studentEmail;
-    }
+    public String getStudentLastName() { return studentLastName; }
 
-    public void setStudentEmail(String studentEmail) {
-        this.studentEmail = studentEmail;
-    }
+    public void setStudentLastName(String studentLastName) { this.studentLastName = studentLastName; }
 
-    public String getStudentDelegate() {
-        return studentDelegate;
-    }
+    public String getStudentEmail() { return studentEmail; }
 
-    public void setStudentDelegate(String studentDelegate) {
-        this.studentDelegate = studentDelegate;
-    }
+    public void setStudentEmail(String studentEmail) { this.studentEmail = studentEmail; }
+
+    public String getStudentDelegate() { return studentDelegate; }
+
+    public void setStudentDelegate(String studentDelegate) { this.studentDelegate = studentDelegate; }
 }

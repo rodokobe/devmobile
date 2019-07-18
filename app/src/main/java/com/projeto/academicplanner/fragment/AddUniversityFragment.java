@@ -103,7 +103,6 @@ public class AddUniversityFragment extends Fragment {
         Toast toastError = Toast.makeText(getContext(), text, Toast.LENGTH_LONG);
         toastError.setGravity(Gravity.CENTER, 0, 800);
         toastError.show();
-
     }
 
     public void backToMain() {
