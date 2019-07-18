@@ -49,8 +49,8 @@ public class Adapter_Classes_Calendar extends RecyclerView.Adapter<Adapter_Class
         holder.classSubject1.setText(classe.getSubject());
         holder.classNameDiscipline1.setText(classe.getNameDiscipline());
         holder.classNameCourse1.setText(classe.getNameCourse());
-        holder.classNameUniversity1.setText(classe.getNameCourse());
-        holder.classDate1.setText(classe.getNameUniversity());
+        holder.classNameUniversity1.setText(classe.getNameUniversity());
+        holder.classDate1.setText(classe.getClassDate());
         holder.classTime1.setText(classe.getClassTime());
         holder.classTimeDuration1.setText(classe.getTimeDuration());
     }
