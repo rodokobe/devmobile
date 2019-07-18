@@ -35,10 +35,10 @@ import java.util.List;
 public class CourseUpdateFragment extends Fragment implements IFirebaseLoadDoneUniversity {
 
     private EditText courseName, courseAcronym;
-    private TextView backToAddEditMain, addEdit;
+    private TextView backToPrevious;
     private SearchableSpinner spinnerUniversity;
     private Button buttonCourse;
-    private String idUserLoged, idUniversitySelected, nameUniversitySelected;
+    private String idUserLogged, idUniversitySelected, nameUniversitySelected;
     private Course courseToUpdate;
 
     private DatabaseReference firebaseRefUniversity;
@@ -63,39 +63,26 @@ public class CourseUpdateFragment extends Fragment implements IFirebaseLoadDoneU
         View updateCourse = inflater.inflate(R.layout.fragment_course_add, container, false);
 
         //configurações iniciais
-        backToAddEditMain = updateCourse.findViewById(R.id.backToAddEditMain);
-        courseName = updateCourse.findViewById(R.id.courseName);
-        courseAcronym = updateCourse.findViewById(R.id.courseAcronym);
-        spinnerUniversity = updateCourse.findViewById(R.id.spinnerUniversity);
-        buttonCourse = updateCourse.findViewById(R.id.buttonCourse);
-        addEdit = updateCourse.findViewById(R.id.addEdit);
+        initializingComponents(updateCourse);
 
         courseName.setText(courseToUpdate.getCourseName());
         courseAcronym.setText(courseToUpdate.getAcronymCourse());
 
         buttonCourse.setText("Update");
-        addEdit.setText("update");
 
 
-        idUserLoged = ConfigFirebase.getUserId();
+        idUserLogged = ConfigFirebase.getUserId();
 
-        firebaseRefUniversity = FirebaseDatabase.getInstance().getReference("universities").child(idUserLoged);
+        firebaseRefUniversity = FirebaseDatabase.getInstance().getReference("universities").child(idUserLogged);
 
         iFirebaseLoadDoneUniversity = this;
 
-        buttonCourse.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
+        buttonCourse.setOnClickListener( v-> {
                 courseUpdate();
-            }
         });
 
-        backToAddEditMain.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        backToPrevious.setOnClickListener( v -> {
                 backToMain();
-            }
         });
 
         firebaseRefUniversity.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -157,7 +144,7 @@ public class CourseUpdateFragment extends Fragment implements IFirebaseLoadDoneU
 
         Course courseUpdate = new Course();
 
-        courseUpdate.setIdUser(idUserLoged);
+        courseUpdate.setIdUser(idUserLogged);
         courseUpdate.setIdCourse(courseToUpdate.getIdCourse());
         courseUpdate.setCourseName(courseName.getText().toString());
         courseUpdate.setAcronymCourse(courseAcronym.getText().toString());
@@ -172,7 +159,7 @@ public class CourseUpdateFragment extends Fragment implements IFirebaseLoadDoneU
     public void backToMain() {
         courseMainFragmentF = new CourseMainFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameAddEditUserProfile, courseMainFragmentF);
+        transaction.replace(R.id.frameSettingsMain, courseMainFragmentF);
         transaction.commit();
     }
 
@@ -183,6 +170,14 @@ public class CourseUpdateFragment extends Fragment implements IFirebaseLoadDoneU
         toastError.setGravity(Gravity.CENTER, 0, 800);
         toastError.show();
 
+    }
+
+    private void initializingComponents(View view){
+        backToPrevious = view.findViewById(R.id.backToPrevious);
+        courseName = view.findViewById(R.id.courseName);
+        courseAcronym = view.findViewById(R.id.courseAcronym);
+        spinnerUniversity = view.findViewById(R.id.spinnerUniversity);
+        buttonCourse = view.findViewById(R.id.buttonCourse);
     }
 
 }

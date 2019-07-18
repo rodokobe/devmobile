@@ -31,17 +31,18 @@ public class CourseMainFragment extends Fragment {
 
     //general variables
     private Button buttonCourses;
-    private TextView backToAddEditMain;
-    private String idUserLoged;
+    private TextView backToPrevious;
+    private String idUserLogged;
     private List<Course> courses = new ArrayList<>();
     private CourseAddFragment addCourseFragmentF;
     private CourseUpdateFragment updateCourseFragmentF;
-    private AddEditMainFragment fragmentMain;
+    private SettingsFragment settingsFragment;
 
     //recycler view variables
-    private RecyclerView recylcerCourses;
+    private RecyclerView recyclerCourses;
     private RecyclerView.LayoutManager layout;
     private Adapter_Courses adapter;
+
 
     private static final String TAG = "AddEditParametersActivity";
 
@@ -58,32 +59,24 @@ public class CourseMainFragment extends Fragment {
         final View mainCourses = inflater.inflate(R.layout.fragment_course_main, container, false);
 
         //start configurations
-        buttonCourses = mainCourses.findViewById(R.id.buttonCourses);
-        backToAddEditMain = mainCourses.findViewById(R.id.backToAddEditMain);
-        recylcerCourses = mainCourses.findViewById(R.id.recylcerCourses);
+        initializingComponents(mainCourses);
 
         //recovery loged user ID
-        idUserLoged = ConfigFirebase.getUserId();
+        idUserLogged = ConfigFirebase.getUserId();
 
         //call methods
         adapterConstructor();
 
         //create object and fill recyclerViewCourses
         Course course = new Course();
-        course.recovery(idUserLoged, courses, adapter);
+        course.recovery(idUserLogged, courses, adapter);
 
-        buttonCourses.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        buttonCourses.setOnClickListener( v -> {
                 goToNewFragment();
-            }
         });
 
-        backToAddEditMain.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goBackToMain();
-            }
+        backToPrevious.setOnClickListener( v -> {
+                backToMainSettings();
         });
 
         return mainCourses;
@@ -95,10 +88,10 @@ public class CourseMainFragment extends Fragment {
         //recycler view configuration
         layout = new LinearLayoutManager(getContext());
         adapter = new Adapter_Courses(courses, getContext());
-        recylcerCourses.setAdapter(adapter);
-        recylcerCourses.setLayoutManager(layout);
-        recylcerCourses.setHasFixedSize(true);
-        recylcerCourses.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayout.VERTICAL));
+        recyclerCourses.setAdapter(adapter);
+        recyclerCourses.setLayoutManager(layout);
+        recyclerCourses.setHasFixedSize(true);
+        //recyclerCourses.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayout.VERTICAL));
 
         adapter.setOnItemClickListener(new Adapter_Courses.ClickListener() {
             @Override
@@ -150,7 +143,7 @@ public class CourseMainFragment extends Fragment {
 
                 //method to remove the selected object
                 selectedToRemove.delete();
-                toastMsg("Course " + selectedToRemove.getCourseName() + " has been removed!");
+                toastMsgLong("Course " + selectedToRemove.getCourseName() + " has been removed!");
                 adapter.notifyDataSetChanged();
                 deleteDialogAlert.cancel();
 
@@ -159,7 +152,7 @@ public class CourseMainFragment extends Fragment {
 
                 //create object and fill recyclerViewCourses
                 Course course = new Course();
-                course.recovery(idUserLoged, courses, adapter);
+                course.recovery(idUserLogged, courses, adapter);
             }
         });
 
@@ -168,7 +161,7 @@ public class CourseMainFragment extends Fragment {
             public void onClick(View v) {
 
                 //method to cancel the delete operation
-                toastMsg("Request CANCELED");
+                toastMsgLong("Request CANCELED");
                 deleteDialogAlert.cancel();
             }
         });
@@ -177,7 +170,7 @@ public class CourseMainFragment extends Fragment {
     public void goToNewFragment() {
         addCourseFragmentF = new CourseAddFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameAddEditUserProfile, addCourseFragmentF);
+        transaction.replace(R.id.frameSettingsMain, addCourseFragmentF);
         transaction.commit();
     }
 
@@ -189,25 +182,31 @@ public class CourseMainFragment extends Fragment {
         updateCourseFragmentF.setArguments(dataToUpdate);
 
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameAddEditUserProfile, updateCourseFragmentF);
+        transaction.replace(R.id.frameSettingsMain, updateCourseFragmentF);
         transaction.commit();
     }
 
-    public void goBackToMain() {
-
-        fragmentMain = new AddEditMainFragment();
-        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameAddEditUserProfile, fragmentMain);
-        transaction.commit();
-
-    }
-
-    public void toastMsg(String text) {
+    public void toastMsgLong(String text) {
 
         //show toast parameters
         Toast toastError = Toast.makeText(getContext(), text, Toast.LENGTH_LONG);
         toastError.setGravity(Gravity.CENTER, 0, 800);
         toastError.show();
 
+    }
+
+    private void backToMainSettings(){
+
+        settingsFragment = new SettingsFragment();
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frameSettingsMain, settingsFragment);
+        transaction.commit();
+
+    }
+
+    public void initializingComponents(View view){
+        buttonCourses = view.findViewById(R.id.buttonCourses);
+        backToPrevious = view.findViewById(R.id.backToPrevious);
+        recyclerCourses = view.findViewById(R.id.recyclerCourses);
     }
 }

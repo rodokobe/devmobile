@@ -34,10 +34,10 @@ import java.util.List;
 public class CourseAddFragment extends Fragment implements IFirebaseLoadDoneUniversity {
 
     private EditText courseName, courseAcronym;
-    private TextView backToAddEditMain;
+    private TextView backToPrevious;
     private SearchableSpinner spinnerUniversity;
     private Button buttonCourse;
-    private String idUserLoged, idUniversitySelected, nameUniversitySelected;
+    private String idUserLogged, idUniversitySelected, nameUniversitySelected;
 
     private DatabaseReference firebaseRefUniversity;
     private IFirebaseLoadDoneUniversity iFirebaseLoadDoneUniversity;
@@ -53,15 +53,11 @@ public class CourseAddFragment extends Fragment implements IFirebaseLoadDoneUniv
         View addCourse = inflater.inflate(R.layout.fragment_course_add, container, false);
 
         //configurações iniciais
-        backToAddEditMain = addCourse.findViewById(R.id.backToAddEditMain);
-        courseName = addCourse.findViewById(R.id.courseName);
-        courseAcronym = addCourse.findViewById(R.id.courseAcronym);
-        spinnerUniversity = addCourse.findViewById(R.id.spinnerUniversity);
-        buttonCourse = addCourse.findViewById(R.id.buttonCourse);
+        initializingComponents(addCourse);
 
-        idUserLoged = ConfigFirebase.getUserId();
+        idUserLogged = ConfigFirebase.getUserId();
 
-        firebaseRefUniversity = FirebaseDatabase.getInstance().getReference("universities").child(idUserLoged);
+        firebaseRefUniversity = FirebaseDatabase.getInstance().getReference("universities").child(idUserLogged);
 
         iFirebaseLoadDoneUniversity = this;
 
@@ -77,7 +73,7 @@ public class CourseAddFragment extends Fragment implements IFirebaseLoadDoneUniv
                 }
         });
 
-        backToAddEditMain.setOnClickListener(new View.OnClickListener() {
+        backToPrevious.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 backToMain();
@@ -144,7 +140,7 @@ public class CourseAddFragment extends Fragment implements IFirebaseLoadDoneUniv
             if (!courseDialogAcronym.isEmpty()) {
 
                 Course course = new Course();
-                course.setIdUser(idUserLoged);
+                course.setIdUser(idUserLogged);
                 course.setCourseName(courseDialogName);
                 course.setAcronymCourse(courseDialogAcronym);
                 course.setIdUniversity(idUniversitySelected);
@@ -169,7 +165,7 @@ public class CourseAddFragment extends Fragment implements IFirebaseLoadDoneUniv
     public void backToMain() {
         courseMainFragmentF = new CourseMainFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameAddEditUserProfile, courseMainFragmentF);
+        transaction.replace(R.id.frameSettingsMain, courseMainFragmentF);
         transaction.commit();
     }
 
@@ -180,6 +176,14 @@ public class CourseAddFragment extends Fragment implements IFirebaseLoadDoneUniv
         toastError.setGravity(Gravity.CENTER, 0, 800);
         toastError.show();
 
+    }
+
+    private void initializingComponents(View v) {
+        backToPrevious = v.findViewById(R.id.backToPrevious);
+        courseName = v.findViewById(R.id.courseName);
+        courseAcronym = v.findViewById(R.id.courseAcronym);
+        spinnerUniversity = v.findViewById(R.id.spinnerUniversity);
+        buttonCourse = v.findViewById(R.id.buttonCourse);
     }
 
 }

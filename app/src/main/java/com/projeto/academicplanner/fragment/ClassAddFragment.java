@@ -48,6 +48,8 @@ public class ClassAddFragment extends Fragment {
 
         initializingComponents(v);
 
+
+
         return v;
     }
 

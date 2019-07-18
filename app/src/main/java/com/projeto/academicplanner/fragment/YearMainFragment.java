@@ -35,12 +35,9 @@ public class YearMainFragment extends Fragment {
      * General variables
      */
     private Button buttonYears;
-    //private TextView backToAddEditMain;
     private String idUserLogged;
     private List<Years> yearsList = new ArrayList<>();
     private YearAddFragment addYearFragmentF;
-    //private YearUpdateFragment updateYearFragmentF;
-    //private AddEditMainFragment fragmentMain;
     private TextView backToPrevious;
     private SettingsFragment settingsFragment;
 
@@ -86,10 +83,6 @@ public class YearMainFragment extends Fragment {
         buttonYears.setOnClickListener(view -> {
             goToNewFragment();
         });
-
-        /*backToAddEditMain.setOnClickListener(view -> {
-            goBackToMain();
-        });*/
 
         backToPrevious.setOnClickListener( view -> {
             backToMainSettings();
@@ -181,8 +174,8 @@ public class YearMainFragment extends Fragment {
         transaction.commit();
     }
 
-    public void goToUpdateFragment(University objectToAction) {
-        /*updateYearFragmentF = new UniversityUpdateFragment();
+    /*public void goToUpdateFragment(University objectToAction) {
+        updateYearFragmentF = new UniversityUpdateFragment();
         Bundle bundle = new Bundle();
         bundle.putString("universityIdBundle", objectToAction.getIdUniversity());
         bundle.putString("universityNameBundle", objectToAction.getUniversityName());
@@ -192,8 +185,8 @@ public class YearMainFragment extends Fragment {
 
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frameAddEditUserProfile, updateYearFragmentF);
-        transaction.commit();*/
-    }
+        transaction.commit();
+    }*/
 
     /*public void goBackToMain() {
 
@@ -222,7 +215,6 @@ public class YearMainFragment extends Fragment {
     private void initializingComponents(View v) {
 
         buttonYears = v.findViewById(R.id.buttonYears);
-        //backToAddEditMain = v.findViewById(R.id.backToAddEditMain);
         recyclerYears = v.findViewById(R.id.recyclerYears);
         backToPrevious = v.findViewById(R.id.backToPrevious);
 

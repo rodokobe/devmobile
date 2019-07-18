@@ -166,7 +166,7 @@ public class EventTypeMainFragment extends Fragment {
                 disciplineUpdate.setCourseName(selectedToUpdate.getCourseName());
 
                 disciplineUpdate.updateCourseData(disciplineUpdate);
-                toastMsg("Discipline " + disciplineUpdate.getDisciplineName() + " successfully update");
+                toastMsgLong("Discipline " + disciplineUpdate.getDisciplineName() + " successfully update");
                 adapter.notifyDataSetChanged();
                 updateDialogAlert.cancel();
 
@@ -193,7 +193,7 @@ public class EventTypeMainFragment extends Fragment {
 
                 //method to remove the selected object
                 selectedToRemove.delete();
-                toastMsg("Discipline " + selectedToRemove.getEventTypeName() + " has been removed!");
+                toastMsgLong("Discipline " + selectedToRemove.getEventTypeName() + " has been removed!");
                 adapter.notifyDataSetChanged();
                 deleteDialogAlert.cancel();
             }
@@ -204,7 +204,7 @@ public class EventTypeMainFragment extends Fragment {
             public void onClick(View v) {
 
                 //method to cancel the delete operation
-                toastMsg("Request CANCELED");
+                toastMsgLong("Request CANCELED");
                 deleteDialogAlert.cancel();
             }
         });

@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="2dp"
-    android:background="@color/colorBackGroundBrown"
     android:orientation="vertical">
 
     <LinearLayout
@@ -26,7 +25,7 @@
                 android:layout_width="345dp"
                 android:layout_height="wrap_content"
                 android:text="yearName"
-                android:textColor="@color/colorBright"
+                android:textColor="@android:color/white"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
