@@ -46,9 +46,15 @@ public class Adapter_AdminPeople extends RecyclerView.Adapter<Adapter_AdminPeopl
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
+
+
         AdminPeople adminPeople = adminPeopleS.get(position);
-        holder.adminPeopleFirstName1.setText(adminPeople.getAdminPeopleFirstName());
-        holder.adminPeopleLastName1.setText(adminPeople.getAdminPeopleLastName());
+
+        String firstname = adminPeople.getAdminPeopleFirstName();
+        String lastname = adminPeople.getAdminPeopleLastName();
+        String name = firstname + " " + lastname;
+
+        holder.adminPeopleName.setText(name);
         holder.adminPeopleEmail1.setText(adminPeople.getAdminPeopleEmail());
         holder.imageEdit1.setImageResource(R.drawable.ic_edit_white_24dp);
         holder.imageDelete1.setImageResource(R.drawable.ic_delete_white_24dp);
@@ -63,8 +69,7 @@ public class Adapter_AdminPeople extends RecyclerView.Adapter<Adapter_AdminPeopl
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView adminPeopleFirstName1;
-        TextView adminPeopleLastName1;
+        TextView adminPeopleName;
         TextView adminPeopleEmail1;
         ImageView imageEdit1;
         ImageView imageDelete1;
@@ -73,8 +78,7 @@ public class Adapter_AdminPeople extends RecyclerView.Adapter<Adapter_AdminPeopl
         public MyViewHolder(@NonNull View itemView, Adapter_AdminPeople ref) {
             super(itemView);
 
-            adminPeopleFirstName1 = itemView.findViewById(R.id.adminPeopleFirstName);
-            adminPeopleLastName1 = itemView.findViewById(R.id.adminPeopleLastName);
+            adminPeopleName = itemView.findViewById(R.id.adminPeopleName);
             adminPeopleEmail1 = itemView.findViewById(R.id.adminPeopleEmail);
 
             imageEdit1 = itemView.findViewById(R.id.imageEdit);

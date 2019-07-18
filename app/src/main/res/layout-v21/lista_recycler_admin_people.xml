@@ -31,21 +31,12 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/adminPeopleFirstName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="firstName"
-                        android:textColor="@color/colorBright"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/adminPeopleLastName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:text="lastName"
-                        android:textColor="@color/colorBright"
+                        android:id="@+id/adminPeopleName"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="name"
+                        android:textColor="@android:color/white"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
@@ -57,7 +48,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="4"
                     android:text="email"
-                    android:textColor="@color/colorBright" />
+                    android:textColor="@android:color/white" />
 
             </LinearLayout>
 

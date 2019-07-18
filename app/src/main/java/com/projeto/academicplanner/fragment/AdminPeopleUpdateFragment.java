@@ -105,7 +105,7 @@ public class AdminPeopleUpdateFragment extends Fragment {
 
     private void initializingComponents(View v){
         backToPrevious = v.findViewById(R.id.backToPrevious);
-        adminPeopleFirstName = v.findViewById(R.id.adminPeopleFirstName);
+        adminPeopleFirstName = v.findViewById(R.id.adminPeopleName);
         adminPeopleLastName = v.findViewById(R.id.adminPeopleLastName);
         adminPeopleEmail = v.findViewById(R.id.adminPeopleEmail);
         buttonAdminPeople = v.findViewById(R.id.buttonAdminPeople);

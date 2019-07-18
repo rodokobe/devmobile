@@ -73,12 +73,12 @@ public class AdminPeopleMainFragment extends Fragment {
         AdminPeople adminPeople = new AdminPeople();
         adminPeople.recovery(idUserLogged, adminPeopleS, adapter);
 
-        buttonAdminPeople.setOnClickListener( v -> {
-                goToNewFragment();
+        buttonAdminPeople.setOnClickListener(v -> {
+            goToNewFragment();
         });
 
-        backToPrevious.setOnClickListener( v -> {
-                goBackToMain();
+        backToPrevious.setOnClickListener(v -> {
+            goBackToMain();
         });
 
         return mainAdminPeople;
@@ -94,43 +94,35 @@ public class AdminPeopleMainFragment extends Fragment {
         recyclerAdminPeople.setLayoutManager(layout);
         recyclerAdminPeople.setHasFixedSize(true);
 
-        adapter.setOnItemClickListener( (adapter_courses, v, position) -> {
+        adapter.setOnItemClickListener((adapter_courses, v, position) -> {
 
-                final ImageView imageEdit = v.findViewById(R.id.imageEdit);
-                final ImageView imageDelete = v.findViewById(R.id.imageDelete);
+            final ImageView imageEdit = v.findViewById(R.id.imageEdit);
+            final ImageView imageDelete = v.findViewById(R.id.imageDelete);
 
-                final AdminPeople objectToAction = adminPeopleS.get(position);
+            final AdminPeople objectToAction = adminPeopleS.get(position);
 
-                imageDelete.setOnClickListener( view -> {
-                    courseDelete(objectToAction);
-                });
+            imageDelete.setOnClickListener(view -> {
+                courseDelete(objectToAction);
+            });
 
-                imageEdit.setOnClickListener( view -> {
-                    goToUpdateFragment(objectToAction);
-                });
+            imageEdit.setOnClickListener(view -> {
+                goToUpdateFragment(objectToAction);
+            });
         });
     }
 
     private void courseDelete(final AdminPeople selectedToRemove) {
 
-        final AlertDialog.Builder deleteDialog = new AlertDialog.Builder(getContext());
-        final View deleteDialogView = getLayoutInflater().inflate(R.layout.dialog_model_delete_request, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        String name = selectedToRemove.getAdminPeopleFirstName() + " " + selectedToRemove.getAdminPeopleLastName();
+        String msg = "Are you sure, you want to delete the administrative people" + name + "?";
+        builder.setTitle(msg);
+        builder.setPositiveButton(android.R.string.yes, (dialog, id) -> {
 
-        final Button buttonNoDelete = deleteDialogView.findViewById(R.id.buttonNoDelete);
-        final Button buttonDelete = deleteDialogView.findViewById(R.id.buttonDelete);
-
-        //method to create and show AlertDialog to DELETE
-        deleteDialog.setView(deleteDialogView);
-        final AlertDialog deleteDialogAlert = deleteDialog.create();
-        deleteDialogAlert.show();
-
-        buttonDelete.setOnClickListener(v -> {
-
-            //method to remove the selected object
             selectedToRemove.delete();
-            toastMsg("Admin " + selectedToRemove.getAdminPeopleFirstName() + " has been removed!");
+            toastMsg("Administrative People, " + name + ", has been removed!");
             adapter.notifyDataSetChanged();
-            deleteDialogAlert.cancel();
+            dialog.dismiss();
 
             //call methods
             adapterConstructor();
@@ -138,13 +130,17 @@ public class AdminPeopleMainFragment extends Fragment {
             //create object and fill recyclerViewCourses
             AdminPeople adminPeople = new AdminPeople();
             adminPeople.recovery(idUserLogged, adminPeopleS, adapter);
+
         });
 
-        buttonNoDelete.setOnClickListener(v -> {
+        builder.setNegativeButton(android.R.string.no, (dialog, id) -> {
             //method to cancel the delete operation
             toastMsg("Request CANCELED");
-            deleteDialogAlert.cancel();
+            dialog.dismiss();
         });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     public void goToUpdateFragment(AdminPeople objectToAction) {

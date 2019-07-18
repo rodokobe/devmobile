@@ -51,7 +51,7 @@
                 android:padding="10dp">
 
                 <EditText
-                    android:id="@+id/adminPeopleFirstName"
+                    android:id="@+id/adminPeopleName"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="10dp"

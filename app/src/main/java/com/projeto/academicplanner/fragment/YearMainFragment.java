@@ -127,44 +127,36 @@ public class YearMainFragment extends Fragment {
 
     private void yearsDelete(final Years selectedToRemove) {
 
-        final AlertDialog.Builder deleteDialog = new AlertDialog.Builder(getContext());
-        final View deleteDialogView = getLayoutInflater().inflate(R.layout.dialog_model_delete_request, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
-        final Button buttonNoDelete = deleteDialogView.findViewById(R.id.buttonNoDelete);
-        final Button buttonDelete = deleteDialogView.findViewById(R.id.buttonDelete);
+        String name = selectedToRemove.getYearName();
+        String msg = "Are you sure, you want to delete the year " + name + "?";
 
-        //method to create and show AlertDialog to DELETE
-        deleteDialog.setView(deleteDialogView);
-        final AlertDialog deleteDialogAlert = deleteDialog.create();
-        deleteDialogAlert.show();
+        builder.setTitle(msg);
+        builder.setPositiveButton(android.R.string.yes, (dialog, id) -> {
 
-        buttonDelete.setOnClickListener(v -> {
-
-            //method to remove the selected object
             selectedToRemove.delete();
-            toastMsgLong("Year " + selectedToRemove.getYearName() + " has been removed!");
+            toastMsgLong("Year " + name + " has been removed!");
             adapter.notifyDataSetChanged();
-            deleteDialogAlert.cancel();
+            dialog.dismiss();
 
-            /**
-             * Call adapter
-             */
+            //call methods
             adapterConstructor();
 
-            /**
-             * Create object and fill recyclerViewYears
-             */
-            Years years = new Years();
-            years.recovery(idUserLogged, yearsList, adapter);
+            //create object and fill recyclerViewCourses
+            Years yearss = new Years();
+            yearss.recovery(idUserLogged, yearsList, adapter);
 
         });
 
-        buttonNoDelete.setOnClickListener(v -> {
-
+        builder.setNegativeButton(android.R.string.no, (dialog, id) -> {
             //method to cancel the delete operation
             toastMsgLong("Request CANCELED");
-            deleteDialogAlert.cancel();
+            dialog.dismiss();
         });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     public void goToNewFragment() {

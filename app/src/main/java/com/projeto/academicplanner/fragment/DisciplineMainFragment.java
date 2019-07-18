@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.projeto.academicplanner.R;
 import com.projeto.academicplanner.adapter.Adapter_Disciplines;
 import com.projeto.academicplanner.helper.ConfigFirebase;
+import com.projeto.academicplanner.model.Course;
 import com.projeto.academicplanner.model.Discipline;
 
 import java.util.ArrayList;
@@ -112,45 +113,36 @@ public class DisciplineMainFragment extends Fragment {
 
     private void disciplineDelete(final Discipline selectedToRemove) {
 
-        final AlertDialog.Builder deleteDialog = new AlertDialog.Builder(getContext());
-        final View deleteDialogView = getLayoutInflater().inflate(R.layout.dialog_model_delete_request, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
-        final Button buttonNoDelete = deleteDialogView.findViewById(R.id.buttonNoDelete);
-        final Button buttonDelete = deleteDialogView.findViewById(R.id.buttonDelete);
+        String name = selectedToRemove.getDisciplineName();
+        String msg = "Are you sure, you want to delete the discipline " + name + "?";
 
-        //method to create and show AlertDialog to DELETE
-        deleteDialog.setView(deleteDialogView);
-        final AlertDialog deleteDialogAlert = deleteDialog.create();
-        deleteDialogAlert.show();
+        builder.setTitle(msg);
+        builder.setPositiveButton(android.R.string.yes, (dialog, id) -> {
 
-        buttonDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            selectedToRemove.delete();
+            toastMsgLong("Discipline " + name + " has been removed!");
+            adapter.notifyDataSetChanged();
+            dialog.dismiss();
 
-                //method to remove the selected object
-                selectedToRemove.delete();
-                toastMsg("Discipline " + selectedToRemove.getDisciplineName() + " has been removed!");
-                adapter.notifyDataSetChanged();
-                deleteDialogAlert.cancel();
+            //call methods
+            adapterConstructor();
 
-                //call methods
-                adapterConstructor();
+            //create object and fill recyclerViewCourses
+            Discipline discipline = new Discipline();
+            discipline.recovery(idUserLogged, disciplines, adapter);
 
-                //create object and fill recyclerViewCourses
-                Discipline discipline = new Discipline();
-                discipline.recovery(idUserLogged, disciplines, adapter);
-            }
         });
 
-        buttonNoDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                //method to cancel the delete operation
-                toastMsg("Request CANCELED");
-                deleteDialogAlert.cancel();
-            }
+        builder.setNegativeButton(android.R.string.no, (dialog, id) -> {
+            //method to cancel the delete operation
+            toastMsgLong("Request CANCELED");
+            dialog.dismiss();
         });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     public void goToUpdateFragment(Discipline objectToAction) {
@@ -183,7 +175,7 @@ public class DisciplineMainFragment extends Fragment {
 
     }
 
-    public void toastMsg(String text) {
+    public void toastMsgLong(String text) {
 
         //show toast parameters
         Toast toastError = Toast.makeText(getContext(), text, Toast.LENGTH_LONG);
