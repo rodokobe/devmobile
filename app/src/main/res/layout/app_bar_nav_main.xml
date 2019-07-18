@@ -18,6 +18,15 @@
             android:background="@drawable/bg_add_edit_brown"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
+        <devs.mulham.horizontalcalendar.HorizontalCalendarView
+            android:id="@+id/calendarView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:textColorNormal="#5E5E5E"
+            app:textColorSelected="#FFFF"
+            app:selectorColor="#006064"
+            app:selectedDateBackground="@color/datePickedBackground"/>
+
     </com.google.android.material.appbar.AppBarLayout>
 
     <include layout="@layout/content_nav_main" />

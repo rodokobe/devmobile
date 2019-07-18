@@ -14,5 +14,6 @@
     <color name="colorButtonBrown">#84725E</color>
     <color name="colorButtonGreen">#FC547040</color>
     <color name="colorButtonNewBrown">#5C5410</color>
+    <color name="datePickedBackground">#797871</color>
 
 </resources>
