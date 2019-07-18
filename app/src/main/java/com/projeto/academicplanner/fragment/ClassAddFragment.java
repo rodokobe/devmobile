@@ -1,6 +1,7 @@
 package com.projeto.academicplanner.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -23,6 +24,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.projeto.academicplanner.Interface.IFirebaseLoadDoneDiscipline;
 import com.projeto.academicplanner.R;
+import com.projeto.academicplanner.activity.ClassMainActivity;
+import com.projeto.academicplanner.activity.NavMainActivity;
 import com.projeto.academicplanner.helper.ConfigFirebase;
 import com.projeto.academicplanner.helper.DateTimeCustom;
 import com.projeto.academicplanner.model.Classes;
@@ -46,8 +49,6 @@ public class ClassAddFragment extends Fragment implements IFirebaseLoadDoneDisci
 
     private DatabaseReference firebaseRefDiscipline;
     private IFirebaseLoadDoneDiscipline iFirebaseLoadDoneDiscipline;
-
-    private ClassAddFragment addClassFragment;
 
 
     public ClassAddFragment() {
@@ -210,10 +211,7 @@ public class ClassAddFragment extends Fragment implements IFirebaseLoadDoneDisci
     }
 
     public void backToMain() {
-        addClassFragment = new ClassAddFragment();
-        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameClassMain, addClassFragment);
-        transaction.commit();
+        startActivity( new Intent(getActivity(), NavMainActivity.class) );
     }
 
     private void initializingComponents(View view) {
