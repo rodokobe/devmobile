@@ -16,15 +16,17 @@ public class Discipline extends Course {
 
     private String idUser;
     private String idUniversity;
+    private String universityName;
     private String idCourse;
+    private String courseName;
     private String idDiscipline;
     private String disciplineName;
     private String acronymDiscipline;
     private String disciplineYearId;
     private String disciplineYearName;
     private String disciplineSemester;
-    private String universityName;
-    private String courseName;
+
+
 
     private DatabaseReference firebaseRef = ConfigFirebase.getReferenciaFirebase();
 

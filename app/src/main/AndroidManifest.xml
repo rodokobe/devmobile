@@ -13,9 +13,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".activity.ClassMainActivity"
+            android:parentActivityName=".activity.NavMainActivity" />
+        <activity
             android:name=".activity.NavMainActivity"
             android:label="@string/title_activity_nav_main"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activity.UserProfileActivity" />
         <activity
             android:name=".activity.CreateAccountActivity"

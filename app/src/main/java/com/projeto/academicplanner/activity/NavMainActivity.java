@@ -13,6 +13,7 @@ import android.util.Log;
 import java.util.Random;
 import android.view.MenuItem;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -29,7 +30,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -53,6 +53,7 @@ public class NavMainActivity extends AppCompatActivity
     private String userIdLogged;
     private TextView nameText;
     private HorizontalCalendar horizontalCalendar;
+    private FloatingActionButton fabButton;
 
     private String urlImagemSelecionada = "";
 
@@ -63,9 +64,9 @@ public class NavMainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nav_main);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         getSupportActionBar().setTitle("Next Events");
 
         auth = ConfigFirebase.getReferenciaAutenticacao();
@@ -81,6 +82,60 @@ public class NavMainActivity extends AppCompatActivity
         userIdLogged = UserFirebase.getUserId();
 
         initializingComponents();
+
+        /**
+         * Setting name and photo on NavigationView
+         */
+        navigationView.setNavigationItemSelectedListener(this);
+
+        View headerView = navigationView.getHeaderView(0);
+
+        TextView nameNav = headerView.findViewById(R.id.navNameText);
+        ImageView photoProfileNav = headerView.findViewById(R.id.imageViewProfile);
+
+        DatabaseReference userProfileRef = firebaseRef
+                .child("users")
+                .child(userIdLogged);
+        userProfileRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                UserProfile userProfile = dataSnapshot.getValue(UserProfile.class);
+
+                String firstname = userProfile.getFirstname();
+                String lastname = userProfile.getLastname();
+
+                String name = firstname + " " + lastname;
+
+                if(dataSnapshot.getValue() != null){
+
+                    nameNav.setText(name);
+                    urlImagemSelecionada = userProfile.getUrlProfile();
+                }
+
+                if(urlImagemSelecionada != ""){
+                    Picasso.get()
+                            .load(urlImagemSelecionada)
+                            .into(photoProfileNav);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+
+        });
+
+        /**
+         * Setting email on NavigationView
+         */
+
+        TextView emailNav = headerView.findViewById(R.id.textViewEmail);
+        emailNav.setText(auth.getCurrentUser().getEmail());
+
+        /**
+         * Implementing Calendar
+         */
 
         /* starts before 1 month from now */
         Calendar startDate = Calendar.getInstance();
@@ -137,49 +192,6 @@ public class NavMainActivity extends AppCompatActivity
             }
         });
 
-        navigationView.setNavigationItemSelectedListener(this);
-
-        View headerView = navigationView.getHeaderView(0);
-
-        /**
-         * Setting name on NavigationView
-         */
-        TextView nameNav = headerView.findViewById(R.id.navNameText);
-        ImageView photoProfileNav = headerView.findViewById(R.id.imageViewProfile);
-
-        DatabaseReference userProfileRef = firebaseRef
-                .child("users")
-                .child(userIdLogged);
-        userProfileRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                UserProfile userProfile = dataSnapshot.getValue(UserProfile.class);
-
-                String firstname = userProfile.getFirstname();
-                String lastname = userProfile.getLastname();
-
-                String name = firstname + " " + lastname;
-
-                if(dataSnapshot.getValue() != null){
-
-                    nameNav.setText(name);
-                    urlImagemSelecionada = userProfile.getUrlProfile();
-                }
-
-                if(urlImagemSelecionada != ""){
-                    Picasso.get()
-                            .load(urlImagemSelecionada)
-                            .into(photoProfileNav);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-
-        });
-
         horizontalCalendar.setCalendarListener(new HorizontalCalendarListener() {
             @Override
             public void onDateSelected(Calendar date, int position) {
@@ -198,18 +210,16 @@ public class NavMainActivity extends AppCompatActivity
             }
         });
 
-
-        /**
-         * Setting email on NavigationView
-         */
-
-        TextView emailNav = headerView.findViewById(R.id.textViewEmail);
-        emailNav.setText(auth.getCurrentUser().getEmail());
+        fabButton.setOnClickListener( view -> {
+            startActivity( new Intent(getApplicationContext(), ClassMainActivity.class) );
+        });
 
     }
 
 
-
+    /**
+     * Pressing Navigation Menu
+     */
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -220,27 +230,7 @@ public class NavMainActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.nav_main, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -275,7 +265,10 @@ public class NavMainActivity extends AppCompatActivity
 
 
     private void initializingComponents(){
+
         nameText = findViewById(R.id.navNameText);
+        fabButton = findViewById(R.id.fabButton);
+
     }
 
     private void userLogout(){
