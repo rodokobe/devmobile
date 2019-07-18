@@ -116,7 +116,7 @@ public class StudentMainFragment extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
         String name = selectedToRemove.getStudentFirstName() + " " + selectedToRemove.getStudentLastName();
-        String msg = "Are you sure, you want to delete the student" + name + "?";
+        String msg = "Are you sure, you want to delete the student " + name + "?";
 
         builder.setTitle(msg);
         builder.setPositiveButton(android.R.string.yes, (dialog, id) -> {

@@ -115,7 +115,7 @@ public class AdminPeopleMainFragment extends Fragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         String name = selectedToRemove.getAdminPeopleFirstName() + " " + selectedToRemove.getAdminPeopleLastName();
-        String msg = "Are you sure, you want to delete the administrative people" + name + "?";
+        String msg = "Are you sure, you want to delete the administrative people " + name + "?";
         builder.setTitle(msg);
         builder.setPositiveButton(android.R.string.yes, (dialog, id) -> {
 
