@@ -10,26 +10,12 @@ import com.projeto.academicplanner.adapter.Adapter_Classes;
 import com.projeto.academicplanner.helper.ConfigFirebase;
 
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
-import java.util.Timer;
 
 public class Classes {
 
-    private String idUser;
-    private String idUniversity;
-    private String nameUniversity;
-    private String idCourse;
-    private String nameCourse;
-    private String idDiscipline;
-    private String nameDiscipline;
-    private String idClass;
-    private String subject;
-    private Date classDate;
-    private Timer classTime;
-    private int timeDuration;
-    private String classroom;
-    private String topicsAndContents;
+    private String idUser, idClass, subject, classDate, classTime, timeDuration, classroom, topicsAndContents,
+            idUniversity, nameUniversity, idCourse, nameCourse, idDiscipline, nameDiscipline, idYear, nameYear, semester;
 
     private DatabaseReference firebaseRef = ConfigFirebase.getReferenciaFirebase();
     private DatabaseReference classesRef;
@@ -173,29 +159,17 @@ public class Classes {
         this.subject = subject;
     }
 
-    public Date getClassDate() {
-        return classDate;
-    }
+    public String getClassDate() { return classDate; }
 
-    public void setClassDate(Date classDate) {
-        this.classDate = classDate;
-    }
+    public void setClassDate(String classDate) { this.classDate = classDate; }
 
-    public Timer getClassTime() {
-        return classTime;
-    }
+    public String getClassTime() { return classTime; }
 
-    public void setClassTime(Timer classTime) {
-        this.classTime = classTime;
-    }
+    public void setClassTime(String classTime) { this.classTime = classTime; }
 
-    public int getTimeDuration() {
-        return timeDuration;
-    }
+    public String getTimeDuration() { return timeDuration; }
 
-    public void setTimeDuration(int timeDuration) {
-        this.timeDuration = timeDuration;
-    }
+    public void setTimeDuration(String timeDuration) { this.timeDuration = timeDuration; }
 
     public String getClassroom() {
         return classroom;
@@ -209,7 +183,17 @@ public class Classes {
         return topicsAndContents;
     }
 
-    public void setTopicsAndContents(String topicsAndContents) {
-        this.topicsAndContents = topicsAndContents;
-    }
+    public void setTopicsAndContents(String topicsAndContents) { this.topicsAndContents = topicsAndContents; }
+
+    public String getIdYear() { return idYear; }
+
+    public void setIdYear(String idYear) { this.idYear = idYear; }
+
+    public String getNameYear() { return nameYear; }
+
+    public void setNameYear(String nameYear) { this.nameYear = nameYear; }
+
+    public String getSemester() { return semester; }
+
+    public void setSemester(String semester) { this.semester = semester; }
 }
