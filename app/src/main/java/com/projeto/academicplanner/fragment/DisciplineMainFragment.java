@@ -32,15 +32,15 @@ public class DisciplineMainFragment extends Fragment {
 
     //general variables
     private Button buttonDisciplines;
-    private TextView backToAddEditMain;
-    private String idUserLoged;
+    private TextView backToPrevious;
+    private String idUserLogged;
     private List<Discipline> disciplines = new ArrayList<>();
     private DisciplineAddFragment addDisciplineFragment;
     private DisciplineUpdateFragment updateDisciplineFragment;
-    private AddEditMainFragment fragmentMain;
+    private SettingsFragment settingsFragment;
 
     //recycler view variables
-    private RecyclerView recylcerDisciplines;
+    private RecyclerView recyclerDisciplines;
     private RecyclerView.LayoutManager layout;
     private Adapter_Disciplines adapter;
 
@@ -59,32 +59,24 @@ public class DisciplineMainFragment extends Fragment {
         final View mainDisciplines = inflater.inflate(R.layout.fragment_discipline_main, container, false);
 
         //start configurations
-        buttonDisciplines = mainDisciplines.findViewById(R.id.buttonDisciplines);
-        backToAddEditMain = mainDisciplines.findViewById(R.id.backToAddEditMain);
-        recylcerDisciplines = mainDisciplines.findViewById(R.id.recylcerDisciplines);
+        initializingComponents(mainDisciplines);
 
         //recovery loged user ID
-        idUserLoged = ConfigFirebase.getUserId();
+        idUserLogged = ConfigFirebase.getUserId();
 
         //call methods
         adapterConstructor();
 
         //create object and fill recyclerViewCourses
         Discipline discipline = new Discipline();
-        discipline.recovery(idUserLoged, disciplines, adapter);
+        discipline.recovery(idUserLogged, disciplines, adapter);
 
-        buttonDisciplines.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        buttonDisciplines.setOnClickListener( v->  {
                 goToNewFragment();
-            }
         });
 
-        backToAddEditMain.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        backToPrevious.setOnClickListener( v -> {
                 goBackToMain();
-            }
         });
 
         return mainDisciplines;
@@ -96,38 +88,24 @@ public class DisciplineMainFragment extends Fragment {
         //recycler view configuration
         layout = new LinearLayoutManager(getContext());
         adapter = new Adapter_Disciplines(disciplines, getContext());
-        recylcerDisciplines.setAdapter(adapter);
-        recylcerDisciplines.setLayoutManager(layout);
-        recylcerDisciplines.setHasFixedSize(true);
-        recylcerDisciplines.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayout.VERTICAL));
+        recyclerDisciplines.setAdapter(adapter);
+        recyclerDisciplines.setLayoutManager(layout);
+        recyclerDisciplines.setHasFixedSize(true);
 
-        adapter.setOnItemClickListener(new Adapter_Disciplines.ClickListener() {
-            @Override
-            public void onItemClick(Adapter_Disciplines adapter_disciplines, View v, final int position) {
+        adapter.setOnItemClickListener( (adapter_disciplines, v, position) ->  {
 
                 final ImageView imageEdit = v.findViewById(R.id.imageEdit);
                 final ImageView imageDelete = v.findViewById(R.id.imageDelete);
 
                 final Discipline objectToAction = disciplines.get(position);
 
-                imageDelete.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
+                imageDelete.setOnClickListener( view -> {
                         disciplineDelete(objectToAction);
-
-                    }
                 });
 
-                imageEdit.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
+                imageEdit.setOnClickListener( view -> {
                         goToUpdateFragment(objectToAction);
-
-                    }
                 });
-            }
         });
 
     }
@@ -160,7 +138,7 @@ public class DisciplineMainFragment extends Fragment {
 
                 //create object and fill recyclerViewCourses
                 Discipline discipline = new Discipline();
-                discipline.recovery(idUserLoged, disciplines, adapter);
+                discipline.recovery(idUserLogged, disciplines, adapter);
             }
         });
 
@@ -185,22 +163,22 @@ public class DisciplineMainFragment extends Fragment {
         updateDisciplineFragment.setArguments(dataToUpdate);
 
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameAddEditUserProfile, updateDisciplineFragment);
+        transaction.replace(R.id.frameSettingsMain, updateDisciplineFragment);
         transaction.commit();
     }
 
     public void goToNewFragment() {
         addDisciplineFragment = new DisciplineAddFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameAddEditUserProfile, addDisciplineFragment);
+        transaction.replace(R.id.frameSettingsMain, addDisciplineFragment);
         transaction.commit();
     }
 
     public void goBackToMain() {
 
-        fragmentMain = new AddEditMainFragment();
+        settingsFragment = new SettingsFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameAddEditUserProfile, fragmentMain);
+        transaction.replace(R.id.frameSettingsMain, settingsFragment);
         transaction.commit();
 
     }
@@ -212,5 +190,11 @@ public class DisciplineMainFragment extends Fragment {
         toastError.setGravity(Gravity.CENTER, 0, 800);
         toastError.show();
 
+    }
+
+    private void initializingComponents(View view){
+        buttonDisciplines = view.findViewById(R.id.buttonDisciplines);
+        backToPrevious = view.findViewById(R.id.backToPrevious);
+        recyclerDisciplines = view.findViewById(R.id.recylcerDisciplines);
     }
 }

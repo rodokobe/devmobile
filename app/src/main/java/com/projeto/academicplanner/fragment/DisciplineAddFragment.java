@@ -37,11 +37,11 @@ import java.util.List;
 public class DisciplineAddFragment extends Fragment implements IFirebaseLoadDoneCourse, IFirebaseLoadDoneYears {
 
     private EditText disciplineName, acronymDiscipline;
-    private TextView backToAddEditMain;
+    private TextView backToPrevious;
     private SearchableSpinner spinnerUniversity, spinnerYear;
     private Switch switchSemester;
     private Button buttonDisciplines;
-    private String idUserLoged, idUniversitySelected, nameUniversitySelected, idCourseSelected, nameCourseSelected, idYearSelected, nameYearSelected;
+    private String idUserLogged, idUniversitySelected, nameUniversitySelected, idCourseSelected, nameCourseSelected, idYearSelected, nameYearSelected;
 
     private DatabaseReference firebaseRefCourse, firebaseRefYear;
     private IFirebaseLoadDoneCourse iFirebaseLoadDoneCourse;
@@ -58,19 +58,13 @@ public class DisciplineAddFragment extends Fragment implements IFirebaseLoadDone
         View addDiscipline = inflater.inflate(R.layout.fragment_discipline_add, container, false);
 
         //configurações iniciais
-        disciplineName = addDiscipline.findViewById(R.id.disciplineName);
-        acronymDiscipline = addDiscipline.findViewById(R.id.acronymDiscipline);
-        backToAddEditMain = addDiscipline.findViewById(R.id.backToAddEditMain);
-        spinnerUniversity = addDiscipline.findViewById(R.id.spinnerUniversity);
-        spinnerYear = addDiscipline.findViewById(R.id.spinnerYear);
-        switchSemester = addDiscipline.findViewById(R.id.switchSemester);
-        buttonDisciplines = addDiscipline.findViewById(R.id.buttonDisciplines);
+        initializingComponents(addDiscipline);
 
-        idUserLoged = ConfigFirebase.getUserId();
+        idUserLogged = ConfigFirebase.getUserId();
 
         //instances to load data and send to spinners
-        firebaseRefCourse = FirebaseDatabase.getInstance().getReference("courses").child(idUserLoged);
-        firebaseRefYear = FirebaseDatabase.getInstance().getReference("years").child(idUserLoged);
+        firebaseRefCourse = FirebaseDatabase.getInstance().getReference("courses").child(idUserLogged);
+        firebaseRefYear = FirebaseDatabase.getInstance().getReference("years").child(idUserLogged);
 
 
         iFirebaseLoadDoneCourse = this;
@@ -141,7 +135,7 @@ public class DisciplineAddFragment extends Fragment implements IFirebaseLoadDone
         });
 
 
-        backToAddEditMain.setOnClickListener(new View.OnClickListener() {
+        backToPrevious.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 backToMain();
@@ -160,7 +154,7 @@ public class DisciplineAddFragment extends Fragment implements IFirebaseLoadDone
         final List<String> university_name = new ArrayList<>();
         for (Course course : coursesList)
 
-            university_name.add("University: " + course.getUniversityName() + "\nCourse: " + course.getCourseName());
+            university_name.add(course.getUniversityName() + "\n" + course.getCourseName());
 
         //Create adapter
         ArrayAdapter<String> adapterUniversity = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, university_name);
@@ -196,7 +190,7 @@ public class DisciplineAddFragment extends Fragment implements IFirebaseLoadDone
         final List<String> year_name = new ArrayList<>();
         for (Years year : yearsList)
 
-            year_name.add("Year: " + year.getYearName());
+            year_name.add(year.getYearName());
 
         //Create adapter
         ArrayAdapter<String> adapterYear = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, year_name);
@@ -230,7 +224,7 @@ public class DisciplineAddFragment extends Fragment implements IFirebaseLoadDone
             if (!disciplineSaveAcronym.isEmpty()) {
 
                 Discipline discipline = new Discipline();
-                discipline.setIdUser(idUserLoged);
+                discipline.setIdUser(idUserLogged);
                 discipline.setDisciplineName(disciplineSaveName);
                 discipline.setAcronymDiscipline(disciplineSaveAcronym);
                 discipline.setDisciplineYearId(disciplineSaveYearId);
@@ -258,7 +252,7 @@ public class DisciplineAddFragment extends Fragment implements IFirebaseLoadDone
     public void backToMain() {
         disciplineMainFragmentF = new DisciplineMainFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameAddEditUserProfile, disciplineMainFragmentF);
+        transaction.replace(R.id.frameSettingsMain, disciplineMainFragmentF);
         transaction.commit();
     }
 
@@ -270,6 +264,16 @@ public class DisciplineAddFragment extends Fragment implements IFirebaseLoadDone
         toastError.setGravity(Gravity.CENTER, 0, 800);
         toastError.show();
 
+    }
+
+    private void initializingComponents(View view){
+        disciplineName = view.findViewById(R.id.disciplineName);
+        acronymDiscipline = view.findViewById(R.id.acronymDiscipline);
+        backToPrevious = view.findViewById(R.id.backToPrevious);
+        spinnerUniversity = view.findViewById(R.id.spinnerUniversity);
+        spinnerYear = view.findViewById(R.id.spinnerYear);
+        switchSemester = view.findViewById(R.id.switchSemester);
+        buttonDisciplines = view.findViewById(R.id.buttonDisciplines);
     }
 
 }

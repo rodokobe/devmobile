@@ -38,11 +38,11 @@ import java.util.List;
 public class DisciplineUpdateFragment extends Fragment implements IFirebaseLoadDoneCourse, IFirebaseLoadDoneYears {
 
     private EditText disciplineName, acronymDiscipline;
-    private TextView backToAddEditMain, addEdit;
+    private TextView backToPrevious;
     private SearchableSpinner spinnerUniversity, spinnerYear;
     private Switch switchSemester;
     private Button buttonDisciplines;
-    private String idUserLoged, idUniversitySelected, nameUniversitySelected, idCourseSelected, nameCourseSelected, idYearSelected, nameYearSelected;
+    private String idUserLogged, idUniversitySelected, nameUniversitySelected, idCourseSelected, nameCourseSelected, idYearSelected, nameYearSelected;
     private Discipline disciplineToUpdate;
 
     private DatabaseReference firebaseRefCourse, firebaseRefYear;
@@ -68,16 +68,9 @@ public class DisciplineUpdateFragment extends Fragment implements IFirebaseLoadD
         View updateDiscipline = inflater.inflate(R.layout.fragment_discipline_add, container, false);
 
         //configurações iniciais
-        disciplineName = updateDiscipline.findViewById(R.id.disciplineName);
-        acronymDiscipline = updateDiscipline.findViewById(R.id.acronymDiscipline);
-        backToAddEditMain = updateDiscipline.findViewById(R.id.backToAddEditMain);
-        spinnerUniversity = updateDiscipline.findViewById(R.id.spinnerUniversity);
-        spinnerYear = updateDiscipline.findViewById(R.id.spinnerYear);
-        switchSemester = updateDiscipline.findViewById(R.id.switchSemester);
-        buttonDisciplines = updateDiscipline.findViewById(R.id.buttonDisciplines);
-        addEdit = updateDiscipline.findViewById(R.id.addEdit);
+        initializingComponents(updateDiscipline);
 
-        idUserLoged = ConfigFirebase.getUserId();
+        idUserLogged = ConfigFirebase.getUserId();
 
         disciplineName.setText(disciplineToUpdate.getDisciplineName());
         acronymDiscipline.setText(disciplineToUpdate.getAcronymDiscipline());
@@ -85,11 +78,10 @@ public class DisciplineUpdateFragment extends Fragment implements IFirebaseLoadD
         spinnerYear.setTitle(disciplineToUpdate.getDisciplineYearName());
 
         buttonDisciplines.setText("Update");
-        addEdit.setText("update");
 
         //instances to load data and send to spinners
-        firebaseRefCourse = FirebaseDatabase.getInstance().getReference("courses").child(idUserLoged);
-        firebaseRefYear = FirebaseDatabase.getInstance().getReference("years").child(idUserLoged);
+        firebaseRefCourse = FirebaseDatabase.getInstance().getReference("courses").child(idUserLogged);
+        firebaseRefYear = FirebaseDatabase.getInstance().getReference("years").child(idUserLogged);
 
 
         iFirebaseLoadDoneCourse = this;
@@ -150,11 +142,8 @@ public class DisciplineUpdateFragment extends Fragment implements IFirebaseLoadD
         });
 
 
-        backToAddEditMain.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        backToPrevious.setOnClickListener( v ->  {
                 backToMain();
-            }
         });
 
         return updateDiscipline;
@@ -169,7 +158,7 @@ public class DisciplineUpdateFragment extends Fragment implements IFirebaseLoadD
         final List<String> university_name = new ArrayList<>();
         for (Course course : coursesList)
 
-            university_name.add("University: " + course.getUniversityName() + "\nCourse: " + course.getCourseName());
+            university_name.add(course.getUniversityName() + "\n" + course.getCourseName());
 
         //Create adapter
         ArrayAdapter<String> adapterUniversity = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, university_name);
@@ -205,7 +194,7 @@ public class DisciplineUpdateFragment extends Fragment implements IFirebaseLoadD
         final List<String> year_name = new ArrayList<>();
         for (Years year : yearsList)
 
-            year_name.add("Year: " + year.getYearName());
+            year_name.add(year.getYearName());
 
         //Create adapter
         ArrayAdapter<String> adapterYear = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, year_name);
@@ -242,7 +231,7 @@ public class DisciplineUpdateFragment extends Fragment implements IFirebaseLoadD
 
         final Discipline disciplineUpdate = new Discipline();
 
-        disciplineUpdate.setIdUser(idUserLoged);
+        disciplineUpdate.setIdUser(idUserLogged);
         disciplineUpdate.setIdDiscipline(disciplineToUpdate.getIdDiscipline());
         disciplineUpdate.setDisciplineName(disciplineName.getText().toString());
         disciplineUpdate.setAcronymDiscipline(acronymDiscipline.getText().toString());
@@ -263,7 +252,7 @@ public class DisciplineUpdateFragment extends Fragment implements IFirebaseLoadD
     public void backToMain() {
         disciplineMainFragmentF = new DisciplineMainFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameAddEditUserProfile, disciplineMainFragmentF);
+        transaction.replace(R.id.frameSettingsMain, disciplineMainFragmentF);
         transaction.commit();
     }
 
@@ -275,6 +264,16 @@ public class DisciplineUpdateFragment extends Fragment implements IFirebaseLoadD
         toastError.setGravity(Gravity.CENTER, 0, 800);
         toastError.show();
 
+    }
+
+    private void initializingComponents(View view){
+        disciplineName = view.findViewById(R.id.disciplineName);
+        acronymDiscipline = view.findViewById(R.id.acronymDiscipline);
+        backToPrevious = view.findViewById(R.id.backToPrevious);
+        spinnerUniversity = view.findViewById(R.id.spinnerUniversity);
+        spinnerYear = view.findViewById(R.id.spinnerYear);
+        switchSemester = view.findViewById(R.id.switchSemester);
+        buttonDisciplines = view.findViewById(R.id.buttonDisciplines);
     }
 
 }
