@@ -54,6 +54,7 @@ public class StudentUpdateFragment extends Fragment {
         studentFirstName.setText(studentToUpdate.getStudentFirstName());
         studentLastName.setText(studentToUpdate.getStudentLastName());
         studentEmail.setText(studentToUpdate.getStudentEmail());
+        isDelegateButton.setText(studentToUpdate.getStudentDelegate());
 
         buttonStudents.setText("UPDATE");
 

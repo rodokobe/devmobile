@@ -77,6 +77,15 @@ public class DisciplineUpdateFragment extends Fragment implements IFirebaseLoadD
         spinnerUniversity.setTitle(disciplineToUpdate.getCourseName());
         spinnerYear.setTitle(disciplineToUpdate.getDisciplineYearName());
 
+        String switchSem = disciplineToUpdate.getDisciplineSemester();
+
+        if (switchSem.equals("1")){
+            switchSemester.setChecked(false);
+        } else {
+            switchSemester.setChecked(true);
+        }
+
+
         buttonDisciplines.setText("Update");
 
         //instances to load data and send to spinners
