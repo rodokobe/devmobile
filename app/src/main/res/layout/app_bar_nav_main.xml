@@ -25,7 +25,12 @@
             app:textColorNormal="#5E5E5E"
             app:textColorSelected="#FFFF"
             app:selectorColor="#006064"
-            app:selectedDateBackground="@color/datePickedBackground"/>
+            app:selectedDateBackground="@color/datePickedBackground">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </devs.mulham.horizontalcalendar.HorizontalCalendarView>
 
     </com.google.android.material.appbar.AppBarLayout>
 

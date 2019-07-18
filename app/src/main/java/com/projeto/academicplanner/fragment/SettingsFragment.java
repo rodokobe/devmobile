@@ -27,7 +27,6 @@ public class SettingsFragment extends Fragment {
     private UniversityMainFragment universityMain;
     private CourseMainFragment courseMain;
     private DisciplineMainFragment disciplineMain;
-    private EventTypeMainFragment eventTypeMain;
     private StudentMainFragment studentMain;
     private AdminPeopleMainFragment adminPeopleMain;
 
@@ -60,10 +59,6 @@ public class SettingsFragment extends Fragment {
 
         disciplinesCrudMain.setOnClickListener( view -> {
                 goToDisciplineMain(view);
-        });
-
-        eventsTypeCrudMain.setOnClickListener( view -> {
-                goToEventTypeMain(view);
         });
 
         studentsCrudMain.setOnClickListener( view -> {
@@ -114,15 +109,6 @@ public class SettingsFragment extends Fragment {
         disciplineMain = new DisciplineMainFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frameSettingsMain, disciplineMain);
-        transaction.commit();
-
-    }
-
-    public void goToEventTypeMain(View view) {
-
-        eventTypeMain = new EventTypeMainFragment();
-        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameSettingsMain, eventTypeMain);
         transaction.commit();
 
     }

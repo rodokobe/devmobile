@@ -22,7 +22,6 @@ public class AddEditMainFragment extends Fragment {
     private UniversityMainFragment universityMain;
     private CourseMainFragment courseMain;
     private DisciplineMainFragment disciplineMain;
-    private EventTypeMainFragment eventTypeMain;
     private StudentMainFragment studentMain;
     private AdminPeopleMainFragment adminPeopleMain;
 
@@ -75,12 +74,6 @@ public class AddEditMainFragment extends Fragment {
             }
         });
 
-        eventsTypeCrudMain.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goToEventTypeMain(v);
-            }
-        });
 
         studentsCrudMain.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,14 +138,6 @@ public class AddEditMainFragment extends Fragment {
 
     }
 
-    public void goToEventTypeMain(View view) {
-
-        eventTypeMain = new EventTypeMainFragment();
-        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameAddEditUserProfile, eventTypeMain);
-        transaction.commit();
-
-    }
 
     public void goToStudentMain(View view) {
 
