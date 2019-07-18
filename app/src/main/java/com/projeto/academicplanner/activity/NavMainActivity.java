@@ -3,15 +3,20 @@ package com.projeto.academicplanner.activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.core.view.GravityCompat;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-
 import android.text.format.DateFormat;
 import android.util.Log;
-import java.util.Random;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -25,22 +30,12 @@ import com.projeto.academicplanner.helper.ConfigFirebase;
 import com.projeto.academicplanner.model.UserProfile;
 import com.squareup.picasso.Picasso;
 
-import androidx.drawerlayout.widget.DrawerLayout;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Random;
 
 import devs.mulham.horizontalcalendar.HorizontalCalendar;
-import devs.mulham.horizontalcalendar.HorizontalCalendarView;
 import devs.mulham.horizontalcalendar.model.CalendarEvent;
 import devs.mulham.horizontalcalendar.utils.CalendarEventsPredicate;
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener;
@@ -189,24 +184,6 @@ public class NavMainActivity extends AppCompatActivity
                 String selectedDateStr = DateFormat.format("EEE, MMM d, yyyy", date).toString();
                 Toast.makeText(NavMainActivity.this, selectedDateStr + " selected!", Toast.LENGTH_SHORT).show();
                 Log.i("onDateSelected", selectedDateStr + " - Position = " + position);
-            }
-        });
-
-        horizontalCalendar.setCalendarListener(new HorizontalCalendarListener() {
-            @Override
-            public void onDateSelected(Calendar date, int position) {
-
-            }
-
-            @Override
-            public void onCalendarScroll(HorizontalCalendarView calendarView,
-                                         int dx, int dy) {
-
-            }
-
-            @Override
-            public boolean onDateLongClicked(Calendar date, int position) {
-                return true;
             }
         });
 
