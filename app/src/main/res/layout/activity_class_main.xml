@@ -22,9 +22,11 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include
-        layout="@layout/fragment_class_add"
+    <FrameLayout
+        android:id="@+id/frameClassMain"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent">
+
+    </FrameLayout>
 
 </LinearLayout>
