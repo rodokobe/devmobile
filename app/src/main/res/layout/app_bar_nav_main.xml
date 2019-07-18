@@ -22,10 +22,19 @@
             android:id="@+id/calendarView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:textColorNormal="#5E5E5E"
-            app:textColorSelected="#FFFF"
+            app:selectedDateBackground="@color/datePickedBackground"
             app:selectorColor="#006064"
-            app:selectedDateBackground="@color/datePickedBackground"/>
+            app:textColorNormal="#5E5E5E"
+            app:textColorSelected="#FFFF">
+
+        </devs.mulham.horizontalcalendar.HorizontalCalendarView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerEvents"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </androidx.recyclerview.widget.RecyclerView>
 
     </com.google.android.material.appbar.AppBarLayout>
 

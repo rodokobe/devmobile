@@ -6,7 +6,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
-import com.projeto.academicplanner.adapter.Adapter_Classes;
+import com.projeto.academicplanner.adapter.Adapter_Classes_Calendar;
 import com.projeto.academicplanner.helper.ConfigFirebase;
 
 import java.util.Collections;
@@ -26,7 +26,7 @@ public class Classes {
         setIdClass(classesRef.push().getKey());
     }
 
-    public void recovery(String idUserLogged, final List<Classes> classes, final Adapter_Classes adapter) {
+    public void recovery(String idUserLogged, final List<Classes> classes, final Adapter_Classes_Calendar adapter) {
 
         classesRef = firebaseRef
                 .child("classes")

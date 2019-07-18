@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +18,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -26,7 +30,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.projeto.academicplanner.R;
+import com.projeto.academicplanner.adapter.Adapter_Classes_Calendar;
 import com.projeto.academicplanner.helper.ConfigFirebase;
+import com.projeto.academicplanner.model.Classes;
 import com.projeto.academicplanner.model.UserProfile;
 import com.squareup.picasso.Picasso;
 
@@ -49,8 +55,13 @@ public class NavMainActivity extends AppCompatActivity
     private TextView nameText;
     private HorizontalCalendar horizontalCalendar;
     private FloatingActionButton fabButton;
+    private List<Classes> classes = new ArrayList<>();
 
     private String urlImagemSelecionada = "";
+
+    private RecyclerView recyclerEvents;
+    private RecyclerView.LayoutManager layout;
+    private Adapter_Classes_Calendar adapter;
 
     private DatabaseReference firebaseRef;
 
@@ -163,6 +174,7 @@ public class NavMainActivity extends AppCompatActivity
                     @Override
                     public List<CalendarEvent> events(Calendar date) {
                         List<CalendarEvent> events = new ArrayList<>();
+
                         int count = rnd.nextInt(6);
 
                         /*for (int i = 0; i <= count; i++) {
@@ -190,6 +202,8 @@ public class NavMainActivity extends AppCompatActivity
         fabButton.setOnClickListener( view -> {
             startActivity( new Intent(getApplicationContext(), ClassMainActivity.class) );
         });
+
+        fabButton.bringToFront();
 
     }
 
@@ -245,6 +259,37 @@ public class NavMainActivity extends AppCompatActivity
 
         nameText = findViewById(R.id.navNameText);
         fabButton = findViewById(R.id.fabButton);
+        recyclerEvents = findViewById(R.id.recyclerEvents);
+
+        //recovery logged user ID
+        userIdLogged = ConfigFirebase.getUserId();
+
+        //call methods
+        adapterConstructor();
+
+        //create object and fill recyclerViewCourses
+        Classes classe = new Classes();
+        classe.recovery(userIdLogged, classes, adapter);
+
+    }
+
+    private void adapterConstructor() {
+
+        //recycler view configuration
+        layout = new LinearLayoutManager(this);
+        adapter = new Adapter_Classes_Calendar(classes, this);
+        recyclerEvents.setAdapter(adapter);
+        recyclerEvents.setLayoutManager(layout);
+        recyclerEvents.setHasFixedSize(true);
+        recyclerEvents.addItemDecoration(new DividerItemDecoration(this, LinearLayout.VERTICAL));
+
+        adapter.setOnItemClickListener(new Adapter_Classes_Calendar.ClickListener() {
+            @Override
+            public void onItemClick(Adapter_Classes_Calendar adapter_classes_calendar, View v, final int position) {
+
+                final Classes objectToAction = classes.get(position);
+            }
+        });
 
     }
 
