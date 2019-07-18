@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.SettingsFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/yearCrudMain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/ic_crud_year"
+                android:gravity="center|start"
+                android:padding="10dp"
+                android:text="  Years"
+                android:textColor="@color/colorButtonNewBrown"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/universityCrudMain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/ic_crud_universities"
+                android:gravity="center|start"
+                android:padding="10dp"
+                android:text="  Universities"
+                android:textColor="@color/colorButtonNewBrown"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/coursesCrudMain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/ic_crud_courses"
+                android:gravity="center|start"
+                android:padding="10dp"
+                android:text="  Courses"
+                android:textColor="@color/colorButtonNewBrown"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/disciplinesCrudMain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/ic_crud_disciplines"
+                android:gravity="center|start"
+                android:padding="10dp"
+                android:text="  Disciplines"
+                android:textColor="@color/colorButtonNewBrown"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/eventsTypeCrudMain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/ic_crud_events_type"
+                android:gravity="center|start"
+                android:padding="10dp"
+                android:text="  Events"
+                android:textColor="@color/colorButtonNewBrown"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/studentsCrudMain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/ic_crud_student"
+                android:gravity="center|start"
+                android:padding="10dp"
+                android:text="  Students"
+                android:textColor="@color/colorButtonNewBrown"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:layout_weight="0.5"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/adminPeopleCrudMain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/ic_crud_adminpeople"
+                android:gravity="center|start"
+                android:padding="10dp"
+                android:text="  Administrative People"
+                android:textAlignment="center"
+                android:textColor="@color/colorButtonNewBrown"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/textViewToComponseScreen"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

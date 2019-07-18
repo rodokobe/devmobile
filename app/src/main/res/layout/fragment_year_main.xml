@@ -4,13 +4,22 @@
     android:layout_height="match_parent"
     tools:context=".fragment.UniversityAddFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="10dp">
+
+        <TextView
+            android:id="@+id/backToPrevious"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:drawableLeft="@drawable/ic_seta_voltar_24dp"
+            android:gravity="center"
+            android:text="BACK TO SETTINGS MAIN SCREEN"
+            android:textColor="@color/colorButtonNewBrown"
+            android:textSize="14sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -18,41 +27,20 @@
             android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="310dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/textFragmentName"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Year"
+                    android:layout_height="match_parent"
+                    android:text="Years"
                     android:textColor="@color/colorGray"
                     android:textSize="40sp"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/textView4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="-10dp"
-                    android:text="add/edit/remove"
-                    android:textColor="@color/colorBright"
-                    android:textSize="14sp" />
-
             </LinearLayout>
-
-            <TextView
-                android:id="@+id/backToAddEditMain"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_seta_voltar_24dp"
-                android:gravity="center"
-                android:paddingTop="20dp"
-                android:text="back"
-                android:textColor="@color/colorBright"
-                android:textSize="14sp" />
 
         </LinearLayout>
 
@@ -68,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:gravity="start"
-                android:text="Years List"
+                android:text="Listing added years"
                 android:textSize="14sp" />
 
             <androidx.recyclerview.widget.RecyclerView

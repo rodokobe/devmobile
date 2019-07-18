@@ -35,12 +35,14 @@ public class YearMainFragment extends Fragment {
      * General variables
      */
     private Button buttonYears;
-    private TextView backToAddEditMain;
+    //private TextView backToAddEditMain;
     private String idUserLogged;
     private List<Years> yearsList = new ArrayList<>();
     private YearAddFragment addYearFragmentF;
     //private YearUpdateFragment updateYearFragmentF;
-    private AddEditMainFragment fragmentMain;
+    //private AddEditMainFragment fragmentMain;
+    private TextView backToPrevious;
+    private SettingsFragment settingsFragment;
 
     /**
      * RecyclerView
@@ -85,8 +87,12 @@ public class YearMainFragment extends Fragment {
             goToNewFragment();
         });
 
-        backToAddEditMain.setOnClickListener(view -> {
+        /*backToAddEditMain.setOnClickListener(view -> {
             goBackToMain();
+        });*/
+
+        backToPrevious.setOnClickListener( view -> {
+            backToMainSettings();
         });
 
         return v;
@@ -171,7 +177,7 @@ public class YearMainFragment extends Fragment {
     public void goToNewFragment() {
         addYearFragmentF = new YearAddFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameAddEditUserProfile, addYearFragmentF);
+        transaction.replace(R.id.frameSettingsMain, addYearFragmentF);
         transaction.commit();
     }
 
@@ -189,26 +195,36 @@ public class YearMainFragment extends Fragment {
         transaction.commit();*/
     }
 
-    public void goBackToMain() {
+    /*public void goBackToMain() {
 
         fragmentMain = new AddEditMainFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameAddEditUserProfile, fragmentMain);
+        transaction.replace(R.id.frameSettingsMain, fragmentMain);
         transaction.commit();
+
+    }*/
+
+    private void toastMsgLong(String text) {
+
+        Toast.makeText(getContext(), text, Toast.LENGTH_LONG).show();
 
     }
 
-    public void toastMsgLong(String text) {
+    private void backToMainSettings(){
 
-        Toast.makeText(getContext(), text, Toast.LENGTH_LONG).show();
+        settingsFragment = new SettingsFragment();
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frameSettingsMain, settingsFragment);
+        transaction.commit();
 
     }
 
     private void initializingComponents(View v) {
 
         buttonYears = v.findViewById(R.id.buttonYears);
-        backToAddEditMain = v.findViewById(R.id.backToAddEditMain);
+        //backToAddEditMain = v.findViewById(R.id.backToAddEditMain);
         recyclerYears = v.findViewById(R.id.recyclerYears);
+        backToPrevious = v.findViewById(R.id.backToPrevious);
 
     }
 

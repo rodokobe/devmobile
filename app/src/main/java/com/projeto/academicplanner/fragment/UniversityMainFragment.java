@@ -29,12 +29,13 @@ public class UniversityMainFragment extends Fragment {
 
     //general variables
     private Button buttonUniversity;
-    private TextView backToAddEditMain;
-    private String idUserLoged;
+    private TextView backToPrevious;
+    private String idUserLogged;
     private List<University> universities = new ArrayList<>();
     private UniversityAddFragment addUniversityFragmentF;
     private UniversityUpdateFragment updateUniversityFragmentF;
-    private AddEditMainFragment fragmentMain;
+    //private AddEditMainFragment fragmentMain;
+    private SettingsFragment settingsFragment;
 
     //recycler view variables
     private RecyclerView recylcerUniversities;
@@ -56,19 +57,17 @@ public class UniversityMainFragment extends Fragment {
         final View mainUniversity = inflater.inflate(R.layout.fragment_university_main, container, false);
 
         //start configurations
-        buttonUniversity = mainUniversity.findViewById(R.id.buttonUniversity);
-        backToAddEditMain = mainUniversity.findViewById(R.id.backToAddEditMain);
-        recylcerUniversities = mainUniversity.findViewById(R.id.recylcerUniversities);
+        initializingComponents(mainUniversity);
 
         //recovery loged user ID
-        idUserLoged = ConfigFirebase.getUserId();
+        idUserLogged = ConfigFirebase.getUserId();
 
         //call methods
         adapterConstructor();
 
         //create object and fill recyclerViewUniversities
         University university = new University();
-        university.recovery(idUserLoged, universities, adapter);
+        university.recovery(idUserLogged, universities, adapter);
 
         buttonUniversity.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,10 +76,10 @@ public class UniversityMainFragment extends Fragment {
             }
         });
 
-        backToAddEditMain.setOnClickListener(new View.OnClickListener() {
+        backToPrevious.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goBackToMain();
+                backToMainSettings();
             }
         });
 
@@ -158,7 +157,7 @@ public class UniversityMainFragment extends Fragment {
 
                 //create object and fill recyclerViewUniversities
                 University university = new University();
-                university.recovery(idUserLoged, universities, adapter);
+                university.recovery(idUserLogged, universities, adapter);
             }
         });
 
@@ -176,7 +175,7 @@ public class UniversityMainFragment extends Fragment {
     public void goToNewFragment() {
         addUniversityFragmentF = new UniversityAddFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameAddEditUserProfile, addUniversityFragmentF);
+        transaction.replace(R.id.frameSettingsMain, addUniversityFragmentF);
         transaction.commit();
     }
 
@@ -190,15 +189,24 @@ public class UniversityMainFragment extends Fragment {
         updateUniversityFragmentF.setArguments(bundle);
 
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameAddEditUserProfile, updateUniversityFragmentF);
+        transaction.replace(R.id.frameSettingsMain, updateUniversityFragmentF);
         transaction.commit();
     }
 
-    public void goBackToMain() {
+    /*public void goBackToMain() {
 
         fragmentMain = new AddEditMainFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameAddEditUserProfile, fragmentMain);
+        transaction.replace(R.id.frameSettingsMain, fragmentMain);
+        transaction.commit();
+
+    }*/
+
+    private void backToMainSettings(){
+
+        settingsFragment = new SettingsFragment();
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frameSettingsMain, settingsFragment);
         transaction.commit();
 
     }
@@ -210,5 +218,11 @@ public class UniversityMainFragment extends Fragment {
         toastError.setGravity(Gravity.CENTER, 0, 800);
         toastError.show();
 
+    }
+
+    private void initializingComponents(View view){
+        buttonUniversity = view.findViewById(R.id.buttonUniversity);
+        backToPrevious = view.findViewById(R.id.backToPrevious);
+        recylcerUniversities = view.findViewById(R.id.recylcerUniversities);
     }
 }

@@ -22,8 +22,8 @@ public class UniversityAddFragment extends Fragment {
     //general variables
     private EditText universityName, universityAcronym;
     private Button buttonUniversity;
-    private TextView backToAddEditMain;
-    private String idUserLoged;
+    private TextView backToPrevious;
+    private String idUserLogged;
 
     private UniversityMainFragment universityMainFragment;
 
@@ -37,14 +37,11 @@ public class UniversityAddFragment extends Fragment {
         View addUniversity = inflater.inflate(R.layout.fragment_university_add, container, false);
 
         //start configurations
-        universityName = addUniversity.findViewById(R.id.universityName);
-        universityAcronym = addUniversity.findViewById(R.id.universityAcronym);
-        buttonUniversity = addUniversity.findViewById(R.id.buttonUniversity);
-        backToAddEditMain = addUniversity.findViewById(R.id.backToAddEditMain);
+        initializingComponents(addUniversity);
 
 
         //recovery loged user ID
-        idUserLoged = ConfigFirebase.getUserId();
+        idUserLogged = ConfigFirebase.getUserId();
 
         buttonUniversity.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,7 +56,7 @@ public class UniversityAddFragment extends Fragment {
 
         });
 
-        backToAddEditMain.setOnClickListener(new View.OnClickListener() {
+        backToPrevious.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 backToMain();
@@ -75,7 +72,7 @@ public class UniversityAddFragment extends Fragment {
             if (!universitySaveAcronym.isEmpty()) {
 
                 University university = new University();
-                university.setIdUser(idUserLoged);
+                university.setIdUser(idUserLogged);
                 university.setUniversityName(universitycSaveName);
                 university.setUniversityAcronym(universitySaveAcronym);
 
@@ -108,8 +105,15 @@ public class UniversityAddFragment extends Fragment {
     public void backToMain() {
         universityMainFragment = new UniversityMainFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameAddEditUserProfile, universityMainFragment);
+        transaction.replace(R.id.frameSettingsMain, universityMainFragment);
         transaction.commit();
+    }
+
+    private void initializingComponents(View view) {
+        universityName = view.findViewById(R.id.universityName);
+        universityAcronym = view.findViewById(R.id.universityAcronym);
+        buttonUniversity = view.findViewById(R.id.buttonUniversity);
+        backToPrevious = view.findViewById(R.id.backToPrevious);
     }
 
 }

@@ -36,7 +36,7 @@ public class YearAddFragment extends Fragment implements AdapterView.OnItemSelec
      */
     private Spinner spinnerYears;
     private Button buttonAdd;
-    private TextView backToAddEditMain;
+    private TextView backToPrevious;
 
     /**
      * Creating variables
@@ -71,17 +71,8 @@ public class YearAddFragment extends Fragment implements AdapterView.OnItemSelec
         spinnerYears.setEnabled(true);
         idUserLogged = ConfigFirebase.getUserId();
 
-        backToAddEditMain.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                backToMain();
-            }
 
-        });
-
-        buttonAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        buttonAdd.setOnClickListener( v-> {
 
                 Years year = new Years();
                 year.setYearName(spinnerValue);
@@ -91,8 +82,11 @@ public class YearAddFragment extends Fragment implements AdapterView.OnItemSelec
                 toastMsgShort("Year " + spinnerValue + " was added");
 
                 backToMain();
-            }
 
+        });
+
+        backToPrevious.setOnClickListener( v-> {
+            backToMain();
         });
 
         return view;
@@ -130,7 +124,7 @@ public class YearAddFragment extends Fragment implements AdapterView.OnItemSelec
         spinnerYears.setOnItemSelectedListener(this);
 
         buttonAdd = v.findViewById(R.id.buttonAdd);
-        backToAddEditMain = v.findViewById(R.id.backToAddEditMain);
+        backToPrevious = v.findViewById(R.id.backToPrevious);
 
 
     }
@@ -148,7 +142,7 @@ public class YearAddFragment extends Fragment implements AdapterView.OnItemSelec
     public void backToMain() {
         yearMainFragment = new YearMainFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameAddEditUserProfile, yearMainFragment);
+        transaction.replace(R.id.frameSettingsMain, yearMainFragment);
         transaction.commit();
     }
 

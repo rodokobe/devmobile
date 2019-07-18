@@ -241,10 +241,10 @@ public class NavMainActivity extends AppCompatActivity
         if (id == R.id.nav_home) {
             // Handle the camera action
         } else if (id == R.id.nav_events) {
-
-        } else if (id == R.id.nav_settings) {
-
             startActivity( new Intent(getApplicationContext(), AddEditParametersActivity.class) );
+        } else if (id == R.id.nav_settings) {
+            startActivity( new Intent(getApplicationContext(), SettingsMainActivity.class) );
+            //startActivity( new Intent(getApplicationContext(), AddEditParametersActivity.class) );
 
         } else if (id == R.id.nav_profile) {
 

@@ -12,6 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".activity.SettingsMainActivity"
+            android:parentActivityName=".activity.NavMainActivity"></activity>
         <activity
             android:name=".activity.ClassMainActivity"
             android:parentActivityName=".activity.NavMainActivity" />
@@ -27,7 +29,9 @@
         <activity android:name=".activity.PlannerMainActivity" />
         <activity android:name=".activity.AboutActivity" />
         <activity android:name=".activity.LoginActivity" />
-        <activity android:name=".activity.AddEditParametersActivity" />
+        <activity
+            android:name=".activity.AddEditParametersActivity"
+            android:parentActivityName=".activity.NavMainActivity" />
         <activity android:name=".activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

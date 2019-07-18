@@ -23,8 +23,8 @@ public class UniversityUpdateFragment extends Fragment {
     //general variables
     private EditText universityName, universityAcronym;
     private Button buttonUniversity;
-    private TextView backToAddEditMain, addEdit;
-    private String idUserLoged, universityUpdateId, universityUpdateName, universityUpdateAcronym;
+    private TextView backToPrevious;
+    private String idUserLogged, universityUpdateId, universityUpdateName, universityUpdateAcronym;
 
     private UniversityMainFragment universityMainFragment;
 
@@ -49,20 +49,15 @@ public class UniversityUpdateFragment extends Fragment {
         View editUniversity = inflater.inflate(R.layout.fragment_university_add, container, false);
 
         //start configurations
-        universityName = editUniversity.findViewById(R.id.universityName);
-        universityAcronym = editUniversity.findViewById(R.id.universityAcronym);
-        buttonUniversity = editUniversity.findViewById(R.id.buttonUniversity);
-        backToAddEditMain = editUniversity.findViewById(R.id.backToAddEditMain);
-        addEdit = editUniversity.findViewById(R.id.addEdit);
+        initializingComponents(editUniversity);
 
         universityName.setText(universityUpdateName);
         universityAcronym.setText(universityUpdateAcronym);
         buttonUniversity.setText("UPDATE");
-        addEdit.setText("update");
 
 
-        //recovery loged user ID
-        idUserLoged = ConfigFirebase.getUserId();
+        //recovery logged user ID
+        idUserLogged = ConfigFirebase.getUserId();
 
         buttonUniversity.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +67,7 @@ public class UniversityUpdateFragment extends Fragment {
 
         });
 
-        backToAddEditMain.setOnClickListener(new View.OnClickListener() {
+        backToPrevious.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 backToMain();
@@ -87,7 +82,7 @@ public class UniversityUpdateFragment extends Fragment {
         //method to update
         University universityUpdate = new University();
 
-        universityUpdate.setIdUser(idUserLoged);
+        universityUpdate.setIdUser(idUserLogged);
         universityUpdate.setIdUniversity(universityUpdateId);
         universityUpdate.setUniversityName(universityName.getText().toString());
         universityUpdate.setUniversityAcronym(universityAcronym.getText().toString());
@@ -108,8 +103,15 @@ public class UniversityUpdateFragment extends Fragment {
     public void backToMain() {
         universityMainFragment = new UniversityMainFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameAddEditUserProfile, universityMainFragment);
+        transaction.replace(R.id.frameSettingsMain, universityMainFragment);
         transaction.commit();
+    }
+
+    private void initializingComponents(View view){
+        universityName = view.findViewById(R.id.universityName);
+        universityAcronym = view.findViewById(R.id.universityAcronym);
+        buttonUniversity = view.findViewById(R.id.buttonUniversity);
+        backToPrevious = view.findViewById(R.id.backToPrevious);
     }
 
 }
