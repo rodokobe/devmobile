@@ -32,15 +32,15 @@ public class StudentMainFragment extends Fragment {
 
     //general variables
     private Button buttonStudents;
-    private TextView backToAddEditMain;
-    private String idUserLoged;
+    private TextView backToPrevious;
+    private String idUserLogged;
     private List<Student> students = new ArrayList<>();
     private StudentAddFragment addStudentFragmentF;
     private StudentUpdateFragment updateStudentFragmentF;
-    private AddEditMainFragment fragmentMain;
+    private SettingsFragment settingsFragment;
 
     //recycler view variables
-    private RecyclerView recylcerStudents;
+    private RecyclerView recyclerStudents;
     private RecyclerView.LayoutManager layout;
     private Adapter_Students adapter;
 
@@ -59,32 +59,24 @@ public class StudentMainFragment extends Fragment {
         final View mainStudents = inflater.inflate(R.layout.fragment_student_main, container, false);
 
         //start configurations
-        buttonStudents = mainStudents.findViewById(R.id.buttonStudents);
-        backToAddEditMain = mainStudents.findViewById(R.id.backToAddEditMain);
-        recylcerStudents = mainStudents.findViewById(R.id.recylcerStudents);
+        initializingComponents(mainStudents);
 
         //recovery loged user ID
-        idUserLoged = ConfigFirebase.getUserId();
+        idUserLogged = ConfigFirebase.getUserId();
 
         //call methods
         adapterConstructor();
 
         //create object and fill recyclerViewCourses
         Student student = new Student();
-        student.recovery(idUserLoged, students, adapter);
+        student.recovery(idUserLogged, students, adapter);
 
-        buttonStudents.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goToNewFragment();
-            }
+        buttonStudents.setOnClickListener( v -> {
+            goToNewFragment();
         });
 
-        backToAddEditMain.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goBackToMain();
-            }
+        backToPrevious.setOnClickListener( v -> {
+           goBackToMain();
         });
 
         return mainStudents;
@@ -96,38 +88,24 @@ public class StudentMainFragment extends Fragment {
         //recycler view configuration
         layout = new LinearLayoutManager(getContext());
         adapter = new Adapter_Students(students, getContext());
-        recylcerStudents.setAdapter(adapter);
-        recylcerStudents.setLayoutManager(layout);
-        recylcerStudents.setHasFixedSize(true);
-        recylcerStudents.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayout.VERTICAL));
+        recyclerStudents.setAdapter(adapter);
+        recyclerStudents.setLayoutManager(layout);
+        recyclerStudents.setHasFixedSize(true);
 
-        adapter.setOnItemClickListener(new Adapter_Students.ClickListener() {
-            @Override
-            public void onItemClick(Adapter_Students adapter_students, View v, final int position) {
+        adapter.setOnItemClickListener( (adapter_students, v, position) -> {
 
                 final ImageView imageEdit = v.findViewById(R.id.imageEdit);
                 final ImageView imageDelete = v.findViewById(R.id.imageDelete);
 
                 final Student objectToAction = students.get(position);
 
-                imageDelete.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
+                imageDelete.setOnClickListener( view -> {
                         studentDelete(objectToAction);
-
-                    }
                 });
 
-                imageEdit.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
+                imageEdit.setOnClickListener( view -> {
                         goToUpdateFragment(objectToAction);
-
-                    }
                 });
-            }
         });
 
     }
@@ -145,9 +123,7 @@ public class StudentMainFragment extends Fragment {
         final AlertDialog deleteDialogAlert = deleteDialog.create();
         deleteDialogAlert.show();
 
-        buttonDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        buttonDelete.setOnClickListener( v -> {
 
                 //method to remove the selected object
                 selectedToRemove.delete();
@@ -160,18 +136,14 @@ public class StudentMainFragment extends Fragment {
 
                 //create object and fill recyclerViewCourses
                 Student student = new Student();
-                student.recovery(idUserLoged, students, adapter);
-            }
+                student.recovery(idUserLogged, students, adapter);
         });
 
-        buttonNoDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        buttonNoDelete.setOnClickListener( v -> {
 
                 //method to cancel the delete operation
                 toastMsg("Request CANCELED");
                 deleteDialogAlert.cancel();
-            }
         });
     }
 
@@ -183,22 +155,22 @@ public class StudentMainFragment extends Fragment {
         updateStudentFragmentF.setArguments(dataToUpdate);
 
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameAddEditUserProfile, updateStudentFragmentF);
+        transaction.replace(R.id.frameSettingsMain, updateStudentFragmentF);
         transaction.commit();
     }
 
     public void goToNewFragment() {
         addStudentFragmentF = new StudentAddFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameAddEditUserProfile, addStudentFragmentF);
+        transaction.replace(R.id.frameSettingsMain, addStudentFragmentF);
         transaction.commit();
     }
 
     public void goBackToMain() {
 
-        fragmentMain = new AddEditMainFragment();
+        settingsFragment = new SettingsFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameAddEditUserProfile, fragmentMain);
+        transaction.replace(R.id.frameSettingsMain, settingsFragment);
         transaction.commit();
 
     }
@@ -210,5 +182,11 @@ public class StudentMainFragment extends Fragment {
         toastError.setGravity(Gravity.CENTER, 0, 800);
         toastError.show();
 
+    }
+
+    private void initializingComponents(View view){
+        buttonStudents = view.findViewById(R.id.buttonStudents);
+        backToPrevious = view.findViewById(R.id.backToPrevious);
+        recyclerStudents = view.findViewById(R.id.recyclerStudents);
     }
 }

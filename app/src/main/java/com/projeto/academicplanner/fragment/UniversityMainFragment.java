@@ -34,7 +34,6 @@ public class UniversityMainFragment extends Fragment {
     private List<University> universities = new ArrayList<>();
     private UniversityAddFragment addUniversityFragmentF;
     private UniversityUpdateFragment updateUniversityFragmentF;
-    //private AddEditMainFragment fragmentMain;
     private SettingsFragment settingsFragment;
 
     //recycler view variables
@@ -223,6 +222,6 @@ public class UniversityMainFragment extends Fragment {
     private void initializingComponents(View view){
         buttonUniversity = view.findViewById(R.id.buttonUniversity);
         backToPrevious = view.findViewById(R.id.backToPrevious);
-        recylcerUniversities = view.findViewById(R.id.recylcerUniversities);
+        recylcerUniversities = view.findViewById(R.id.recyclerUniversities);
     }
 }

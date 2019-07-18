@@ -20,10 +20,10 @@ import com.projeto.academicplanner.model.AdminPeople;
 
 public class AdminPeopleUpdateFragment extends Fragment {
 
-    private TextView backToAddEditMain, addEdit;
+    private TextView backToPrevious;
     private EditText adminPeopleFirstName, adminPeopleLastName, adminPeopleEmail;
     private Button buttonAdminPeople;
-    private String idUserLoged;
+    private String idUserLogged;
 
     private AdminPeopleMainFragment adminPeopleMainFragmentF;
     private AdminPeople adminPeopleToUpdate;
@@ -47,36 +47,24 @@ public class AdminPeopleUpdateFragment extends Fragment {
         View updateStudent = inflater.inflate(R.layout.fragment_admin_people_add, container, false);
 
 
-        backToAddEditMain = updateStudent.findViewById(R.id.backToAddEditMain);
-        adminPeopleFirstName = updateStudent.findViewById(R.id.adminPeopleFirstName);
-        adminPeopleLastName = updateStudent.findViewById(R.id.adminPeopleLastName);
-        adminPeopleEmail = updateStudent.findViewById(R.id.adminPeopleEmail);
-        buttonAdminPeople = updateStudent.findViewById(R.id.buttonAdminPeople);
-        addEdit = updateStudent.findViewById(R.id.addEdit);
+        initializingComponents(updateStudent);
 
         adminPeopleFirstName.setText(adminPeopleToUpdate.getAdminPeopleFirstName());
         adminPeopleLastName.setText(adminPeopleToUpdate.getAdminPeopleLastName());
         adminPeopleEmail.setText(adminPeopleToUpdate.getAdminPeopleEmail());
 
         buttonAdminPeople.setText("UPDATE");
-        addEdit.setText("update");
 
 
-        //recovery loged user ID
-        idUserLoged = ConfigFirebase.getUserId();
+        //recovery logged user ID
+        idUserLogged = ConfigFirebase.getUserId();
 
-        backToAddEditMain.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        backToPrevious.setOnClickListener( v -> {
                 backToMain();
-            }
         });
 
-        buttonAdminPeople.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        buttonAdminPeople.setOnClickListener( v -> {
                 adminPeopleUpdate();
-            }
         });
 
         return updateStudent;
@@ -87,7 +75,7 @@ public class AdminPeopleUpdateFragment extends Fragment {
 
         AdminPeople admPeopleUpdate = new AdminPeople();
 
-        admPeopleUpdate.setIdUser(idUserLoged);
+        admPeopleUpdate.setIdUser(idUserLogged);
         admPeopleUpdate.setIdAdminPeople(adminPeopleToUpdate.getIdAdminPeople());
         admPeopleUpdate.setAdminPeopleFirstName(adminPeopleFirstName.getText().toString());
         admPeopleUpdate.setAdminPeopleLastName(adminPeopleLastName.getText().toString());
@@ -103,7 +91,7 @@ public class AdminPeopleUpdateFragment extends Fragment {
 
         adminPeopleMainFragmentF = new AdminPeopleMainFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameAddEditUserProfile, adminPeopleMainFragmentF);
+        transaction.replace(R.id.frameSettingsMain, adminPeopleMainFragmentF);
         transaction.commit();
     }
 
@@ -113,6 +101,14 @@ public class AdminPeopleUpdateFragment extends Fragment {
         Toast toastError = Toast.makeText(getContext(), text, Toast.LENGTH_LONG);
         toastError.setGravity(Gravity.CENTER, 0, 800);
         toastError.show();
+    }
+
+    private void initializingComponents(View v){
+        backToPrevious = v.findViewById(R.id.backToPrevious);
+        adminPeopleFirstName = v.findViewById(R.id.adminPeopleFirstName);
+        adminPeopleLastName = v.findViewById(R.id.adminPeopleLastName);
+        adminPeopleEmail = v.findViewById(R.id.adminPeopleEmail);
+        buttonAdminPeople = v.findViewById(R.id.buttonAdminPeople);
     }
 
 }

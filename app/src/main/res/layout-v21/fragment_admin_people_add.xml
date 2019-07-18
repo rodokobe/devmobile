@@ -8,7 +8,18 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="20dp">
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/backToPrevious"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:drawableLeft="@drawable/ic_seta_voltar_24dp"
+                android:gravity="center"
+                android:text="BACK TO ADMIN PEOPLE MAIN SCREEN"
+                android:textColor="@color/colorButtonNewBrown"
+                android:textSize="14sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -16,7 +27,7 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="310dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
@@ -29,35 +40,7 @@
                         android:textSize="40sp"
                         android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/addEdit"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="-10dp"
-                        android:text="add new"
-                        android:textColor="@color/colorBright"
-                        android:textSize="14sp" />
-
-                    <View
-                        android:id="@+id/divider6"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="5dp"
-                        android:background="?android:attr/listDivider" />
-
                 </LinearLayout>
-
-                <TextView
-                    android:id="@+id/backToAddEditMain"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_seta_voltar_24dp"
-                    android:gravity="center"
-                    android:paddingTop="20dp"
-                    android:text="back"
-                    android:textColor="@color/colorBright"
-                    android:textSize="14sp" />
 
             </LinearLayout>
 
@@ -119,7 +102,7 @@
                     android:layout_marginTop="30dp"
                     android:layout_weight="1"
                     android:text="ADD"
-                    android:theme="@style/botaoPadraoGreen" />
+                    android:theme="@style/botaoPadraoBrown" />
 
             </LinearLayout>
 

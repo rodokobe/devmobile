@@ -32,17 +32,17 @@ public class AdminPeopleMainFragment extends Fragment {
 
     //general variables
     private Button buttonAdminPeople;
-    private TextView backToAddEditMain;
-    private String idUserLoged;
+    private TextView backToPrevious;
+    private String idUserLogged;
     private List<AdminPeople> adminPeopleS = new ArrayList<>();
     private AdminPeopleAddFragment addAdminPeopleFragmentF;
     private AdminPeopleUpdateFragment updateAdminPeopleFragmentF;
-    private AddEditMainFragment fragmentMain;
+    private SettingsFragment settingsFragment;
 
     //private StudentMainFragment studentMainFragmentF;
 
     //recycler view variables
-    private RecyclerView recylcerAdminPeople;
+    private RecyclerView recyclerAdminPeople;
     private RecyclerView.LayoutManager layout;
     private Adapter_AdminPeople adapter;
 
@@ -61,30 +61,24 @@ public class AdminPeopleMainFragment extends Fragment {
         final View mainAdminPeople = inflater.inflate(R.layout.fragment_adminpeople_main, container, false);
 
         //start configurations
-        buttonAdminPeople = mainAdminPeople.findViewById(R.id.buttonAdminPeople);
-        backToAddEditMain = mainAdminPeople.findViewById(R.id.backToAddEditMain);
-        recylcerAdminPeople = mainAdminPeople.findViewById(R.id.recylcerAdminPeople);
+        initializingComponents(mainAdminPeople);
 
         //recovery loged user ID
-        idUserLoged = ConfigFirebase.getUserId();
+        idUserLogged = ConfigFirebase.getUserId();
 
         //call methods
         adapterConstructor();
 
         //create object and fill recyclerViewCourses
         AdminPeople adminPeople = new AdminPeople();
-        adminPeople.recovery(idUserLoged, adminPeopleS, adapter);
+        adminPeople.recovery(idUserLogged, adminPeopleS, adapter);
 
-        buttonAdminPeople.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) { goToNewFragment(); }
+        buttonAdminPeople.setOnClickListener( v -> {
+                goToNewFragment();
         });
 
-        backToAddEditMain.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        backToPrevious.setOnClickListener( v -> {
                 goBackToMain();
-            }
         });
 
         return mainAdminPeople;
@@ -96,40 +90,25 @@ public class AdminPeopleMainFragment extends Fragment {
         //recycler view configuration
         layout = new LinearLayoutManager(getContext());
         adapter = new Adapter_AdminPeople(adminPeopleS, getContext());
-        recylcerAdminPeople.setAdapter(adapter);
-        recylcerAdminPeople.setLayoutManager(layout);
-        recylcerAdminPeople.setHasFixedSize(true);
-        recylcerAdminPeople.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayout.VERTICAL));
+        recyclerAdminPeople.setAdapter(adapter);
+        recyclerAdminPeople.setLayoutManager(layout);
+        recyclerAdminPeople.setHasFixedSize(true);
 
-        adapter.setOnItemClickListener(new Adapter_AdminPeople.ClickListener() {
-            @Override
-            public void onItemClick(Adapter_AdminPeople adapter_courses, View v, final int position) {
+        adapter.setOnItemClickListener( (adapter_courses, v, position) -> {
 
                 final ImageView imageEdit = v.findViewById(R.id.imageEdit);
                 final ImageView imageDelete = v.findViewById(R.id.imageDelete);
 
                 final AdminPeople objectToAction = adminPeopleS.get(position);
 
-                imageDelete.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        courseDelete(objectToAction);
-
-                    }
+                imageDelete.setOnClickListener( view -> {
+                    courseDelete(objectToAction);
                 });
 
-                imageEdit.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        goToUpdateFragment(objectToAction);
-
-                    }
+                imageEdit.setOnClickListener( view -> {
+                    goToUpdateFragment(objectToAction);
                 });
-            }
         });
-
     }
 
     private void courseDelete(final AdminPeople selectedToRemove) {
@@ -145,33 +124,26 @@ public class AdminPeopleMainFragment extends Fragment {
         final AlertDialog deleteDialogAlert = deleteDialog.create();
         deleteDialogAlert.show();
 
-        buttonDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        buttonDelete.setOnClickListener(v -> {
 
-                //method to remove the selected object
-                selectedToRemove.delete();
-                toastMsg("Admin " + selectedToRemove.getAdminPeopleFirstName() + " has been removed!");
-                adapter.notifyDataSetChanged();
-                deleteDialogAlert.cancel();
+            //method to remove the selected object
+            selectedToRemove.delete();
+            toastMsg("Admin " + selectedToRemove.getAdminPeopleFirstName() + " has been removed!");
+            adapter.notifyDataSetChanged();
+            deleteDialogAlert.cancel();
 
-                //call methods
-                adapterConstructor();
+            //call methods
+            adapterConstructor();
 
-                //create object and fill recyclerViewCourses
-                AdminPeople adminPeople = new AdminPeople();
-                adminPeople.recovery(idUserLoged, adminPeopleS, adapter);
-            }
+            //create object and fill recyclerViewCourses
+            AdminPeople adminPeople = new AdminPeople();
+            adminPeople.recovery(idUserLogged, adminPeopleS, adapter);
         });
 
-        buttonNoDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                //method to cancel the delete operation
-                toastMsg("Request CANCELED");
-                deleteDialogAlert.cancel();
-            }
+        buttonNoDelete.setOnClickListener(v -> {
+            //method to cancel the delete operation
+            toastMsg("Request CANCELED");
+            deleteDialogAlert.cancel();
         });
     }
 
@@ -183,22 +155,22 @@ public class AdminPeopleMainFragment extends Fragment {
         updateAdminPeopleFragmentF.setArguments(dataToUpdate);
 
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameAddEditUserProfile, updateAdminPeopleFragmentF);
+        transaction.replace(R.id.frameSettingsMain, updateAdminPeopleFragmentF);
         transaction.commit();
     }
 
     public void goToNewFragment() {
         addAdminPeopleFragmentF = new AdminPeopleAddFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameAddEditUserProfile, addAdminPeopleFragmentF);
+        transaction.replace(R.id.frameSettingsMain, addAdminPeopleFragmentF);
         transaction.commit();
     }
 
     public void goBackToMain() {
 
-        fragmentMain = new AddEditMainFragment();
+        settingsFragment = new SettingsFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameAddEditUserProfile, fragmentMain);
+        transaction.replace(R.id.frameSettingsMain, settingsFragment);
         transaction.commit();
 
     }
@@ -210,5 +182,11 @@ public class AdminPeopleMainFragment extends Fragment {
         toastError.setGravity(Gravity.CENTER, 0, 800);
         toastError.show();
 
+    }
+
+    private void initializingComponents(View view) {
+        buttonAdminPeople = view.findViewById(R.id.buttonAdminPeople);
+        backToPrevious = view.findViewById(R.id.backToPrevious);
+        recyclerAdminPeople = view.findViewById(R.id.recylcerAdminPeople);
     }
 }

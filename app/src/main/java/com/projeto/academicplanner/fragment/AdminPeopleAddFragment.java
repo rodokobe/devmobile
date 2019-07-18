@@ -19,11 +19,11 @@ import com.projeto.academicplanner.model.AdminPeople;
 
 public class AdminPeopleAddFragment extends Fragment {
 
-    private TextView backToAddEditMain;
+    private TextView backToPrevious;
     private EditText adminPeopleFirstName, adminPeopleLastName, adminPeopleEmail;
     private Button buttonAdminPeople;
     private AdminPeopleMainFragment adminPeopleMainFragmentF;
-    private String idUserLoged;
+    private String idUserLogged;
 
     public AdminPeopleAddFragment() {
         // Required empty public constructor
@@ -34,32 +34,21 @@ public class AdminPeopleAddFragment extends Fragment {
                              Bundle savedInstanceState) {
         View addAdminPeople = inflater.inflate(R.layout.fragment_admin_people_add, container, false);
 
+        initializingComponents(addAdminPeople);
 
-        backToAddEditMain = addAdminPeople.findViewById(R.id.backToAddEditMain);
-        adminPeopleFirstName = addAdminPeople.findViewById(R.id.adminPeopleFirstName);
-        adminPeopleLastName = addAdminPeople.findViewById(R.id.adminPeopleLastName);
-        adminPeopleEmail = addAdminPeople.findViewById(R.id.adminPeopleEmail);
-        buttonAdminPeople = addAdminPeople.findViewById(R.id.buttonAdminPeople);
+        //recovery logged user ID
+        idUserLogged = ConfigFirebase.getUserId();
 
-        //recovery loged user ID
-        idUserLoged = ConfigFirebase.getUserId();
-
-        backToAddEditMain.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        backToPrevious.setOnClickListener( view -> {
                 backToMain();
-            }
         });
 
-        buttonAdminPeople.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        buttonAdminPeople.setOnClickListener( view -> {
                 String adminPeopleSaveFirstName = adminPeopleFirstName.getText().toString();
                 String adminPeopleSaveLastName = adminPeopleLastName.getText().toString();
                 String adminPeopleSaveEmail = adminPeopleEmail.getText().toString();
 
                 adminPeopleAddNew(adminPeopleSaveFirstName, adminPeopleSaveLastName, adminPeopleSaveEmail);
-            }
         });
 
         return addAdminPeople;
@@ -73,7 +62,7 @@ public class AdminPeopleAddFragment extends Fragment {
                 if (!adminPeopleSaveEmail.isEmpty()) {
 
                     AdminPeople adminPeople = new AdminPeople();
-                    adminPeople.setIdUser(idUserLoged);
+                    adminPeople.setIdUser(idUserLogged);
                     adminPeople.setAdminPeopleFirstName(adminPeopleSaveFirstName);
                     adminPeople.setAdminPeopleLastName(adminPeopleSaveLastName);
                     adminPeople.setAdminPeopleEmail(adminPeopleSaveEmail);
@@ -98,7 +87,7 @@ public class AdminPeopleAddFragment extends Fragment {
 
         adminPeopleMainFragmentF = new AdminPeopleMainFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameAddEditUserProfile, adminPeopleMainFragmentF);
+        transaction.replace(R.id.frameSettingsMain, adminPeopleMainFragmentF);
         transaction.commit();
 
     }
@@ -109,6 +98,14 @@ public class AdminPeopleAddFragment extends Fragment {
         Toast toastError = Toast.makeText(getContext(), text, Toast.LENGTH_LONG);
         toastError.setGravity(Gravity.CENTER, 0, 800);
         toastError.show();
+    }
+
+    private void initializingComponents(View view){
+        backToPrevious = view.findViewById(R.id.backToPrevious);
+        adminPeopleFirstName = view.findViewById(R.id.adminPeopleFirstName);
+        adminPeopleLastName = view.findViewById(R.id.adminPeopleLastName);
+        adminPeopleEmail = view.findViewById(R.id.adminPeopleEmail);
+        buttonAdminPeople = view.findViewById(R.id.buttonAdminPeople);
     }
 
 }

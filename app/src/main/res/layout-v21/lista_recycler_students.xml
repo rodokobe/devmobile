@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="2dp"
-    android:background="@color/colorBackGroundBrown"
     android:orientation="vertical">
 
     <LinearLayout
@@ -36,8 +35,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="firstName"
-                        android:textColor="@color/colorBright"
-                        android:textSize="16sp"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -46,7 +45,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:text="lastName"
-                        android:textColor="@color/colorBright" />
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
@@ -75,7 +76,7 @@
                         android:id="@+id/studentDelegate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_weight="0.4"
                         android:text="YES"
                         android:textColor="@color/colorBright"
                         android:textSize="14sp"

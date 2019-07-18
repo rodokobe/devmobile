@@ -20,13 +20,14 @@ import com.projeto.academicplanner.model.Student;
 
 public class StudentAddFragment extends Fragment {
 
-    private TextView backToAddEditMain;
+    private TextView backToPrevious;
     private EditText studentFirstName, studentLastName, studentEmail;
     private ToggleButton isDelegateButton;
     private Button buttonStudents;
-    private String idUserLoged;
+    private String idUserLogged;
 
     private StudentMainFragment studentMainFragmentF;
+    private SettingsFragment settingsFragment;
 
     public StudentAddFragment() {
         // Required empty public constructor
@@ -37,27 +38,16 @@ public class StudentAddFragment extends Fragment {
                              Bundle savedInstanceState) {
         View addStudent = inflater.inflate(R.layout.fragment_student_add, container, false);
 
+        initializingComponents(addStudent);
 
-        backToAddEditMain = addStudent.findViewById(R.id.backToAddEditMain);
-        studentFirstName = addStudent.findViewById(R.id.studentFirstName);
-        studentLastName = addStudent.findViewById(R.id.studentLastName);
-        studentEmail = addStudent.findViewById(R.id.studentEmail);
-        isDelegateButton = addStudent.findViewById(R.id.isDelegateButton);
-        buttonStudents = addStudent.findViewById(R.id.buttonStudents);
+        //recovery logged user ID
+        idUserLogged = ConfigFirebase.getUserId();
 
-        //recovery loged user ID
-        idUserLoged = ConfigFirebase.getUserId();
-
-        backToAddEditMain.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        backToPrevious.setOnClickListener( v -> {
                 backToMain();
-            }
         });
 
-        buttonStudents.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        buttonStudents.setOnClickListener( v -> {
 
                 String studentSaveFirstName = studentFirstName.getText().toString();
                 String studentSaveLastName = studentLastName.getText().toString();
@@ -69,8 +59,6 @@ public class StudentAddFragment extends Fragment {
                 }
 
                 studentAddNew(studentSaveFirstName, studentSaveLastName, studentSaveEmail, studentSabeDelegate);
-
-            }
         });
 
         return addStudent;
@@ -84,7 +72,7 @@ public class StudentAddFragment extends Fragment {
                 if (!studentSaveEmail.isEmpty()) {
 
                 Student student = new Student();
-                student.setIdUser(idUserLoged);
+                student.setIdUser(idUserLogged);
                 student.setStudentFirstName(studentSaveFirstName);
                 student.setStudentLastName(studentSaveLastName);
                 student.setStudentEmail(studentSaveEmail);
@@ -110,7 +98,7 @@ public class StudentAddFragment extends Fragment {
 
         studentMainFragmentF = new StudentMainFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameAddEditUserProfile, studentMainFragmentF);
+        transaction.replace(R.id.frameSettingsMain, studentMainFragmentF);
         transaction.commit();
     }
 
@@ -120,6 +108,15 @@ public class StudentAddFragment extends Fragment {
         Toast toastError = Toast.makeText(getContext(), text, Toast.LENGTH_LONG);
         toastError.setGravity(Gravity.CENTER, 0, 800);
         toastError.show();
+    }
+
+    private void initializingComponents(View view){
+        backToPrevious = view.findViewById(R.id.backToPrevious);
+        studentFirstName = view.findViewById(R.id.studentFirstName);
+        studentLastName = view.findViewById(R.id.studentLastName);
+        studentEmail = view.findViewById(R.id.studentEmail);
+        isDelegateButton = view.findViewById(R.id.isDelegateButton);
+        buttonStudents = view.findViewById(R.id.buttonStudents);
     }
 
 }
