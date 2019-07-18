@@ -47,8 +47,12 @@ public class Adapter_Students extends RecyclerView.Adapter<Adapter_Students.MyVi
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
         Student student = students.get(position);
-        holder.studentFirstName1.setText(student.getStudentFirstName());
-        holder.studentLastName1.setText(student.getStudentLastName());
+
+        String firstname = student.getStudentFirstName();
+        String lastname = student.getStudentLastName();
+        String name = firstname + " " + lastname;
+
+        holder.studentName.setText(name);
         holder.studentEmail1.setText(student.getStudentEmail());
         holder.studentDelegate1.setText(student.getStudentDelegate());
         holder.imageEdit1.setImageResource(R.drawable.ic_edit_white_24dp);
@@ -64,8 +68,7 @@ public class Adapter_Students extends RecyclerView.Adapter<Adapter_Students.MyVi
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView studentFirstName1;
-        TextView studentLastName1;
+        TextView studentName;
         TextView studentEmail1;
         TextView studentDelegate1;
         ImageView imageEdit1;
@@ -75,8 +78,9 @@ public class Adapter_Students extends RecyclerView.Adapter<Adapter_Students.MyVi
         public MyViewHolder(@NonNull View itemView, Adapter_Students ref) {
             super(itemView);
 
-            studentFirstName1 = itemView.findViewById(R.id.studentFirstName);
-            studentLastName1 = itemView.findViewById(R.id.studentLastName);
+
+
+            studentName = itemView.findViewById(R.id.studentName);
             studentEmail1 = itemView.findViewById(R.id.studentEmail);
             studentDelegate1 = itemView.findViewById(R.id.studentDelegate);
 
