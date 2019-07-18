@@ -20,7 +20,7 @@ import com.projeto.academicplanner.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class UpdateYearFragment extends Fragment {
+public class YearUpdateFragment extends Fragment {
 
 
     private EditText year;
@@ -30,7 +30,7 @@ public class UpdateYearFragment extends Fragment {
 
     private UniversityMainFragment universityMainFragment;
 
-    public UpdateYearFragment() {
+    public YearUpdateFragment() {
         // Required empty public constructor
     }
 
@@ -39,7 +39,7 @@ public class UpdateYearFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_update_year, container, false);
+        return inflater.inflate(R.layout.fragment_year_update, container, false);
     }
 
 

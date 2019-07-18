@@ -35,8 +35,8 @@ public class DisciplineMainFragment extends Fragment {
     private TextView backToAddEditMain;
     private String idUserLoged;
     private List<Discipline> disciplines = new ArrayList<>();
-    private AddDisciplineFragment addDisciplineFragment;
-    private UpdateDisciplineFragment updateDisciplineFragment;
+    private DisciplineAddFragment addDisciplineFragment;
+    private DisciplineUpdateFragment updateDisciplineFragment;
     private AddEditMainFragment fragmentMain;
 
     //recycler view variables
@@ -177,7 +177,7 @@ public class DisciplineMainFragment extends Fragment {
 
     public void goToUpdateFragment(Discipline objectToAction) {
 
-        updateDisciplineFragment = new UpdateDisciplineFragment();
+        updateDisciplineFragment = new DisciplineUpdateFragment();
 
         Bundle dataToUpdate = new Bundle();
         dataToUpdate.putSerializable("DisciplineToUpdate", objectToAction);
@@ -190,7 +190,7 @@ public class DisciplineMainFragment extends Fragment {
     }
 
     public void goToNewFragment() {
-        addDisciplineFragment = new AddDisciplineFragment();
+        addDisciplineFragment = new DisciplineAddFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frameAddEditUserProfile, addDisciplineFragment);
         transaction.commit();

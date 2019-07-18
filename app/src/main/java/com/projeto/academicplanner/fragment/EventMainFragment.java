@@ -36,7 +36,7 @@ public class EventMainFragment extends Fragment {
     private TextView backToAddEditMain;
     private String idUserLoged;
     private List<Discipline> disciplines = new ArrayList<>();
-    private AddDisciplineFragment addDisciplineFragment;
+    private DisciplineAddFragment addDisciplineFragment;
     private AddEditMainFragment fragmentMain;
 
     //recycler view variables
@@ -226,7 +226,7 @@ public class EventMainFragment extends Fragment {
     }
 
     public void goToNewFragment() {
-        addDisciplineFragment = new AddDisciplineFragment();
+        addDisciplineFragment = new DisciplineAddFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frameAddEditUserProfile, addDisciplineFragment);
         transaction.commit();

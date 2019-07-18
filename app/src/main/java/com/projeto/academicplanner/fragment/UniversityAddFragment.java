@@ -17,7 +17,7 @@ import com.projeto.academicplanner.R;
 import com.projeto.academicplanner.helper.ConfigFirebase;
 import com.projeto.academicplanner.model.University;
 
-public class AddUniversityFragment extends Fragment {
+public class UniversityAddFragment extends Fragment {
 
     //general variables
     private EditText universityName, universityAcronym;
@@ -27,14 +27,14 @@ public class AddUniversityFragment extends Fragment {
 
     private UniversityMainFragment universityMainFragment;
 
-    public AddUniversityFragment() {
+    public UniversityAddFragment() {
         // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View addUniversity = inflater.inflate(R.layout.fragment_add_university, container, false);
+        View addUniversity = inflater.inflate(R.layout.fragment_university_add, container, false);
 
         //start configurations
         universityName = addUniversity.findViewById(R.id.universityName);

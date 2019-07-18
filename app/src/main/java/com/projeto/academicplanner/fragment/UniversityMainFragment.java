@@ -32,8 +32,8 @@ public class UniversityMainFragment extends Fragment {
     private TextView backToAddEditMain;
     private String idUserLoged;
     private List<University> universities = new ArrayList<>();
-    private AddUniversityFragment addUniversityFragmentF;
-    private UpdateUniversityFragment updateUniversityFragmentF;
+    private UniversityAddFragment addUniversityFragmentF;
+    private UniversityUpdateFragment updateUniversityFragmentF;
     private AddEditMainFragment fragmentMain;
 
     //recycler view variables
@@ -174,14 +174,14 @@ public class UniversityMainFragment extends Fragment {
     }
 
     public void goToNewFragment() {
-        addUniversityFragmentF = new AddUniversityFragment();
+        addUniversityFragmentF = new UniversityAddFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frameAddEditUserProfile, addUniversityFragmentF);
         transaction.commit();
     }
 
     public void goToUpdateFragment(University objectToAction) {
-        updateUniversityFragmentF = new UpdateUniversityFragment();
+        updateUniversityFragmentF = new UniversityUpdateFragment();
         Bundle bundle = new Bundle();
         bundle.putString("universityIdBundle", objectToAction.getIdUniversity());
         bundle.putString("universityNameBundle", objectToAction.getUniversityName());

@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -31,33 +32,50 @@ import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddCourseFragment extends Fragment implements IFirebaseLoadDoneUniversity {
+public class CourseUpdateFragment extends Fragment implements IFirebaseLoadDoneUniversity {
 
     private EditText courseName, courseAcronym;
-    private TextView backToAddEditMain;
+    private TextView backToAddEditMain, addEdit;
     private SearchableSpinner spinnerUniversity;
     private Button buttonCourse;
     private String idUserLoged, idUniversitySelected, nameUniversitySelected;
+    private Course courseToUpdate;
 
     private DatabaseReference firebaseRefUniversity;
     private IFirebaseLoadDoneUniversity iFirebaseLoadDoneUniversity;
     private CourseMainFragment courseMainFragmentF;
 
-    public AddCourseFragment() {
+    public CourseUpdateFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        courseToUpdate = (Course) getArguments().getSerializable("CourseToUpdate");
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View addCourse = inflater.inflate(R.layout.fragment_add_course, container, false);
+        View updateCourse = inflater.inflate(R.layout.fragment_course_add, container, false);
 
         //configurações iniciais
-        backToAddEditMain = addCourse.findViewById(R.id.backToAddEditMain);
-        courseName = addCourse.findViewById(R.id.courseName);
-        courseAcronym = addCourse.findViewById(R.id.courseAcronym);
-        spinnerUniversity = addCourse.findViewById(R.id.spinnerUniversity);
-        buttonCourse = addCourse.findViewById(R.id.buttonCourse);
+        backToAddEditMain = updateCourse.findViewById(R.id.backToAddEditMain);
+        courseName = updateCourse.findViewById(R.id.courseName);
+        courseAcronym = updateCourse.findViewById(R.id.courseAcronym);
+        spinnerUniversity = updateCourse.findViewById(R.id.spinnerUniversity);
+        buttonCourse = updateCourse.findViewById(R.id.buttonCourse);
+        addEdit = updateCourse.findViewById(R.id.addEdit);
+
+        courseName.setText(courseToUpdate.getCourseName());
+        courseAcronym.setText(courseToUpdate.getAcronymCourse());
+
+        buttonCourse.setText("Update");
+        addEdit.setText("update");
+
 
         idUserLoged = ConfigFirebase.getUserId();
 
@@ -65,16 +83,12 @@ public class AddCourseFragment extends Fragment implements IFirebaseLoadDoneUniv
 
         iFirebaseLoadDoneUniversity = this;
 
-
         buttonCourse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                        String courseSaveName = courseName.getText().toString();
-                        String courseSaveAcronym = courseAcronym.getText().toString();
-
-                        courseAddNew(courseSaveName, courseSaveAcronym, idUniversitySelected, nameUniversitySelected);
-                }
+                courseUpdate();
+            }
         });
 
         backToAddEditMain.setOnClickListener(new View.OnClickListener() {
@@ -103,7 +117,7 @@ public class AddCourseFragment extends Fragment implements IFirebaseLoadDoneUniv
                 iFirebaseLoadDoneUniversity.onFireBaseLoadUniversityFailed(databaseError.getMessage());
             }
         });
-        return addCourse;
+        return updateCourse;
     }
 
     @Override
@@ -111,9 +125,10 @@ public class AddCourseFragment extends Fragment implements IFirebaseLoadDoneUniv
 
         //universitySpinner = universitiesList;
         final List<String> university_name = new ArrayList<>();
-        for (University university : universitiesList)
 
+        for (University university : universitiesList)
             university_name.add(university.getUniversityName());
+
 
         //Create adapter
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, university_name);
@@ -138,31 +153,19 @@ public class AddCourseFragment extends Fragment implements IFirebaseLoadDoneUniv
     public void onFireBaseLoadUniversityFailed(String message) {
     }
 
-    private void courseAddNew(String courseDialogName, String courseDialogAcronym, String idUniversitySelected, String nameUniversitySelected) {
+    private void courseUpdate() {
 
-        if (!courseDialogName.isEmpty()) {
-            if (!courseDialogAcronym.isEmpty()) {
+        Course courseUpdate = new Course();
 
-                Course course = new Course();
-                course.setIdUser(idUserLoged);
-                course.setCourseName(courseDialogName);
-                course.setAcronymCourse(courseDialogAcronym);
-                course.setIdUniversity(idUniversitySelected);
-                course.setUniversityName(nameUniversitySelected);
-
-                course.save();
-
-                courseName.setText("");
-                courseAcronym.setText("");
-                toastMsg("Course " + courseDialogName + " added to " + nameUniversitySelected + " university!");
-                backToMain();
-
-            } else {
-                toastMsg("Enter an acronym to Course");
-            }
-        } else {
-            toastMsg("Enter an Course name");
-        }
+        courseUpdate.setIdUser(idUserLoged);
+        courseUpdate.setIdCourse(courseToUpdate.getIdCourse());
+        courseUpdate.setCourseName(courseName.getText().toString());
+        courseUpdate.setAcronymCourse(courseAcronym.getText().toString());
+        courseUpdate.setIdUniversity(idUniversitySelected);
+        courseUpdate.setUniversityName(nameUniversitySelected);
+        courseUpdate.update(courseUpdate);
+        toastMsg("Course " + courseUpdate.getCourseName() + " updated");
+        backToMain();
 
     }
 

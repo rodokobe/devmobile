@@ -35,8 +35,8 @@ public class StudentMainFragment extends Fragment {
     private TextView backToAddEditMain;
     private String idUserLoged;
     private List<Student> students = new ArrayList<>();
-    private AddStudentFragment addStudentFragmentF;
-    private UpdateStudentFragment updateStudentFragmentF;
+    private StudentAddFragment addStudentFragmentF;
+    private StudentUpdateFragment updateStudentFragmentF;
     private AddEditMainFragment fragmentMain;
 
     //recycler view variables
@@ -176,7 +176,7 @@ public class StudentMainFragment extends Fragment {
     }
 
     public void goToUpdateFragment(Student objectToAction) {
-        updateStudentFragmentF = new UpdateStudentFragment();
+        updateStudentFragmentF = new StudentUpdateFragment();
         Bundle dataToUpdate = new Bundle();
         dataToUpdate.putSerializable("StudentToUpdate", objectToAction);
 
@@ -188,7 +188,7 @@ public class StudentMainFragment extends Fragment {
     }
 
     public void goToNewFragment() {
-        addStudentFragmentF = new AddStudentFragment();
+        addStudentFragmentF = new StudentAddFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frameAddEditUserProfile, addStudentFragmentF);
         transaction.commit();

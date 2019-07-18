@@ -34,8 +34,8 @@ public class CourseMainFragment extends Fragment {
     private TextView backToAddEditMain;
     private String idUserLoged;
     private List<Course> courses = new ArrayList<>();
-    private AddCourseFragment addCourseFragmentF;
-    private UpdateCourseFragment updateCourseFragmentF;
+    private CourseAddFragment addCourseFragmentF;
+    private CourseUpdateFragment updateCourseFragmentF;
     private AddEditMainFragment fragmentMain;
 
     //recycler view variables
@@ -175,14 +175,14 @@ public class CourseMainFragment extends Fragment {
     }
 
     public void goToNewFragment() {
-        addCourseFragmentF = new AddCourseFragment();
+        addCourseFragmentF = new CourseAddFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frameAddEditUserProfile, addCourseFragmentF);
         transaction.commit();
     }
 
     public void goToUpdateFragment(Course objectToAction) {
-        updateCourseFragmentF = new UpdateCourseFragment();
+        updateCourseFragmentF = new CourseUpdateFragment();
         Bundle dataToUpdate = new Bundle();
         dataToUpdate.putSerializable("CourseToUpdate", objectToAction);
 

@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:padding="20dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -23,7 +23,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/textFragmentName"
+                    android:id="@+id/textView14"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="University"
@@ -32,14 +32,21 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/textView4"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/addEdit"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="-10dp"
-                    android:text="add/edit/remove"
+                    android:text="add new"
                     android:textColor="@color/colorBright"
                     android:textSize="14sp" />
+
+                <View
+                    android:id="@+id/divider9"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="5dp"
+                    android:background="?android:attr/listDivider" />
 
             </LinearLayout>
 
@@ -57,43 +64,49 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/linearLayoutRecycler"
-            android:layout_width="match_parent"
-            android:layout_height="360dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/textListUniversities"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="start"
-                android:text="Universities List"
-                android:textSize="14sp" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recylcerUniversities"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="6dp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/linerLayoutAddGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="2dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <EditText
+                android:id="@+id/universityName"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_edit_text"
+                android:ems="10"
+                android:hint="university name"
+                android:textColorHint="@color/colorLightGray"
+                android:inputType="textPersonName"
+                android:paddingStart="10dp"
+                android:textSize="16sp"
+                android:theme="@style/editTextPadrao" />
+
+            <EditText
+                android:id="@+id/universityAcronym"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_edit_text"
+                android:ems="10"
+                android:hint="university acronym"
+                android:textColorHint="@color/colorLightGray"
+                android:inputType="textPersonName"
+                android:paddingStart="10dp"
+                android:textSize="16sp"
+                android:theme="@style/editTextPadrao" />
 
             <Button
                 android:id="@+id/buttonUniversity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="40dp"
                 android:layout_weight="1"
-                android:text="ADD NEW"
-                android:theme="@style/botaoPadraoBrown" />
+                android:text="ADD"
+                android:theme="@style/botaoPadraoGreen" />
 
         </LinearLayout>
 

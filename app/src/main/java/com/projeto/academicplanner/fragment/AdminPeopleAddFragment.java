@@ -17,7 +17,7 @@ import com.projeto.academicplanner.R;
 import com.projeto.academicplanner.helper.ConfigFirebase;
 import com.projeto.academicplanner.model.AdminPeople;
 
-public class AddAdminPeopleFragment extends Fragment {
+public class AdminPeopleAddFragment extends Fragment {
 
     private TextView backToAddEditMain;
     private EditText adminPeopleFirstName, adminPeopleLastName, adminPeopleEmail;
@@ -25,14 +25,14 @@ public class AddAdminPeopleFragment extends Fragment {
     private AdminPeopleMainFragment adminPeopleMainFragmentF;
     private String idUserLoged;
 
-    public AddAdminPeopleFragment() {
+    public AdminPeopleAddFragment() {
         // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View addAdminPeople = inflater.inflate(R.layout.fragment_add_admin_people, container, false);
+        View addAdminPeople = inflater.inflate(R.layout.fragment_admin_people_add, container, false);
 
 
         backToAddEditMain = addAdminPeople.findViewById(R.id.backToAddEditMain);

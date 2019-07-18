@@ -42,8 +42,8 @@ altera layout dos objetos
     private UniversityMainFragment addUniversityF;
     private CourseMainFragment addCourseF;
     private DisciplineMainFragment addDisciplineF;
-    private AddEventTypeFragment addEventTypeF;
-    private AddStudentFragment addStudentF;
+    private EventTypeAddFragment addEventTypeF;
+    private StudentAddFragment addStudentF;
     private AddAdmPeopleFragment addAdmPeopleF;
     private LinearLayout textLayout;
 
@@ -186,7 +186,7 @@ altera layout dos objetos
 
     public void addStudent(View view) {
 
-        addStudentF = new AddStudentFragment();
+        addStudentF = new StudentAddFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frameAddEditParameters, addStudentF);
         transaction.commit();
@@ -195,7 +195,7 @@ altera layout dos objetos
 
     public void addEventType(View view) {
 
-        addEventTypeF = new AddEventTypeFragment();
+        addEventTypeF = new EventTypeAddFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frameAddEditParameters, addEventTypeF);
         transaction.commit();

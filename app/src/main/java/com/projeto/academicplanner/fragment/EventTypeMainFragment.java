@@ -30,7 +30,7 @@ public class EventTypeMainFragment extends Fragment {
     private TextView backToAddEditMain;
     private String idUserLoged;
     private List<EventType> eventsType = new ArrayList<>();
-    private AddEventTypeFragment addEventTypeFragment;
+    private EventTypeAddFragment addEventTypeFragment;
     private AddEditMainFragment fragmentMain;
 
     //recycler view variables
@@ -211,7 +211,7 @@ public class EventTypeMainFragment extends Fragment {
     }*/
 
     public void goToNewFragment() {
-        addEventTypeFragment = new AddEventTypeFragment();
+        addEventTypeFragment = new EventTypeAddFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frameAddEditUserProfile, addEventTypeFragment);
         transaction.commit();

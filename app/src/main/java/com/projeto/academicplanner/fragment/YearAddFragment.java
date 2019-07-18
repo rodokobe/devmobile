@@ -1,7 +1,6 @@
 package com.projeto.academicplanner.fragment;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -23,14 +22,13 @@ import com.projeto.academicplanner.R;
 import com.projeto.academicplanner.helper.ConfigFirebase;
 import com.projeto.academicplanner.model.Years;
 
-import java.time.Year;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AddYearFragment extends Fragment implements AdapterView.OnItemSelectedListener {
+public class YearAddFragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
 
     /**
@@ -54,7 +52,7 @@ public class AddYearFragment extends Fragment implements AdapterView.OnItemSelec
 
     private YearMainFragment yearMainFragment;
 
-    public AddYearFragment() {
+    public YearAddFragment() {
         // Required empty public constructor
     }
 
@@ -63,7 +61,7 @@ public class AddYearFragment extends Fragment implements AdapterView.OnItemSelec
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_add_year, container, false);
+        View view = inflater.inflate(R.layout.fragment_year_add, container, false);
 
         auth = ConfigFirebase.getReferenciaAutenticacao();
         firebaseRef = ConfigFirebase.getReferenciaFirebase();

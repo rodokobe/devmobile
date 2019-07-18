@@ -14,7 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -35,57 +34,39 @@ import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UpdateDisciplineFragment extends Fragment implements IFirebaseLoadDoneCourse, IFirebaseLoadDoneYears {
+public class DisciplineAddFragment extends Fragment implements IFirebaseLoadDoneCourse, IFirebaseLoadDoneYears {
 
     private EditText disciplineName, acronymDiscipline;
-    private TextView backToAddEditMain, addEdit;
+    private TextView backToAddEditMain;
     private SearchableSpinner spinnerUniversity, spinnerYear;
     private Switch switchSemester;
     private Button buttonDisciplines;
     private String idUserLoged, idUniversitySelected, nameUniversitySelected, idCourseSelected, nameCourseSelected, idYearSelected, nameYearSelected;
-    private Discipline disciplineToUpdate;
 
     private DatabaseReference firebaseRefCourse, firebaseRefYear;
     private IFirebaseLoadDoneCourse iFirebaseLoadDoneCourse;
     private IFirebaseLoadDoneYears iFirebaseLoadDoneYears;
     private DisciplineMainFragment disciplineMainFragmentF;
 
-    public UpdateDisciplineFragment() {
+    public DisciplineAddFragment() {
         // Required empty public constructor
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        disciplineToUpdate = (Discipline) getArguments().getSerializable("DisciplineToUpdate");
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View updateDiscipline = inflater.inflate(R.layout.fragment_add_discipline, container, false);
+        View addDiscipline = inflater.inflate(R.layout.fragment_discipline_add, container, false);
 
         //configurações iniciais
-        disciplineName = updateDiscipline.findViewById(R.id.disciplineName);
-        acronymDiscipline = updateDiscipline.findViewById(R.id.acronymDiscipline);
-        backToAddEditMain = updateDiscipline.findViewById(R.id.backToAddEditMain);
-        spinnerUniversity = updateDiscipline.findViewById(R.id.spinnerUniversity);
-        spinnerYear = updateDiscipline.findViewById(R.id.spinnerYear);
-        switchSemester = updateDiscipline.findViewById(R.id.switchSemester);
-        buttonDisciplines = updateDiscipline.findViewById(R.id.buttonDisciplines);
-        addEdit = updateDiscipline.findViewById(R.id.addEdit);
+        disciplineName = addDiscipline.findViewById(R.id.disciplineName);
+        acronymDiscipline = addDiscipline.findViewById(R.id.acronymDiscipline);
+        backToAddEditMain = addDiscipline.findViewById(R.id.backToAddEditMain);
+        spinnerUniversity = addDiscipline.findViewById(R.id.spinnerUniversity);
+        spinnerYear = addDiscipline.findViewById(R.id.spinnerYear);
+        switchSemester = addDiscipline.findViewById(R.id.switchSemester);
+        buttonDisciplines = addDiscipline.findViewById(R.id.buttonDisciplines);
 
         idUserLoged = ConfigFirebase.getUserId();
-
-        disciplineName.setText(disciplineToUpdate.getDisciplineName());
-        acronymDiscipline.setText(disciplineToUpdate.getAcronymDiscipline());
-        spinnerUniversity.setTitle(disciplineToUpdate.getCourseName());
-        spinnerYear.setTitle(disciplineToUpdate.getDisciplineYearName());
-
-        buttonDisciplines.setText("Update");
-        addEdit.setText("update");
 
         //instances to load data and send to spinners
         firebaseRefCourse = FirebaseDatabase.getInstance().getReference("courses").child(idUserLoged);
@@ -100,7 +81,17 @@ public class UpdateDisciplineFragment extends Fragment implements IFirebaseLoadD
             @Override
             public void onClick(View v) {
 
-                disciplineUpdate();
+                String disciplineSaveName = disciplineName.getText().toString();
+                String disciplineSaveAcronym = acronymDiscipline.getText().toString();
+                String disciplineSaveSemester = "1";
+
+                if (switchSemester.isChecked()) {
+                    disciplineSaveSemester = "2";
+                }
+
+
+                disciplineAddNew(disciplineSaveName, disciplineSaveAcronym, idYearSelected, nameYearSelected, disciplineSaveSemester,
+                        idUniversitySelected, nameUniversitySelected, idCourseSelected, nameCourseSelected);
 
             }
         });
@@ -157,7 +148,7 @@ public class UpdateDisciplineFragment extends Fragment implements IFirebaseLoadD
             }
         });
 
-        return updateDiscipline;
+        return addDiscipline;
 
     }
 
@@ -232,31 +223,35 @@ public class UpdateDisciplineFragment extends Fragment implements IFirebaseLoadD
     }
 
 
-    private void disciplineUpdate() {
+    private void disciplineAddNew(String disciplineSaveName, String disciplineSaveAcronym, String disciplineSaveYearId, String disciplineSaveYearName, String disciplineSaveSemester,
+                                  String idUniversitySelected, String nameUniversitySelected, String idCourseSelected, String nameCourseSelected) {
 
-        String disciplineSaveSemester = "1";
+        if (!disciplineSaveName.isEmpty()) {
+            if (!disciplineSaveAcronym.isEmpty()) {
 
-        if (switchSemester.isChecked()) {
-            disciplineSaveSemester = "2";
+                Discipline discipline = new Discipline();
+                discipline.setIdUser(idUserLoged);
+                discipline.setDisciplineName(disciplineSaveName);
+                discipline.setAcronymDiscipline(disciplineSaveAcronym);
+                discipline.setDisciplineYearId(disciplineSaveYearId);
+                discipline.setDisciplineYearName(disciplineSaveYearName);
+                discipline.setDisciplineSemester(disciplineSaveSemester);
+                discipline.setIdUniversity(idUniversitySelected);
+                discipline.setUniversityName(nameUniversitySelected);
+                discipline.setIdCourse(idCourseSelected);
+                discipline.setCourseName(nameCourseSelected);
+
+                discipline.save();
+
+                toastMsg("Discipline " + disciplineSaveName + " added to " + nameCourseSelected + " course!");
+                backToMain();
+
+            } else {
+                toastMsg("Enter an acronym to Discipline");
+            }
+        } else {
+            toastMsg("Enter an Discipline name");
         }
-
-        final Discipline disciplineUpdate = new Discipline();
-
-        disciplineUpdate.setIdUser(idUserLoged);
-        disciplineUpdate.setIdDiscipline(disciplineToUpdate.getIdDiscipline());
-        disciplineUpdate.setDisciplineName(disciplineName.getText().toString());
-        disciplineUpdate.setAcronymDiscipline(acronymDiscipline.getText().toString());
-        disciplineUpdate.setDisciplineYearId(idYearSelected);
-        disciplineUpdate.setDisciplineYearName(nameYearSelected);
-        disciplineUpdate.setDisciplineSemester(disciplineSaveSemester);
-        disciplineUpdate.setIdUniversity(idUniversitySelected);
-        disciplineUpdate.setUniversityName(nameUniversitySelected);
-        disciplineUpdate.setIdCourse(idCourseSelected);
-        disciplineUpdate.setCourseName(nameCourseSelected);
-
-        disciplineUpdate.update(disciplineUpdate);
-        toastMsg("Discipline " + disciplineUpdate.getDisciplineName() + " successfully update");
-        backToMain();
 
     }
 

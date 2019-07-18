@@ -38,8 +38,8 @@ public class YearMainFragment extends Fragment {
     private TextView backToAddEditMain;
     private String idUserLogged;
     private List<Years> yearsList = new ArrayList<>();
-    private AddYearFragment addYearFragmentF;
-    //private UpdateYearFragment updateYearFragmentF;
+    private YearAddFragment addYearFragmentF;
+    //private YearUpdateFragment updateYearFragmentF;
     private AddEditMainFragment fragmentMain;
 
     /**
@@ -169,14 +169,14 @@ public class YearMainFragment extends Fragment {
     }
 
     public void goToNewFragment() {
-        addYearFragmentF = new AddYearFragment();
+        addYearFragmentF = new YearAddFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frameAddEditUserProfile, addYearFragmentF);
         transaction.commit();
     }
 
     public void goToUpdateFragment(University objectToAction) {
-        /*updateYearFragmentF = new UpdateUniversityFragment();
+        /*updateYearFragmentF = new UniversityUpdateFragment();
         Bundle bundle = new Bundle();
         bundle.putString("universityIdBundle", objectToAction.getIdUniversity());
         bundle.putString("universityNameBundle", objectToAction.getUniversityName());

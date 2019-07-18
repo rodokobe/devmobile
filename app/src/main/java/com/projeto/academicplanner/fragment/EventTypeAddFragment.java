@@ -11,19 +11,19 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.projeto.academicplanner.R;
 
-public class AddEventTypeFragment extends Fragment {
+public class EventTypeAddFragment extends Fragment {
 
     private TextView backToAddEditMain;
     private EventTypeMainFragment eventTypeMainFragmentF;
 
-    public AddEventTypeFragment() {
+    public EventTypeAddFragment() {
         // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View addEventType = inflater.inflate(R.layout.fragment_add_event_type, container, false);
+        View addEventType = inflater.inflate(R.layout.fragment_event_type_add, container, false);
 
         backToAddEditMain = addEventType.findViewById(R.id.backToAddEditMain);
 

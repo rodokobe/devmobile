@@ -18,7 +18,7 @@ import com.projeto.academicplanner.R;
 import com.projeto.academicplanner.helper.ConfigFirebase;
 import com.projeto.academicplanner.model.AdminPeople;
 
-public class UpdateAdminPeopleFragment extends Fragment {
+public class AdminPeopleUpdateFragment extends Fragment {
 
     private TextView backToAddEditMain, addEdit;
     private EditText adminPeopleFirstName, adminPeopleLastName, adminPeopleEmail;
@@ -29,7 +29,7 @@ public class UpdateAdminPeopleFragment extends Fragment {
     private AdminPeople adminPeopleToUpdate;
 
 
-    public UpdateAdminPeopleFragment() {
+    public AdminPeopleUpdateFragment() {
         // Required empty public constructor
     }
 
@@ -44,7 +44,7 @@ public class UpdateAdminPeopleFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View updateStudent = inflater.inflate(R.layout.fragment_add_admin_people, container, false);
+        View updateStudent = inflater.inflate(R.layout.fragment_admin_people_add, container, false);
 
 
         backToAddEditMain = updateStudent.findViewById(R.id.backToAddEditMain);

@@ -35,8 +35,8 @@ public class AdminPeopleMainFragment extends Fragment {
     private TextView backToAddEditMain;
     private String idUserLoged;
     private List<AdminPeople> adminPeopleS = new ArrayList<>();
-    private AddAdminPeopleFragment addAdminPeopleFragmentF;
-    private UpdateAdminPeopleFragment updateAdminPeopleFragmentF;
+    private AdminPeopleAddFragment addAdminPeopleFragmentF;
+    private AdminPeopleUpdateFragment updateAdminPeopleFragmentF;
     private AddEditMainFragment fragmentMain;
 
     //private StudentMainFragment studentMainFragmentF;
@@ -176,7 +176,7 @@ public class AdminPeopleMainFragment extends Fragment {
     }
 
     public void goToUpdateFragment(AdminPeople objectToAction) {
-        updateAdminPeopleFragmentF = new UpdateAdminPeopleFragment();
+        updateAdminPeopleFragmentF = new AdminPeopleUpdateFragment();
         Bundle dataToUpdate = new Bundle();
         dataToUpdate.putSerializable("AdminPeopleToUpdate", objectToAction);
 
@@ -188,7 +188,7 @@ public class AdminPeopleMainFragment extends Fragment {
     }
 
     public void goToNewFragment() {
-        addAdminPeopleFragmentF = new AddAdminPeopleFragment();
+        addAdminPeopleFragmentF = new AdminPeopleAddFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frameAddEditUserProfile, addAdminPeopleFragmentF);
         transaction.commit();

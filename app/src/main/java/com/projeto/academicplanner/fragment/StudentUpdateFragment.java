@@ -19,7 +19,7 @@ import com.projeto.academicplanner.R;
 import com.projeto.academicplanner.helper.ConfigFirebase;
 import com.projeto.academicplanner.model.Student;
 
-public class UpdateStudentFragment extends Fragment {
+public class StudentUpdateFragment extends Fragment {
 
     private TextView backToAddEditMain, addEdit;
     private EditText studentFirstName, studentLastName, studentEmail;
@@ -31,7 +31,7 @@ public class UpdateStudentFragment extends Fragment {
     private Student studentToUpdate;
 
 
-    public UpdateStudentFragment() {
+    public StudentUpdateFragment() {
         // Required empty public constructor
     }
 
@@ -46,7 +46,7 @@ public class UpdateStudentFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View updateStudent = inflater.inflate(R.layout.fragment_add_student, container, false);
+        View updateStudent = inflater.inflate(R.layout.fragment_student_add, container, false);
 
 
         backToAddEditMain = updateStudent.findViewById(R.id.backToAddEditMain);

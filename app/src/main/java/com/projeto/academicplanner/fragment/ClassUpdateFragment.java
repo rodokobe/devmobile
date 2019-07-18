@@ -15,21 +15,19 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.projeto.academicplanner.R;
-import com.projeto.academicplanner.activity.LoginActivity;
 import com.projeto.academicplanner.activity.NavMainActivity;
-import com.projeto.academicplanner.activity.SplashActivity;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ClassEditFragment extends Fragment {
+public class ClassUpdateFragment extends Fragment {
 
     private Spinner spinnerDiscipline;
     private EditText subjectEditText, editTextDate, editTextHour, editTextTimeDuration, editTextClassroom, editTextContent;
     private TextView backToAddEditMain;
 
 
-    public ClassEditFragment() {
+    public ClassUpdateFragment() {
         // Required empty public constructor
     }
 
@@ -38,7 +36,7 @@ public class ClassEditFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_class_edit, container, false);
+        View v = inflater.inflate(R.layout.fragment_class_update, container, false);
 
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Edit Class");
 

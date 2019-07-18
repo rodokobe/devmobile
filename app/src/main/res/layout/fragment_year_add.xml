@@ -1,10 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.AddUniversityFragment">
-
-    <!-- TODO: Update blank fragment layout -->
+    tools:context=".fragment.YearAddFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,16 +22,16 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/textView14"
+                    android:id="@+id/textFragmentName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="University"
+                    android:text="Year"
                     android:textColor="@color/colorGray"
                     android:textSize="40sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/addEdit"
+                    android:id="@+id/textView4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
@@ -42,7 +41,7 @@
                     android:textSize="14sp" />
 
                 <View
-                    android:id="@+id/divider9"
+                    android:id="@+id/divider6"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="5dp"
@@ -69,44 +68,41 @@
             android:orientation="vertical"
             android:padding="10dp">
 
-            <EditText
-                android:id="@+id/universityName"
+            <TextView
+                android:id="@+id/textDiscipline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Select a year:"
+                android:textColor="@color/colorGray"
+                android:textSize="14sp" />
+
+            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                android:id="@+id/spinnerYears"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/bg_edit_text"
-                android:ems="10"
-                android:hint="university name"
-                android:textColorHint="@color/colorLightGray"
-                android:inputType="textPersonName"
-                android:paddingStart="10dp"
-                android:textSize="16sp"
-                android:theme="@style/editTextPadrao" />
+                android:dropDownWidth="wrap_content"
+                android:outlineSpotShadowColor="@color/colorGray"
+                android:padding="10dp" />
 
-            <EditText
-                android:id="@+id/universityAcronym"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_marginTop="20dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
                 android:layout_weight="1"
-                android:background="@drawable/bg_edit_text"
-                android:ems="10"
-                android:hint="university acronym"
-                android:textColorHint="@color/colorLightGray"
-                android:inputType="textPersonName"
-                android:paddingStart="10dp"
-                android:textSize="16sp"
-                android:theme="@style/editTextPadrao" />
+                android:orientation="horizontal"/>
 
             <Button
-                android:id="@+id/buttonUniversity"
+                android:id="@+id/buttonAdd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="30dp"
                 android:layout_weight="1"
                 android:text="ADD"
-                android:theme="@style/botaoPadraoGreen" />
+                android:theme="@style/botaoPadraoBrown" />
 
         </LinearLayout>
 
