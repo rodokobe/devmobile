@@ -31,7 +31,7 @@ import com.squareup.picasso.Picasso;
  */
 public class UserProfileFragment extends Fragment {
 
-    private TextView txtName, txtEmail, backToHome;
+    private TextView txtName, txtEmail;
     private ImageView imgProfile;
     private Button btnEditUserProfile;
 
@@ -84,17 +84,6 @@ public class UserProfileFragment extends Fragment {
             showUserProfileEditFragment();
 
         });
-
-        /**
-         * Back to home
-         */
-        backToHome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(), NavMainActivity.class));
-            }
-        });
-
 
         return v;
 
@@ -165,7 +154,6 @@ public class UserProfileFragment extends Fragment {
         txtEmail = v.findViewById(R.id.txtEmail);
         txtName = v.findViewById(R.id.txtName);
         btnEditUserProfile = v.findViewById(R.id.btnGoToNextFragment);
-        backToHome = v.findViewById(R.id.backToHome);
 
     }
 

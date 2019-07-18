@@ -24,20 +24,10 @@
                         android:id="@+id/textFragmentName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Event Type"
+                        android:text="Events"
                         android:textColor="@color/colorGray"
                         android:textSize="40sp"
                         android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/textView4"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="-10dp"
-                        android:text="add new"
-                        android:textColor="@color/colorBright"
-                        android:textSize="14sp" />
 
                     <View
                         android:id="@+id/divider6"
@@ -47,17 +37,6 @@
                         android:background="?android:attr/listDivider" />
 
                 </LinearLayout>
-
-                <TextView
-                    android:id="@+id/backToAddEditMain"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_seta_voltar_24dp"
-                    android:gravity="center"
-                    android:paddingTop="20dp"
-                    android:text="back"
-                    android:textColor="@color/colorBright"
-                    android:textSize="14sp" />
 
             </LinearLayout>
 

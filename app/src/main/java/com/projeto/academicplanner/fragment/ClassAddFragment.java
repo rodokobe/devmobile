@@ -113,9 +113,10 @@ public class ClassAddFragment extends Fragment implements IFirebaseLoadDoneDisci
         final List<String> discipline_info = new ArrayList<>();
         for (Discipline discipline : disciplinesList)
 
-            discipline_info.add("University: " + discipline.getUniversityName() + "\nCourse: " + discipline.getCourseName()
-                    + "\n Discipline: " + discipline.getDisciplineName() + "\n Year: " + discipline.getDisciplineYearName() +
-                    "\n Semester: " + discipline.getDisciplineSemester());
+            discipline_info.add(discipline.getDisciplineName() + "\n"
+                    + discipline.getDisciplineYearName() + "   Semester: " + discipline.getDisciplineSemester() + "\n"
+                    + discipline.getCourseName()  + "\n"
+                    + discipline.getUniversityName());
 
         //Create adapter
         ArrayAdapter<String> adapterUniversity = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, discipline_info);

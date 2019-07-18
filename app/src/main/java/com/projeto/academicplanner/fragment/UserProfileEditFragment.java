@@ -47,7 +47,7 @@ public class UserProfileEditFragment extends Fragment {
     private StorageReference storageReference;
     private DatabaseReference firebaseRef;
 
-    private TextView backToUserProfile;
+    private TextView backToPrevious;
     private EditText firstname, lastname, emailText;
     private Button btnSave;
     private ImageView profile_image;
@@ -120,7 +120,7 @@ public class UserProfileEditFragment extends Fragment {
             }
         });
 
-        backToUserProfile.setOnClickListener(new View.OnClickListener() {
+        backToPrevious.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showUserProfileFragment();
@@ -182,7 +182,8 @@ public class UserProfileEditFragment extends Fragment {
                 userProfile.save();
                 toastMessageShort("Perfil alterado com sucesso");
 
-                getActivity().finish();
+                //getActivity().finish();
+                showUserProfileFragment();
             } else {
                 toastMessageShort("Digite um apelido");
             }
@@ -270,7 +271,7 @@ public class UserProfileEditFragment extends Fragment {
         firstname = v.findViewById(R.id.editTextFirstname);
         lastname = v.findViewById(R.id.editTextLastname);
         btnSave = v.findViewById(R.id.btnSaveUserProfileFragment);
-        backToUserProfile = v.findViewById(R.id.backToUserProfile);
+        backToPrevious = v.findViewById(R.id.backToPrevious);
 
     }
 

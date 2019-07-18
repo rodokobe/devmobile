@@ -19,20 +19,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:text="Event"
+            android:text="Events"
             android:textColor="@color/colorGray"
             android:textSize="40sp"
             android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="-10dp"
-            android:text="add/edit/remove"
-            android:textColor="@color/colorBright"
-            android:textSize="14sp" />
 
         <LinearLayout
             android:id="@+id/linearLayoutRecycler"
@@ -47,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:gravity="start"
-                android:text="Disciplines List"
+                android:text="Listing added events"
                 android:textSize="14sp" />
 
             <androidx.recyclerview.widget.RecyclerView
