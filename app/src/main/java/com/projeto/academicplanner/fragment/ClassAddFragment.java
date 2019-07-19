@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -37,6 +38,7 @@ import com.projeto.academicplanner.model.Discipline;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -46,7 +48,8 @@ import java.util.List;
 public class ClassAddFragment extends Fragment implements IFirebaseLoadDoneDiscipline {
 
     private SearchableSpinner spinnerDiscipline;
-    private EditText subjectEditText, editTextClassroom, editTextContent, editTextDate, editTextHour, editTextTimeDuration;
+    private EditText subjectEditText, editTextClassroom, editTextContent, editTextDate, editTextHour;
+    private Spinner spinnerDuration;
     private Button buttonClassAdd;
 
     private String idUserLogged, idUniversitySelected, nameUniversitySelected, idCourseSelected, nameCourseSelected,
@@ -123,10 +126,8 @@ public class ClassAddFragment extends Fragment implements IFirebaseLoadDoneDisci
                 timePickerDialog.show();
 
 
-
             }
         });
-
 
 
         int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
@@ -140,7 +141,7 @@ public class ClassAddFragment extends Fragment implements IFirebaseLoadDoneDisci
             String subjectEditTextToSave = subjectEditText.getText().toString();
             String editTextDateToSave = editTextDate.getText().toString();
             String editTextHourToSave = editTextHour.getText().toString();
-            String editTextTimeDurationToSave = editTextTimeDuration.getText().toString();
+            String editTextTimeDurationToSave = spinnerDuration.getSelectedItem().toString();
             toastMsgShort(editTextTimeDurationToSave);
             String editTextClassroomToSave = editTextClassroom.getText().toString();
             String editTextContentToSave = editTextContent.getText().toString();
@@ -221,7 +222,7 @@ public class ClassAddFragment extends Fragment implements IFirebaseLoadDoneDisci
     }
 
     private void classAddNew(String subjectEditTextToSave, String editTextDateToSave, String
-            editTextHourToSave, String editTextTimeDurationToSave, String editTextClassroomToSave,
+            editTextHourToSave, String spinnerDurationToSave, String editTextClassroomToSave,
                              String editTextContentToSave, String idUniversitySelected, String
                                      nameUniversitySelected, String idCourseSelected, String nameCourseSelected,
                              String idDisciplineSelected, String nameDisciplineSelected, String
@@ -230,7 +231,7 @@ public class ClassAddFragment extends Fragment implements IFirebaseLoadDoneDisci
         if (!subjectEditTextToSave.isEmpty()) {
             if (!editTextDateToSave.isEmpty()) {
                 if (!editTextHourToSave.isEmpty()) {
-                    if (!editTextTimeDurationToSave.isEmpty()) {
+                    if (!spinnerDurationToSave.isEmpty()) {
                         if (!editTextClassroomToSave.isEmpty()) {
                             if (!editTextContentToSave.isEmpty()) {
 
@@ -239,7 +240,7 @@ public class ClassAddFragment extends Fragment implements IFirebaseLoadDoneDisci
                                 classToSave.setSubject(subjectEditTextToSave);
                                 classToSave.setClassDate(editTextDateToSave);
                                 classToSave.setClassTime(editTextHourToSave);
-                                classToSave.setTimeDuration(editTextTimeDurationToSave);
+                                classToSave.setTimeDuration(spinnerDurationToSave);
                                 classToSave.setClassroom(editTextClassroomToSave);
                                 classToSave.setTopicsAndContents(editTextContentToSave);
                                 classToSave.setIdUniversity(idUniversitySelected);
@@ -294,14 +295,24 @@ public class ClassAddFragment extends Fragment implements IFirebaseLoadDoneDisci
         subjectEditText = view.findViewById(R.id.subjectEditText);
         editTextDate = view.findViewById(R.id.editTextDate);
         editTextHour = view.findViewById(R.id.editTextHour);
-        editTextTimeDuration = view.findViewById(R.id.editTextTimeDuration);
+        //editTextTimeDuration = view.findViewById(R.id.editTextTimeDuration);
         editTextClassroom = view.findViewById(R.id.editTextClassroom);
         editTextContent = view.findViewById(R.id.editTextContent);
         buttonClassAdd = view.findViewById(R.id.buttonClassAdd);
 
         //editTextDate.setText(DateTimeCustom.getNowDate());
         //editTextHour.setText(DateTimeCustom.getNowTime());
-        editTextTimeDuration.setText("00");
+        //editTextTimeDuration.setText("00");
+
+        spinnerDuration = view.findViewById(R.id.spinnerDuration);
+
+        String[] numbers = new String[]{"1", "2", "3", "4", "5", "6", "7", "8"};
+        List<String> numbersList = new ArrayList<String>(Arrays.asList(numbers));
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, numbersList);
+        //specify the layout to appear list items
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //data bind adapter with both spinners
+        spinnerDuration.setAdapter(adapter);
 
         idUserLogged = ConfigFirebase.getUserId();
 

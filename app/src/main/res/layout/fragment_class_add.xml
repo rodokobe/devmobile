@@ -123,12 +123,12 @@
                         android:text="Time Duration (in hours):"
                         android:textSize="16sp" />
 
-                    <EditText
-                        android:id="@+id/editTextTimeDuration"
+                    <Spinner
+                        android:id="@+id/spinnerDuration"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:inputType="number" />
+                        android:layout_height="match_parent"
+                        android:dropDownWidth="match_parent"
+                        android:textAlignment="center" />
 
                 </LinearLayout>
 
