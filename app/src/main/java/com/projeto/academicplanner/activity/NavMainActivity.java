@@ -193,9 +193,16 @@ public class NavMainActivity extends AppCompatActivity
         horizontalCalendar.setCalendarListener(new HorizontalCalendarListener() {
             @Override
             public void onDateSelected(Calendar date, int position) {
-                String selectedDateStr = DateFormat.format("EEE, MMM d, yyyy", date).toString();
-                Toast.makeText(NavMainActivity.this, selectedDateStr + " selected!", Toast.LENGTH_SHORT).show();
-                Log.i("onDateSelected", selectedDateStr + " - Position = " + position);
+
+                int daySelected = date.get(Calendar.DAY_OF_MONTH);
+                int monthSelected = date.get(Calendar.MONTH);
+                int yearSelected = date.get(Calendar.YEAR);
+
+                String dateSelected = String.format("%02d/%02d/%04d", daySelected,monthSelected+1,yearSelected);
+
+                //String selectedDateStr = DateFormat.format("EEE, MMM d, yyyy", date).toString();
+                Toast.makeText(NavMainActivity.this, dateSelected, Toast.LENGTH_SHORT).show();
+                //Log.i("onDateSelected", selectedDateStr + " - Position = " + position);
             }
         });
 
