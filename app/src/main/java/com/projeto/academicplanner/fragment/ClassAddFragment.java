@@ -1,7 +1,11 @@
 package com.projeto.academicplanner.fragment;
 
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -10,12 +14,13 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,7 +29,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.projeto.academicplanner.Interface.IFirebaseLoadDoneDiscipline;
 import com.projeto.academicplanner.R;
-import com.projeto.academicplanner.activity.ClassMainActivity;
 import com.projeto.academicplanner.activity.NavMainActivity;
 import com.projeto.academicplanner.helper.ConfigFirebase;
 import com.projeto.academicplanner.helper.DateTimeCustom;
@@ -33,6 +37,7 @@ import com.projeto.academicplanner.model.Discipline;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -49,6 +54,7 @@ public class ClassAddFragment extends Fragment implements IFirebaseLoadDoneDisci
 
     private DatabaseReference firebaseRefDiscipline;
     private IFirebaseLoadDoneDiscipline iFirebaseLoadDoneDiscipline;
+    private DatePickerDialog.OnDateSetListener setListener;
 
 
     public ClassAddFragment() {
@@ -63,45 +69,110 @@ public class ClassAddFragment extends Fragment implements IFirebaseLoadDoneDisci
 
         initializingComponents(addClass);
 
-        buttonClassAdd.setOnClickListener(new View.OnClickListener() {
+        Calendar calendar = Calendar.getInstance();
+        final int year = calendar.get(Calendar.YEAR);
+        final int month = calendar.get(Calendar.MONTH);
+        final int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        editTextDate.setOnClickListener(v -> {
+            DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), android.R.style.Theme_Holo_Light_Dialog_MinWidth, setListener, year, month, day);
+            datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            datePickerDialog.show();
+        });
+
+        setListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                month = month + 1;
+                String date = day + "/" + month + "/" + year;
+                editTextDate.setText(date);
+            }
+        };
+
+        editTextDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                String subjectEditTextToSave = subjectEditText.getText().toString();
-                String editTextDateToSave = editTextDate.getText().toString();
-                String editTextHourToSave = editTextHour.getText().toString();
-                String editTextTimeDurationToSave = editTextTimeDuration.getText().toString();
-                toastMsgShort(editTextTimeDurationToSave);
-                String editTextClassroomToSave = editTextClassroom.getText().toString();
-                String editTextContentToSave = editTextContent.getText().toString();
-
-                classAddNew(subjectEditTextToSave, editTextDateToSave, editTextHourToSave, editTextTimeDurationToSave, editTextClassroomToSave,
-                        editTextContentToSave, idUniversitySelected, nameUniversitySelected, idCourseSelected, nameCourseSelected, idDisciplineSelected,
-                        nameDisciplineSelected, idYearSelected, nameYearSelected, semester);
+                DatePickerDialog datePickerDialog = new DatePickerDialog(
+                        getActivity(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int day) {
+                        month = month + 1;
+                        String date = day + "/" + month + "/" + year;
+                        editTextDate.setText(date);
+                    }
+                }, year, month, day);
+                datePickerDialog.show();
             }
+        });
+
+        /**
+         * Time Picker
+         */
+
+        editTextHour.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
+                        editTextHour.setText(String.format("%02d:%02d", hourOfDay, minutes));
+                    }
+                }, 0, 0, false);
+
+                timePickerDialog.show();
+
+
+
+            }
+        });
+
+
+
+        int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
+        int currentMinute = calendar.get(Calendar.MINUTE);
+
+
+        buttonClassAdd.setOnClickListener(v ->
+
+        {
+
+            String subjectEditTextToSave = subjectEditText.getText().toString();
+            String editTextDateToSave = editTextDate.getText().toString();
+            String editTextHourToSave = editTextHour.getText().toString();
+            String editTextTimeDurationToSave = editTextTimeDuration.getText().toString();
+            toastMsgShort(editTextTimeDurationToSave);
+            String editTextClassroomToSave = editTextClassroom.getText().toString();
+            String editTextContentToSave = editTextContent.getText().toString();
+
+            classAddNew(subjectEditTextToSave, editTextDateToSave, editTextHourToSave, editTextTimeDurationToSave, editTextClassroomToSave,
+                    editTextContentToSave, idUniversitySelected, nameUniversitySelected, idCourseSelected, nameCourseSelected, idDisciplineSelected,
+                    nameDisciplineSelected, idYearSelected, nameYearSelected, semester);
         });
 
         //load fields to the Discipline spinner
-        firebaseRefDiscipline.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+        firebaseRefDiscipline.addListenerForSingleValueEvent(new
 
-                List<Discipline> disciplines = new ArrayList<>();
+                                                                     ValueEventListener() {
+                                                                         @Override
+                                                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                for (DataSnapshot coursesSnapShot : dataSnapshot.getChildren()) {
+                                                                             List<Discipline> disciplines = new ArrayList<>();
 
-                    disciplines.add(coursesSnapShot.getValue(Discipline.class));
-                    iFirebaseLoadDoneDiscipline.onFireBaseLoadDisciplineSuccess(disciplines);
-                }
+                                                                             for (DataSnapshot coursesSnapShot : dataSnapshot.getChildren()) {
 
-            }
+                                                                                 disciplines.add(coursesSnapShot.getValue(Discipline.class));
+                                                                                 iFirebaseLoadDoneDiscipline.onFireBaseLoadDisciplineSuccess(disciplines);
+                                                                             }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                                                         }
 
-                iFirebaseLoadDoneDiscipline.onFireBaseLoadDisciplineFailed(databaseError.getMessage());
-            }
-        });
+                                                                         @Override
+                                                                         public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                                                             iFirebaseLoadDoneDiscipline.onFireBaseLoadDisciplineFailed(databaseError.getMessage());
+                                                                         }
+                                                                     });
 
         return addClass;
     }
@@ -116,7 +187,7 @@ public class ClassAddFragment extends Fragment implements IFirebaseLoadDoneDisci
 
             discipline_info.add(discipline.getDisciplineName() + "\n"
                     + discipline.getDisciplineYearName() + "   Semester: " + discipline.getDisciplineSemester() + "\n"
-                    + discipline.getCourseName()  + "\n"
+                    + discipline.getCourseName() + "\n"
                     + discipline.getUniversityName());
 
         //Create adapter
@@ -149,9 +220,12 @@ public class ClassAddFragment extends Fragment implements IFirebaseLoadDoneDisci
     public void onFireBaseLoadDisciplineFailed(String message) {
     }
 
-    private void classAddNew(String subjectEditTextToSave, String editTextDateToSave, String editTextHourToSave, String editTextTimeDurationToSave, String editTextClassroomToSave,
-                             String editTextContentToSave, String idUniversitySelected, String nameUniversitySelected, String idCourseSelected, String nameCourseSelected,
-                             String idDisciplineSelected, String nameDisciplineSelected, String idYearSelected, String nameYearSelected, String semester) {
+    private void classAddNew(String subjectEditTextToSave, String editTextDateToSave, String
+            editTextHourToSave, String editTextTimeDurationToSave, String editTextClassroomToSave,
+                             String editTextContentToSave, String idUniversitySelected, String
+                                     nameUniversitySelected, String idCourseSelected, String nameCourseSelected,
+                             String idDisciplineSelected, String nameDisciplineSelected, String
+                                     idYearSelected, String nameYearSelected, String semester) {
 
         if (!subjectEditTextToSave.isEmpty()) {
             if (!editTextDateToSave.isEmpty()) {
@@ -204,14 +278,14 @@ public class ClassAddFragment extends Fragment implements IFirebaseLoadDoneDisci
 
     }
 
-    public void toastMsgShort(String errorMsg){
+    public void toastMsgShort(String errorMsg) {
         Toast toastErrorMsg = Toast.makeText(getActivity(), errorMsg, Toast.LENGTH_SHORT);
-        toastErrorMsg.setGravity(Gravity.CENTER, 0 , 600);
+        toastErrorMsg.setGravity(Gravity.CENTER, 0, 600);
         toastErrorMsg.show();
     }
 
     public void backToMain() {
-        startActivity( new Intent(getActivity(), NavMainActivity.class) );
+        startActivity(new Intent(getActivity(), NavMainActivity.class));
     }
 
     private void initializingComponents(View view) {
@@ -225,8 +299,8 @@ public class ClassAddFragment extends Fragment implements IFirebaseLoadDoneDisci
         editTextContent = view.findViewById(R.id.editTextContent);
         buttonClassAdd = view.findViewById(R.id.buttonClassAdd);
 
-        editTextDate.setText(DateTimeCustom.getNowDate());
-        editTextHour.setText(DateTimeCustom.getNowTime());
+        //editTextDate.setText(DateTimeCustom.getNowDate());
+        //editTextHour.setText(DateTimeCustom.getNowTime());
         editTextTimeDuration.setText("00");
 
         idUserLogged = ConfigFirebase.getUserId();

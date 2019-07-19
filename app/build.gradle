@@ -86,8 +86,8 @@ dependencies {
     /**
      * Pick the Date
      */
-    implementation 'com.wdullaer:materialdatetimepicker:4.2.1'
-
+    //implementation 'com.wdullaer:materialdatetimepicker:4.2.1'
+    //implementation 'com.github.chivorns:datetimeoptionspicker:1.0.1'
 
 }
 apply plugin: 'com.google.gms.google-services'
