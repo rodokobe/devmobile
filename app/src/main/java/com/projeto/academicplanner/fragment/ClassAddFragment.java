@@ -77,6 +77,10 @@ public class ClassAddFragment extends Fragment implements IFirebaseLoadDoneDisci
         final int month = calendar.get(Calendar.MONTH);
         final int day = calendar.get(Calendar.DAY_OF_MONTH);
 
+
+        /**
+         * Date Picker
+         */
         editTextDate.setOnClickListener(v -> {
             DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), android.R.style.Theme_Holo_Light_Dialog_MinWidth, setListener, year, month, day);
             datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -129,10 +133,9 @@ public class ClassAddFragment extends Fragment implements IFirebaseLoadDoneDisci
         });
 
 
-        int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
-        int currentMinute = calendar.get(Calendar.MINUTE);
-
-
+        /**
+         * Saving new class data
+         */
         buttonClassAdd.setOnClickListener(v ->
 
         {
@@ -150,7 +153,9 @@ public class ClassAddFragment extends Fragment implements IFirebaseLoadDoneDisci
                     nameDisciplineSelected, idYearSelected, nameYearSelected, semester);
         });
 
-        //load fields to the Discipline spinner
+        /**
+         * load fields to the Discipline spinner
+         */
         firebaseRefDiscipline.addListenerForSingleValueEvent(new
 
                                                                      ValueEventListener() {
@@ -190,7 +195,9 @@ public class ClassAddFragment extends Fragment implements IFirebaseLoadDoneDisci
                     + discipline.getCourseName() + "\n"
                     + discipline.getUniversityName());
 
-        //Create adapter
+        /**
+         * Creates adapter
+         */
         ArrayAdapter<String> adapterUniversity = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, discipline_info);
         spinnerDiscipline.setAdapter(adapterUniversity);
 
