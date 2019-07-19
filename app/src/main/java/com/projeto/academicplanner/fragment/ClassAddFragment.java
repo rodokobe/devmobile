@@ -32,7 +32,6 @@ import com.projeto.academicplanner.Interface.IFirebaseLoadDoneDiscipline;
 import com.projeto.academicplanner.R;
 import com.projeto.academicplanner.activity.NavMainActivity;
 import com.projeto.academicplanner.helper.ConfigFirebase;
-import com.projeto.academicplanner.helper.DateTimeCustom;
 import com.projeto.academicplanner.model.Classes;
 import com.projeto.academicplanner.model.Discipline;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
@@ -71,6 +70,8 @@ public class ClassAddFragment extends Fragment implements IFirebaseLoadDoneDisci
         View addClass = inflater.inflate(R.layout.fragment_class_add, container, false);
 
         initializingComponents(addClass);
+
+        idUserLogged = ConfigFirebase.getUserId();
 
         Calendar calendar = Calendar.getInstance();
         final int year = calendar.get(Calendar.YEAR);
@@ -301,17 +302,15 @@ public class ClassAddFragment extends Fragment implements IFirebaseLoadDoneDisci
         subjectEditText = view.findViewById(R.id.subjectEditText);
         editTextDate = view.findViewById(R.id.editTextDate);
         editTextHour = view.findViewById(R.id.editTextHour);
-        //editTextTimeDuration = view.findViewById(R.id.editTextTimeDuration);
         editTextClassroom = view.findViewById(R.id.editTextClassroom);
         editTextContent = view.findViewById(R.id.editTextContent);
         buttonClassAdd = view.findViewById(R.id.buttonClassAdd);
 
-        //editTextDate.setText(DateTimeCustom.getNowDate());
-        //editTextHour.setText(DateTimeCustom.getNowTime());
-        //editTextTimeDuration.setText("00");
-
         spinnerDuration = view.findViewById(R.id.spinnerDuration);
 
+        /**
+         * Initiazing Spinner Duration with 8 hours
+         */
         String[] numbers = new String[]{"1", "2", "3", "4", "5", "6", "7", "8"};
         List<String> numbersList = new ArrayList<String>(Arrays.asList(numbers));
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, numbersList);
@@ -320,9 +319,9 @@ public class ClassAddFragment extends Fragment implements IFirebaseLoadDoneDisci
         //data bind adapter with both spinners
         spinnerDuration.setAdapter(adapter);
 
-        idUserLogged = ConfigFirebase.getUserId();
-
-        //instances to load data and send to spinners
+        /**
+         * instances to load data and send to spinners
+         */
         firebaseRefDiscipline = FirebaseDatabase.getInstance().getReference("disciplines").child(idUserLogged);
 
         iFirebaseLoadDoneDiscipline = this;
