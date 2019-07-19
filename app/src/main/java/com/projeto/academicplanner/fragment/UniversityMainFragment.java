@@ -42,9 +42,6 @@ public class UniversityMainFragment extends Fragment {
     private RecyclerView.LayoutManager layout;
     private Adapter_Universities adapter;
 
-    private static final String TAG = "AddEditParametersActivity";
-
-
     public UniversityMainFragment() {
         // Required empty public constructor
     }

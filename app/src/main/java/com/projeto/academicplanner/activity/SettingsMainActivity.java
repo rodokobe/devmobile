@@ -7,7 +7,6 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 
 import com.projeto.academicplanner.R;
-import com.projeto.academicplanner.fragment.AddEditMainFragment;
 import com.projeto.academicplanner.fragment.SettingsFragment;
 
 public class SettingsMainActivity extends AppCompatActivity {

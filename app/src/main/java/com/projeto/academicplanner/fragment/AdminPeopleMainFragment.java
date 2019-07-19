@@ -46,8 +46,6 @@ public class AdminPeopleMainFragment extends Fragment {
     private RecyclerView.LayoutManager layout;
     private Adapter_AdminPeople adapter;
 
-    private static final String TAG = "AddEditParametersActivity";
-
 
     public AdminPeopleMainFragment() {
         // Required empty public constructor

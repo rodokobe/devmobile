@@ -45,8 +45,6 @@ public class StudentMainFragment extends Fragment {
     private RecyclerView.LayoutManager layout;
     private Adapter_Students adapter;
 
-    private static final String TAG = "AddEditParametersActivity";
-
 
     public StudentMainFragment() {
         // Required empty public constructor

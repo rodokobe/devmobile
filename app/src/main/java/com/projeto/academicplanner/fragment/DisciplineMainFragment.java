@@ -45,9 +45,6 @@ public class DisciplineMainFragment extends Fragment {
     private RecyclerView.LayoutManager layout;
     private Adapter_Disciplines adapter;
 
-    private static final String TAG = "AddEditParametersActivity";
-
-
     public DisciplineMainFragment() {
         // Required empty public constructor
     }

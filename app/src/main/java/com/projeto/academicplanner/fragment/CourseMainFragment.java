@@ -45,9 +45,6 @@ public class CourseMainFragment extends Fragment {
     private Adapter_Courses adapter;
 
 
-    private static final String TAG = "AddEditParametersActivity";
-
-
     public CourseMainFragment() {
         // Required empty public constructor
     }

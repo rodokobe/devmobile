@@ -133,12 +133,10 @@ public class SettingsFragment extends Fragment {
     }
 
     private void initializingComponents(View view){
-        homeActivity = view.findViewById(R.id.homeActivity);
         yearCrudMain = view.findViewById(R.id.yearCrudMain);
         universityCrudMain = view.findViewById(R.id.universityCrudMain);
         coursesCrudMain = view.findViewById(R.id.coursesCrudMain);
         disciplinesCrudMain = view.findViewById(R.id.disciplinesCrudMain);
-        eventsTypeCrudMain = view.findViewById(R.id.eventsTypeCrudMain);
         studentsCrudMain = view.findViewById(R.id.studentsCrudMain);
         adminPeopleCrudMain = view.findViewById(R.id.adminPeopleCrudMain);
     }

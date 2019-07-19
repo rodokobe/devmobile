@@ -16,4 +16,12 @@
     <color name="colorButtonNewBrown">#5C5410</color>
     <color name="datePickedBackground">#797871</color>
 
+    <!-- Cores Floating Action Button !-->
+    <color name="fab_colorPressed">#D9E615</color>
+    <color name="fab_regularClass_colorNormal">#8A7F3B</color>
+    <color name="fab_specialClass_colorNormal">#E2998B22</color>
+    <color name="fab_contactHour_colorNormal">#B4A142</color>
+    <color name="menu_fab">#C2BF12</color>
+
+
 </resources>

@@ -48,9 +48,6 @@ public class YearMainFragment extends Fragment {
     private RecyclerView.LayoutManager layout;
     private Adapter_Years adapter;
 
-    private static final String TAG = "AddEditParametersActivity";
-
-
     public YearMainFragment() {
         // Required empty public constructor
     }

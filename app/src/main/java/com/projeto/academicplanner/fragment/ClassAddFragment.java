@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TimePicker;
@@ -54,7 +53,7 @@ public class ClassAddFragment extends Fragment implements IFirebaseLoadDoneDisci
     private String idUserLogged, idUniversitySelected, nameUniversitySelected, idCourseSelected, nameCourseSelected,
             idDisciplineSelected, nameDisciplineSelected, idYearSelected, nameYearSelected, semester;
 
-    private DatabaseReference firebaseRefDiscipline;
+    private DatabaseReference databaseDisciplineReference;
     private IFirebaseLoadDoneDiscipline iFirebaseLoadDoneDiscipline;
     private DatePickerDialog.OnDateSetListener setListener;
 
@@ -69,9 +68,9 @@ public class ClassAddFragment extends Fragment implements IFirebaseLoadDoneDisci
         // Inflate the layout for this fragment
         View addClass = inflater.inflate(R.layout.fragment_class_add, container, false);
 
-        initializingComponents(addClass);
-
         idUserLogged = ConfigFirebase.getUserId();
+
+        initializingComponents(addClass);
 
         Calendar calendar = Calendar.getInstance();
         final int year = calendar.get(Calendar.YEAR);
@@ -88,58 +87,42 @@ public class ClassAddFragment extends Fragment implements IFirebaseLoadDoneDisci
             datePickerDialog.show();
         });
 
-        setListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                month = month + 1;
-                String date = day + "/" + month + "/" + year;
-                editTextDate.setText(date);
-            }
+        setListener = (view, thisYear, thisMonth, dayOfMonth) -> {
+            thisMonth = thisMonth + 1;
+            String date = dayOfMonth + "/" + thisMonth + "/" + thisYear;
+            editTextDate.setText(date);
         };
 
-        editTextDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DatePickerDialog datePickerDialog = new DatePickerDialog(
-                        getActivity(), new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int day) {
-                        month = month + 1;
-                        editTextDate.setText(String.format("%02d/%02d/%04d", day,month,year));
-                    }
-                }, year, month, day);
-                datePickerDialog.show();
-            }
+        editTextDate.setOnClickListener(v -> {
+            DatePickerDialog datePickerDialog = new DatePickerDialog(
+                    getActivity(), (view, thisYear, thisMonth, dayOfMonth) -> {
+                thisMonth = thisMonth + 1;
+                editTextDate.setText(String.format("%02d/%02d/%04d", dayOfMonth, thisMonth, thisYear));
+            }, year, month, day);
+            datePickerDialog.show();
         });
 
         /**
          * Time Picker
          */
 
-        editTextHour.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        editTextHour.setOnClickListener(view -> {
 
-                TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
-                        editTextHour.setText(String.format("%02d:%02d", hourOfDay, minutes));
-                    }
-                }, 0, 0, false);
+            TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
+                @Override
+                public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
+                    editTextHour.setText(String.format("%02d:%02d", hourOfDay, minutes));
+                }
+            }, 0, 0, false);
 
-                timePickerDialog.show();
-
-
-            }
+            timePickerDialog.show();
         });
 
 
         /**
          * Saving new class data
          */
-        buttonClassAdd.setOnClickListener(v ->
-
-        {
+        buttonClassAdd.setOnClickListener(v -> {
 
             String subjectEditTextToSave = subjectEditText.getText().toString();
             String editTextDateToSave = editTextDate.getText().toString();
@@ -157,28 +140,27 @@ public class ClassAddFragment extends Fragment implements IFirebaseLoadDoneDisci
         /**
          * load fields to the Discipline spinner
          */
-        firebaseRefDiscipline.addListenerForSingleValueEvent(new
+        databaseDisciplineReference
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                                                                     ValueEventListener() {
-                                                                         @Override
-                                                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        List<Discipline> disciplines = new ArrayList<>();
 
-                                                                             List<Discipline> disciplines = new ArrayList<>();
+                        for (DataSnapshot coursesSnapShot : dataSnapshot.getChildren()) {
 
-                                                                             for (DataSnapshot coursesSnapShot : dataSnapshot.getChildren()) {
+                            disciplines.add(coursesSnapShot.getValue(Discipline.class));
+                            iFirebaseLoadDoneDiscipline.onFireBaseLoadDisciplineSuccess(disciplines);
+                        }
 
-                                                                                 disciplines.add(coursesSnapShot.getValue(Discipline.class));
-                                                                                 iFirebaseLoadDoneDiscipline.onFireBaseLoadDisciplineSuccess(disciplines);
-                                                                             }
+                    }
 
-                                                                         }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                                                                         @Override
-                                                                         public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                                                             iFirebaseLoadDoneDiscipline.onFireBaseLoadDisciplineFailed(databaseError.getMessage());
-                                                                         }
-                                                                     });
+                        iFirebaseLoadDoneDiscipline.onFireBaseLoadDisciplineFailed(databaseError.getMessage());
+                    }
+                });
 
         return addClass;
     }
@@ -322,7 +304,7 @@ public class ClassAddFragment extends Fragment implements IFirebaseLoadDoneDisci
         /**
          * instances to load data and send to spinners
          */
-        firebaseRefDiscipline = FirebaseDatabase.getInstance().getReference("disciplines").child(idUserLogged);
+        databaseDisciplineReference = FirebaseDatabase.getInstance().getReference("disciplines").child(idUserLogged);
 
         iFirebaseLoadDoneDiscipline = this;
 

@@ -6,38 +6,49 @@
     android:layout_height="match_parent"
     tools:context=".activity.NavMainActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@drawable/bg_add_edit_brown"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-        <devs.mulham.horizontalcalendar.HorizontalCalendarView
-            android:id="@+id/calendarView"
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:selectedDateBackground="@color/datePickedBackground"
-            app:selectorColor="#006064"
-            app:textColorNormal="#5E5E5E"
-            app:textColorSelected="#FFFF">
+            android:theme="@style/AppTheme.AppBarOverlay">
 
-        </devs.mulham.horizontalcalendar.HorizontalCalendarView>
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@drawable/bg_add_edit_brown"
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+            <devs.mulham.horizontalcalendar.HorizontalCalendarView
+                android:id="@+id/calendarView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:selectedDateBackground="@color/datePickedBackground"
+                app:selectorColor="#006064"
+                app:textColorNormal="#5E5E5E"
+                app:textColorSelected="#FFFF">
+
+            </devs.mulham.horizontalcalendar.HorizontalCalendarView>
+
+        </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerEvents"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:scrollbars="vertical">
 
         </androidx.recyclerview.widget.RecyclerView>
+    </LinearLayout>
 
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <include layout="@layout/content_nav_main" />
+    <include
+        layout="@layout/content_nav_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom|end" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
