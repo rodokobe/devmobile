@@ -10,6 +10,7 @@ import com.projeto.academicplanner.adapter.Adapter_Years;
 import com.projeto.academicplanner.helper.ConfigFirebase;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Years {
@@ -47,7 +48,14 @@ public class Years {
                 }
 
                 //put the item added to the top
-                Collections.reverse(years);
+                //Collections.reverse(years);
+
+                Collections.sort(years, new Comparator<Years>() {
+                    @Override
+                    public int compare(Years lhs, Years rhs) {
+                        return lhs.yearName.compareTo(rhs.yearName);
+                    }
+                });
                 adapter.notifyDataSetChanged();
 
             }

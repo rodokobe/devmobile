@@ -24,6 +24,8 @@ import com.projeto.academicplanner.model.University;
 import com.projeto.academicplanner.model.Years;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -111,12 +113,6 @@ public class YearMainFragment extends Fragment {
                     yearsDelete(objectToAction);
 
                 });
-
-                /*imageEdit.setOnClickListener(view -> {
-
-                    goToUpdateFragment(objectToAction);
-
-                });*/
             }
         });
 
@@ -141,8 +137,8 @@ public class YearMainFragment extends Fragment {
             adapterConstructor();
 
             //create object and fill recyclerViewCourses
-            Years yearss = new Years();
-            yearss.recovery(idUserLogged, yearsList, adapter);
+            Years mineYears = new Years();
+            mineYears.recovery(idUserLogged, yearsList, adapter);
 
         });
 
@@ -162,29 +158,6 @@ public class YearMainFragment extends Fragment {
         transaction.replace(R.id.frameSettingsMain, addYearFragmentF);
         transaction.commit();
     }
-
-    /*public void goToUpdateFragment(University objectToAction) {
-        updateYearFragmentF = new UniversityUpdateFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("universityIdBundle", objectToAction.getIdUniversity());
-        bundle.putString("universityNameBundle", objectToAction.getUniversityName());
-        bundle.putString("universityAcronymBundle", objectToAction.getUniversityAcronym());
-
-        updateYearFragmentF.setArguments(bundle);
-
-        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameAddEditUserProfile, updateYearFragmentF);
-        transaction.commit();
-    }*/
-
-    /*public void goBackToMain() {
-
-        fragmentMain = new AddEditMainFragment();
-        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameSettingsMain, fragmentMain);
-        transaction.commit();
-
-    }*/
 
     private void toastMsgLong(String text) {
 

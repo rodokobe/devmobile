@@ -48,7 +48,6 @@ public class Adapter_Years extends RecyclerView.Adapter<Adapter_Years.MyViewHold
 
         Years myYears = years.get(position);
         holder.yearName.setText(myYears.getYearName());
-        //holder.imageEdit1.setImageResource(R.drawable.ic_edit_white_24dp);
         holder.imageDelete1.setImageResource(R.drawable.ic_delete_white_24dp);
 
     }
@@ -61,7 +60,6 @@ public class Adapter_Years extends RecyclerView.Adapter<Adapter_Years.MyViewHold
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView yearName;
-        //ImageView imageEdit1;
         ImageView imageDelete1;
         Adapter_Years adapterRef;
 
@@ -69,7 +67,6 @@ public class Adapter_Years extends RecyclerView.Adapter<Adapter_Years.MyViewHold
             super(itemView);
 
             yearName = itemView.findViewById(R.id.yearName);
-            //imageEdit1 = itemView.findViewById(R.id.imageEdit);
             imageDelete1 = itemView.findViewById(R.id.imageDelete);
             adapterRef = ref;
             itemView.setOnClickListener(this);

@@ -26,9 +26,8 @@ public class Discipline extends Course {
     private String disciplineYearName;
     private String disciplineSemester;
 
-
-
     private DatabaseReference firebaseRef = ConfigFirebase.getReferenciaFirebase();
+    private DatabaseReference disciplineRef;
 
     public Discipline() {
 
@@ -40,12 +39,28 @@ public class Discipline extends Course {
 
     public void save() {
 
-        DatabaseReference disciplineRef = firebaseRef
+         disciplineRef = firebaseRef
                 .child("disciplines")
                 .child(getIdUser())
                 .child(getIdDiscipline());
         disciplineRef.setValue(this);
 
+    }
+
+    public void saveStudentOnDiscipline() {
+
+        Student student = new Student();
+        disciplineRef = firebaseRef
+                .child("disciplines")
+                .child(getIdUser())
+                .child(getIdDiscipline())
+                .child(getDisciplineName())
+                .child("students")
+                .child(student.getIdStudent())
+                .child(student.getStudentFirstName())
+                .child(student.getStudentLastName())
+                .child(student.getStudentEmail());
+        disciplineRef.push().setValue(this);
     }
 
     public void update(Discipline objectToUpdate) {
