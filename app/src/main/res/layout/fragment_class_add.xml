@@ -127,6 +127,7 @@
                         android:id="@+id/spinnerDuration"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_gravity="center"
                         android:dropDownWidth="match_parent"
                         android:textAlignment="center" />
 

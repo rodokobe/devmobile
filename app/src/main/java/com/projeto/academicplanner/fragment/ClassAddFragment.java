@@ -100,8 +100,7 @@ public class ClassAddFragment extends Fragment implements IFirebaseLoadDoneDisci
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int day) {
                         month = month + 1;
-                        String date = day + "/" + month + "/" + year;
-                        editTextDate.setText(date);
+                        editTextDate.setText(String.format("%02d/%02d/%04d", day,month,year));
                     }
                 }, year, month, day);
                 datePickerDialog.show();
