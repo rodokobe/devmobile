@@ -87,7 +87,7 @@ public class StudentUpdateFragment extends Fragment implements IFirebaseLoadDone
         studentLastName.setText(studentToUpdate.getStudentLastName());
         studentEmail.setText(studentToUpdate.getStudentEmail());
         isDelegateButton.setText(studentToUpdate.getStudentDelegate());
-        spinnerDisciplines.setTitle(disciplineToUpdate.getCourseName());
+        //spinnerDisciplines.setTitle(disciplineToUpdate.getCourseName());
 
         /**
          * instances to load data and send to spinners

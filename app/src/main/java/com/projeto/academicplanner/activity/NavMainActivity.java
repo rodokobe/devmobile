@@ -37,8 +37,10 @@ import com.projeto.academicplanner.model.UserProfile;
 import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -91,9 +93,6 @@ public class NavMainActivity extends AppCompatActivity
 
         databaseReference = ConfigFirebase.getReferenciaFirebase();
         userIdLogged = UserFirebase.getUserId();
-
-        //FloatingActionButton fab_menu = findViewById(R.id.fab_menu);
-        //fab_menu.bringToFront();
 
         initializingComponents();
 
@@ -164,7 +163,7 @@ public class NavMainActivity extends AppCompatActivity
         // Default Date set to Today.
         final Calendar defaultSelectedDate = Calendar.getInstance();
 
-        horizontalCalendar = new HorizontalCalendar.Builder(this, R.id.calendarView)
+                horizontalCalendar = new HorizontalCalendar.Builder(this, R.id.calendarView)
                 .range(startDate, endDate)
                 .datesNumberOnScreen(5)
                 .configure()
@@ -177,9 +176,10 @@ public class NavMainActivity extends AppCompatActivity
                 .colorTextMiddle(Color.LTGRAY, Color.parseColor("#ffd54f"))
                 .end()
                 .defaultSelectedDate(defaultSelectedDate)
-                .addEvents(new CalendarEventsPredicate() {
+                /*.addEvents(new CalendarEventsPredicate() {
 
-                    Random rnd = new Random();
+                    //Random rnd = new Random();
+
 
                     @Override
                     public List<CalendarEvent> events(Calendar date) {
@@ -187,18 +187,18 @@ public class NavMainActivity extends AppCompatActivity
 
                         //int count = rnd.nextInt(6);
 
-                        /*for (int i = 0; i <= count; i++) {
+                        for (int i = 0; i <= count; i++) {
                             events.add(new CalendarEvent(Color.rgb(rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256)), "event"));
-                        }*/
+                        }
 
                         events.add(new CalendarEvent(Color.rgb( 255, 255, 0), "event"));
 
                         return events;
                     }
-                })
+                })*/
                 .build();
 
-        Log.i("Default Date", DateFormat.format("EEE, MMM d, yyyy", defaultSelectedDate).toString());
+        //Log.i("Default Date", DateFormat.format("EEE, MMM d, yyyy", defaultSelectedDate).toString());
 
         calendarListener();
 
@@ -220,6 +220,7 @@ public class NavMainActivity extends AppCompatActivity
 
 
     public void calendarListener(){
+
         horizontalCalendar.setCalendarListener(new HorizontalCalendarListener() {
 
             @Override
@@ -229,7 +230,7 @@ public class NavMainActivity extends AppCompatActivity
                 int monthSelected = date.get(Calendar.MONTH);
                 int yearSelected = date.get(Calendar.YEAR);
 
-                final String dateSelected = String.format("%02d/%02d/%04d", daySelected,monthSelected+1,yearSelected);
+                String dateSelected = String.format("%02d/%02d/%04d", daySelected,monthSelected+1,yearSelected);
 
                 //String selectedDateStr = DateFormat.format("EEE, MMM d, yyyy", date).toString();
                 Toast.makeText(NavMainActivity.this, dateSelected, Toast.LENGTH_SHORT).show();
@@ -237,8 +238,8 @@ public class NavMainActivity extends AppCompatActivity
 
                 classesList = new ArrayList<>();
 
-                DatabaseReference disciplineRef = firebaseDatabase
-                        .getReference("disciplines")
+                DatabaseReference disciplineRef = databaseReference
+                        .child("disciplines")
                         .child(userIdLogged);
 
 
@@ -249,27 +250,38 @@ public class NavMainActivity extends AppCompatActivity
                             Discipline discipline = snap.getValue(Discipline.class);
                             idDiscipline = discipline.getIdDiscipline();
 
-                            databaseReference = firebaseDatabase.getReference("classes").child(idDiscipline);
+                            DatabaseReference classesRef = disciplineRef.child(idDiscipline).child("classes");
 
-                            databaseReference.addValueEventListener(new ValueEventListener() {
+                            classesRef.addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    for (DataSnapshot snapshot: dataSnapshot.getChildren()){
-                                        Classes aula = snapshot.getValue(Classes.class);
+
+                                    for (DataSnapshot snap: dataSnapshot.getChildren()){
+
+                                        Classes aula = snap.getValue(Classes.class);
 
                                         String dataAula = aula.getClassDate();
 
-                                        //try {
-                                            if (dateSelected.equals(dataAula))
-                                                //Log.i("DATAS MD:", "igual");
-                                                classesList.add(aula);
-                                            //Classes classe = new Classes();
-                                            aula.recovery(userIdLogged, classesList, adapter);
-                                        //} catch (ParseException e){
-                                        //    e.printStackTrace();
-                                        //}
+                                        try {
+
+                                            if (dataAula.equals(dateSelected)){
+                                                //Log.i("Onde estou? ", "igual");
+                                                classesList.add(aula);}
+                                            else {
+                                                //Log.i("Onde estou? ", "diff");
+                                            }
+
+                                        } catch ( Exception e ){
+                                            e.printStackTrace();
+                                        }
                                     }
-                                    adapterConstructor();
+
+                                    adapter = new Adapter_Classes_Calendar(classesList, getApplicationContext());
+                                    recyclerEvents.setAdapter(adapter);
+                                    recyclerEvents.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                                    recyclerEvents.setHasFixedSize(true);
+                                    adapter.notifyDataSetChanged();
+
                                 }
 
                                 @Override
@@ -322,28 +334,6 @@ public class NavMainActivity extends AppCompatActivity
         return true;
     }
 
-    private void adapterConstructor() {
-
-        //recycler view configuration
-
-        layout = new LinearLayoutManager(this);
-        adapter = new Adapter_Classes_Calendar(classesList, this);
-        recyclerEvents.setAdapter(adapter);
-        recyclerEvents.setLayoutManager(layout);
-        recyclerEvents.setHasFixedSize(true);
-
-        //recyclerEvents.addItemDecoration(new DividerItemDecoration(this, LinearLayout.VERTICAL));
-
-        adapter.setOnItemClickListener(new Adapter_Classes_Calendar.ClickListener() {
-            @Override
-            public void onItemClick(Adapter_Classes_Calendar adapter_classes_calendar, View v, final int position) {
-
-                final Classes objectToAction = classesList.get(position);
-            }
-        });
-
-    }
-
     public void addRegularClass(View view){
             startActivity( new Intent(this, ClassMainActivity.class) );
     }
@@ -355,9 +345,6 @@ public class NavMainActivity extends AppCompatActivity
 
         //recovery logged user ID
         userIdLogged = ConfigFirebase.getUserId();
-
-        //call methods
-        //adapterConstructor();
 
 
     }

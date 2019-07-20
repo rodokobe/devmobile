@@ -71,6 +71,8 @@ public class Student implements Serializable {
     {
         DatabaseReference disciplineRef = firebaseRef
                 .child("disciplines")
+                .child(getIdUser())
+                .child(discipline.getIdDiscipline())
                 .child("students")
                 .child(getIdStudent());
         disciplineRef.setValue(studentOnDiscipline);
@@ -81,6 +83,8 @@ public class Student implements Serializable {
     {
         DatabaseReference disciplineRef = firebaseRef
                 .child("disciplines")
+                .child(getIdUser())
+                .child(discipline.getIdDiscipline())
                 .child("students")
                 .child(getIdStudent());
         disciplineRef.removeValue();
