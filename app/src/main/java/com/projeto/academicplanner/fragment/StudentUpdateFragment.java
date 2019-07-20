@@ -58,7 +58,6 @@ public class StudentUpdateFragment extends Fragment implements IFirebaseLoadDone
     private DatabaseReference firebaseRefDiscipline;
     private IFirebaseLoadDoneDiscipline iFirebaseLoadDoneDiscipline;
 
-
     public StudentUpdateFragment() {
         // Required empty public constructor
     }

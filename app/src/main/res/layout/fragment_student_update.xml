@@ -163,7 +163,7 @@
                     android:layout_weight="0"
                     android:text="Add to discipline" />
 
-                <Spinner
+                <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                     android:id="@+id/spinnerDisciplines"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
