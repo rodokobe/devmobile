@@ -18,12 +18,17 @@ public class Classes {
             idUniversity, nameUniversity, idCourse, nameCourse, idDiscipline, nameDiscipline, idYear, nameYear, semester;
 
     private DatabaseReference firebaseRef = ConfigFirebase.getReferenciaFirebase();
-    private DatabaseReference classesRef;
+    private DatabaseReference classesRef, disciplineRef;
 
     public Classes() {
         classesRef = firebaseRef
                 .child("classes");
         setIdClass(classesRef.push().getKey());
+
+        disciplineRef = firebaseRef
+                .child("disciplines")
+                .child("classes");
+        setIdDiscipline(disciplineRef.push().getKey());
     }
 
     public void recovery(String idUserLogged, final List<Classes> classes, final Adapter_Classes_Calendar adapter) {
@@ -60,6 +65,17 @@ public class Classes {
     }
 
     public void save() {
+
+        disciplineRef = firebaseRef
+                .child("disciplines")
+                .child(getIdUser())
+                .child(getIdDiscipline())
+                .child("classes")
+                .child(getIdClass());
+        disciplineRef.setValue(this);
+
+
+        disciplineRef.setValue(this);
 
         classesRef = firebaseRef
                 .child("classes")

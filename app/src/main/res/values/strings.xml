@@ -18,6 +18,7 @@
     <string name="menu_events">Next Events</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_preferences">Preferences</string>
     <string name="menu_profile">Profile</string>
     <string name="menu_logout">Logout</string>
     <string name="menu_tools">Tools</string>

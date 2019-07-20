@@ -9,13 +9,20 @@
             android:icon="@drawable/icons8_calendar_12_50_black"
             android:title="@string/menu_events" />
         <item
-            android:id="@+id/nav_messages"
-            android:icon="@android:drawable/sym_action_email"
-            android:title="@string/menu_messages" />
-        <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/ic_menu_manage"
             android:title="@string/action_settings" />
+        <item
+            android:id="@+id/nav_messages"
+            android:icon="@android:drawable/sym_action_email"
+            android:title="@string/menu_messages" />
+    </group>
+    <item android:title="More...">
+        <menu>
+            <item
+                android:id="@+id/nav_preferences"
+                android:icon="@android:drawable/ic_menu_myplaces"
+                android:title="@string/menu_preferences" />
         <item
             android:id="@+id/nav_profile"
             android:icon="@drawable/icons8_login_as_user_100"
@@ -24,6 +31,8 @@
             android:id="@+id/nav_logout"
             android:icon="@drawable/icons8_shutdown"
             android:title="@string/menu_logout" />
-    </group>
+        </menu>
+    </item>
+
 
 </menu>

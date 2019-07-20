@@ -39,33 +39,16 @@ public class Discipline extends Course {
 
     public void save() {
 
-         disciplineRef = firebaseRef
+         disciplineRef = firebaseRef.getRef()
                 .child("disciplines")
                 .child(getIdUser())
                 .child(getIdDiscipline());
         disciplineRef.setValue(this);
-
-    }
-
-    public void saveStudentOnDiscipline() {
-
-        Student student = new Student();
-        disciplineRef = firebaseRef
-                .child("disciplines")
-                .child(getIdUser())
-                .child(getIdDiscipline())
-                .child(getDisciplineName())
-                .child("students")
-                .child(student.getIdStudent())
-                .child(student.getStudentFirstName())
-                .child(student.getStudentLastName())
-                .child(student.getStudentEmail());
-        disciplineRef.push().setValue(this);
     }
 
     public void update(Discipline objectToUpdate) {
 
-        DatabaseReference disciplineRef = firebaseRef
+        disciplineRef = firebaseRef
                 .child("disciplines")
                 .child(getIdUser())
                 .child(getIdDiscipline());
@@ -75,18 +58,18 @@ public class Discipline extends Course {
 
     public void delete() {
 
-        DatabaseReference disciplineRef = firebaseRef
+        disciplineRef = firebaseRef
                 .child("disciplines")
                 .child(getIdUser())
                 .child(getIdDiscipline());
         disciplineRef.removeValue();
     }
 
-    public void recovery(String idUserLoged, final List<Discipline> disciplines, final Adapter_Disciplines adapter) {
+    public void recovery(String idUserLogged, final List<Discipline> disciplines, final Adapter_Disciplines adapter) {
 
         DatabaseReference disciplineRef = firebaseRef
                 .child("disciplines")
-                .child(idUserLoged);
+                .child(idUserLogged);
 
         disciplineRef.addValueEventListener(new ValueEventListener() {
             @Override

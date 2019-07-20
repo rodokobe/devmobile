@@ -35,6 +35,7 @@ import com.projeto.academicplanner.model.Classes;
 import com.projeto.academicplanner.model.Discipline;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -147,9 +148,9 @@ public class ClassAddFragment extends Fragment implements IFirebaseLoadDoneDisci
 
                         List<Discipline> disciplines = new ArrayList<>();
 
-                        for (DataSnapshot coursesSnapShot : dataSnapshot.getChildren()) {
+                        for (DataSnapshot disciplinesSnapShot : dataSnapshot.getChildren()) {
 
-                            disciplines.add(coursesSnapShot.getValue(Discipline.class));
+                            disciplines.add(disciplinesSnapShot.getValue(Discipline.class));
                             iFirebaseLoadDoneDiscipline.onFireBaseLoadDisciplineSuccess(disciplines);
                         }
 
@@ -165,11 +166,10 @@ public class ClassAddFragment extends Fragment implements IFirebaseLoadDoneDisci
         return addClass;
     }
 
-    //charge the spinner Course values
+    //charge the spinner Discipline values
     @Override
     public void onFireBaseLoadDisciplineSuccess(final List<Discipline> disciplinesList) {
 
-        //universitySpinner = universitiesList;
         final List<String> discipline_info = new ArrayList<>();
         for (Discipline discipline : disciplinesList)
 
@@ -181,8 +181,8 @@ public class ClassAddFragment extends Fragment implements IFirebaseLoadDoneDisci
         /**
          * Creates adapter
          */
-        ArrayAdapter<String> adapterUniversity = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, discipline_info);
-        spinnerDiscipline.setAdapter(adapterUniversity);
+        ArrayAdapter<String> adapterDiscipline = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, discipline_info);
+        spinnerDiscipline.setAdapter(adapterDiscipline);
 
         spinnerDiscipline.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -283,7 +283,14 @@ public class ClassAddFragment extends Fragment implements IFirebaseLoadDoneDisci
         spinnerDiscipline = view.findViewById(R.id.spinnerDiscipline);
         subjectEditText = view.findViewById(R.id.subjectEditText);
         editTextDate = view.findViewById(R.id.editTextDate);
+
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat dateOnly = new SimpleDateFormat("dd/MM/yyyy");
+        editTextDate.setText(dateOnly.format(cal.getTime()));
+
         editTextHour = view.findViewById(R.id.editTextHour);
+        editTextHour.setText("19:00");
+
         editTextClassroom = view.findViewById(R.id.editTextClassroom);
         editTextContent = view.findViewById(R.id.editTextContent);
         buttonClassAdd = view.findViewById(R.id.buttonClassAdd);
@@ -291,15 +298,17 @@ public class ClassAddFragment extends Fragment implements IFirebaseLoadDoneDisci
         spinnerDuration = view.findViewById(R.id.spinnerDuration);
 
         /**
-         * Initiazing Spinner Duration with 8 hours
+         * Setting 8 hours to initializes Spinner Duration Time
          */
-        String[] numbers = new String[]{"1", "2", "3", "4", "5", "6", "7", "8"};
+        String[] numbers = new String[]{"1 hour", "2 hours", "3 hours", "4 hours", "5 hours", "6 hours", "7 hours", "8 hours"};
         List<String> numbersList = new ArrayList<String>(Arrays.asList(numbers));
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, numbersList);
         //specify the layout to appear list items
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //data bind adapter with both spinners
         spinnerDuration.setAdapter(adapter);
+        spinnerDuration.setSelection(3);
+
 
         /**
          * instances to load data and send to spinners

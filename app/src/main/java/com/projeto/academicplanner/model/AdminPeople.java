@@ -21,10 +21,13 @@ public class AdminPeople implements Serializable {
     private String adminPeopleLastName;
     private String adminPeopleEmail;
     private DatabaseReference firebaseRef = ConfigFirebase.getReferenciaFirebase();
+    private Course course = new Course();
 
     public AdminPeople() {
         DatabaseReference adminPeopleRef = firebaseRef
                 .child("adminpeople");
+        DatabaseReference coursesRef = firebaseRef
+                .child("courses");
         setIdAdminPeople(adminPeopleRef.push().getKey());
     }
 
@@ -59,6 +62,29 @@ public class AdminPeople implements Serializable {
 
         });
 
+    }
+
+    public void saveOnCourse()
+    {
+        DatabaseReference coursesRef = firebaseRef
+                .child("courses")
+                .child(getIdUser())
+                .child(course.getIdCourse())
+                .child("adminPeople")
+                .child(getIdAdminPeople());
+        coursesRef.setValue(this);
+
+    }
+
+    public void removeFromCourse()
+    {
+        DatabaseReference coursesRef = firebaseRef
+                .child("courses")
+                .child(getIdUser())
+                .child(course.getIdCourse())
+                .child("adminPeople")
+                .child(getIdAdminPeople());
+        coursesRef.removeValue();
     }
 
     public void save() {

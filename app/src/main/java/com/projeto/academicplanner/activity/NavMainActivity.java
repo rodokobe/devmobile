@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,7 +17,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,14 +26,17 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.projeto.academicplanner.R;
 import com.projeto.academicplanner.adapter.Adapter_Classes_Calendar;
 import com.projeto.academicplanner.helper.ConfigFirebase;
 import com.projeto.academicplanner.model.Classes;
+import com.projeto.academicplanner.model.Discipline;
 import com.projeto.academicplanner.model.UserProfile;
 import com.squareup.picasso.Picasso;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -52,8 +53,9 @@ public class NavMainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private FirebaseAuth auth;
+    private FirebaseDatabase firebaseDatabase;
 
-    private String userIdLogged;
+    private String userIdLogged, idDiscipline;
     private TextView nameText;
     private HorizontalCalendar horizontalCalendar;
     private FloatingActionButton fabRClass, fabSClass, fabContactHour;
@@ -61,12 +63,12 @@ public class NavMainActivity extends AppCompatActivity
     private String urlImagemSelecionada = "";
 
 
-    private List<Classes> classes = new ArrayList<>();
+    private List<Classes> classesList;
     private RecyclerView recyclerEvents;
     private RecyclerView.LayoutManager layout;
     private Adapter_Classes_Calendar adapter;
 
-    private DatabaseReference firebaseRef;
+    private DatabaseReference databaseReference;
 
 
     @Override
@@ -87,7 +89,7 @@ public class NavMainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        firebaseRef = ConfigFirebase.getReferenciaFirebase();
+        databaseReference = ConfigFirebase.getReferenciaFirebase();
         userIdLogged = UserFirebase.getUserId();
 
         //FloatingActionButton fab_menu = findViewById(R.id.fab_menu);
@@ -105,7 +107,7 @@ public class NavMainActivity extends AppCompatActivity
         TextView nameNav = headerView.findViewById(R.id.navNameText);
         ImageView photoProfileNav = headerView.findViewById(R.id.imageViewProfile);
 
-        DatabaseReference userProfileRef = firebaseRef
+        DatabaseReference userProfileRef = databaseReference
                 .child("users")
                 .child(userIdLogged);
         userProfileRef.addValueEventListener(new ValueEventListener() {
@@ -148,6 +150,8 @@ public class NavMainActivity extends AppCompatActivity
         /**
          * Implementing Calendar
          */
+
+
 
         /* starts before 1 month from now */
         Calendar startDate = Calendar.getInstance();
@@ -230,6 +234,58 @@ public class NavMainActivity extends AppCompatActivity
                 //String selectedDateStr = DateFormat.format("EEE, MMM d, yyyy", date).toString();
                 Toast.makeText(NavMainActivity.this, dateSelected, Toast.LENGTH_SHORT).show();
                 //Log.i("onDateSelected", selectedDateStr + " - Position = " + position);
+
+                classesList = new ArrayList<>();
+
+                DatabaseReference disciplineRef = firebaseDatabase
+                        .getReference("disciplines")
+                        .child(userIdLogged);
+
+
+                disciplineRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot snap: dataSnapshot.getChildren()){
+                            Discipline discipline = snap.getValue(Discipline.class);
+                            idDiscipline = discipline.getIdDiscipline();
+
+                            databaseReference = firebaseDatabase.getReference("classes").child(idDiscipline);
+
+                            databaseReference.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    for (DataSnapshot snapshot: dataSnapshot.getChildren()){
+                                        Classes aula = snapshot.getValue(Classes.class);
+
+                                        String dataAula = aula.getClassDate();
+
+                                        //try {
+                                            if (dateSelected.equals(dataAula))
+                                                //Log.i("DATAS MD:", "igual");
+                                                classesList.add(aula);
+                                            //Classes classe = new Classes();
+                                            aula.recovery(userIdLogged, classesList, adapter);
+                                        //} catch (ParseException e){
+                                        //    e.printStackTrace();
+                                        //}
+                                    }
+                                    adapterConstructor();
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
             }
 
         });
@@ -269,8 +325,9 @@ public class NavMainActivity extends AppCompatActivity
     private void adapterConstructor() {
 
         //recycler view configuration
+
         layout = new LinearLayoutManager(this);
-        adapter = new Adapter_Classes_Calendar(classes, this);
+        adapter = new Adapter_Classes_Calendar(classesList, this);
         recyclerEvents.setAdapter(adapter);
         recyclerEvents.setLayoutManager(layout);
         recyclerEvents.setHasFixedSize(true);
@@ -281,7 +338,7 @@ public class NavMainActivity extends AppCompatActivity
             @Override
             public void onItemClick(Adapter_Classes_Calendar adapter_classes_calendar, View v, final int position) {
 
-                final Classes objectToAction = classes.get(position);
+                final Classes objectToAction = classesList.get(position);
             }
         });
 
@@ -300,11 +357,8 @@ public class NavMainActivity extends AppCompatActivity
         userIdLogged = ConfigFirebase.getUserId();
 
         //call methods
-        adapterConstructor();
+        //adapterConstructor();
 
-        //create object and fill recyclerViewCourses
-        Classes classe = new Classes();
-        classe.recovery(userIdLogged, classes, adapter);
 
     }
 

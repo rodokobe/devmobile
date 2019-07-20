@@ -97,13 +97,8 @@ public class DisciplineUpdateFragment extends Fragment implements IFirebaseLoadD
         iFirebaseLoadDoneYears = this;
 
 
-        buttonDisciplines.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
+        buttonDisciplines.setOnClickListener( v-> {
                 disciplineUpdate();
-
-            }
         });
 
         //load fields to the Course spinner

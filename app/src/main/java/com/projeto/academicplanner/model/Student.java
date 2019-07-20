@@ -22,10 +22,13 @@ public class Student implements Serializable {
     private String studentEmail;
     private String studentDelegate;
     private DatabaseReference firebaseRef = ConfigFirebase.getReferenciaFirebase();
+    DatabaseReference studentRef;
+
+    Discipline discipline = new Discipline();
 
     public Student() {
 
-        DatabaseReference studentRef = firebaseRef
+        studentRef = firebaseRef
                 .child("students");
         setIdStudent(studentRef.push().getKey());
 
@@ -62,6 +65,27 @@ public class Student implements Serializable {
 
         });
 
+    }
+
+    public void saveOnDiscipline(String studentOnDiscipline)
+    {
+        DatabaseReference disciplineRef = firebaseRef
+                .child("disciplines")
+                .child("students")
+                .child(getIdStudent());
+        disciplineRef.setValue(studentOnDiscipline);
+
+    }
+
+    public void removeFromDiscipline()
+    {
+        DatabaseReference disciplineRef = firebaseRef
+                .child("disciplines")
+                .child(getIdUser())
+                .child(discipline.getIdDiscipline())
+                .child("students")
+                .child(getIdStudent());
+        disciplineRef.removeValue();
     }
 
     public void save() {
