@@ -87,8 +87,10 @@ public class Classes {
     public void update(Classes objectToUpdate) {
 
         classesRef = firebaseRef
-                .child("classes")
+                .child("disciplines")
                 .child(getIdUser())
+                .child(getIdDiscipline())
+                .child("classes")
                 .child(getIdClass());
         classesRef.setValue(objectToUpdate);
 
@@ -97,8 +99,10 @@ public class Classes {
     public void delete() {
 
         classesRef = firebaseRef
-                .child("classes")
+                .child("disciplines")
                 .child(getIdUser())
+                .child(getIdDiscipline())
+                .child("classes")
                 .child(getIdClass());
         classesRef.removeValue();
     }

@@ -48,7 +48,7 @@ public class ClassAddFragment extends Fragment implements IFirebaseLoadDoneDisci
 
     private SearchableSpinner spinnerDiscipline;
     private EditText subjectEditText, editTextClassroom, editTextContent, editTextDate, editTextHour;
-    private Spinner spinnerDuration;
+    private SearchableSpinner spinnerDuration;
     private Button buttonClassAdd;
 
     private String idUserLogged, idUniversitySelected, nameUniversitySelected, idCourseSelected, nameCourseSelected,

@@ -123,7 +123,7 @@
                         android:text="Time Duration"
                         android:textSize="16sp" />
 
-                    <Spinner
+                    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                         android:id="@+id/spinnerDuration"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
