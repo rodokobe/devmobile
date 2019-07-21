@@ -89,5 +89,12 @@ dependencies {
      */
     implementation 'com.github.clans:fab:1.6.4'
 
+    /**
+     * Uses Javax Mail
+     */
+    implementation files('libs/activation.jar')
+    implementation files('libs/additionnal.jar')
+    implementation files('libs/mail.jar')
+
 }
 apply plugin: 'com.google.gms.google-services'

@@ -24,6 +24,7 @@
                 android:id="@+id/textDetails"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:padding="10dp"
                 android:text="Show Class Details"
                 android:textAlignment="center"
@@ -54,10 +55,11 @@
                 android:id="@+id/textRemove"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
                 android:padding="10dp"
                 android:text="Remove Class"
                 android:textAlignment="center"
-                android:textColor="#880E4F"
+                android:textColor="#B71C1C"
                 android:textSize="18sp"
                 android:textStyle="bold" />
         </LinearLayout>
