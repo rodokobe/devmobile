@@ -4,10 +4,8 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,11 +29,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.projeto.academicplanner.R;
 import com.projeto.academicplanner.adapter.Adapter_Classes_Calendar;
-import com.projeto.academicplanner.fragment.ClassAddFragment;
 import com.projeto.academicplanner.fragment.ClassUpdateFragment;
 import com.projeto.academicplanner.helper.ConfigFirebase;
 import com.projeto.academicplanner.model.Classes;
-import com.projeto.academicplanner.model.Course;
 import com.projeto.academicplanner.model.Discipline;
 import com.projeto.academicplanner.model.UserProfile;
 import com.squareup.picasso.Picasso;
@@ -352,7 +348,7 @@ public class NavMainActivity extends AppCompatActivity
         } else if (id == R.id.nav_events) {
             startActivity(new Intent(getApplicationContext(), NavMainActivity.class));
         } else if (id == R.id.nav_messages) {
-
+            startActivity( new Intent(getApplicationContext(), SendEmailActivity.class));
         } else if (id == R.id.nav_settings) {
             startActivity(new Intent(getApplicationContext(), SettingsMainActivity.class));
         } else if (id == R.id.nav_profile) {

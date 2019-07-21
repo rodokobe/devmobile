@@ -44,7 +44,7 @@ public class SendMail extends AsyncTask<Void,Void,Void> {
     protected void onPreExecute() {
         super.onPreExecute();
         //Showing progress dialog while sending email
-        progressDialog = ProgressDialog.show(context,"A enviar convite","Aguarde ... ",false,false);
+        progressDialog = ProgressDialog.show(context,"Sending the email","Please, wait.",false,false);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class SendMail extends AsyncTask<Void,Void,Void> {
         //Dismissing the progress dialog
         progressDialog.dismiss();
         //Showing a success message
-        Toast.makeText(context,"Convite Enviado",Toast.LENGTH_LONG).show();
+        Toast.makeText(context,"Email was sent",Toast.LENGTH_LONG).show();
     }
 
     @Override
