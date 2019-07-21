@@ -12,8 +12,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.SettingsMainActivity"
-            android:parentActivityName=".activity.NavMainActivity"></activity>
+        <activity
+            android:name=".activity.ClassDetailActivity"
+            android:parentActivityName=".activity.NavMainActivity" />
+        <activity
+            android:name=".activity.SettingsMainActivity"
+            android:parentActivityName=".activity.NavMainActivity" />
         <activity
             android:name=".activity.ClassMainActivity"
             android:parentActivityName=".activity.NavMainActivity" />
@@ -21,8 +25,9 @@
             android:name=".activity.NavMainActivity"
             android:label="@string/title_activity_nav_main"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.UserProfileActivity"
-            android:parentActivityName=".activity.NavMainActivity"/>
+        <activity
+            android:name=".activity.UserProfileActivity"
+            android:parentActivityName=".activity.NavMainActivity" />
         <activity
             android:name=".activity.CreateAccountActivity"
             android:screenOrientation="portrait" />

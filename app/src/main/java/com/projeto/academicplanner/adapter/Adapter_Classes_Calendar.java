@@ -14,7 +14,7 @@ import com.projeto.academicplanner.model.Classes;
 
 import java.util.List;
 
-public class Adapter_Classes_Calendar extends RecyclerView.Adapter<Adapter_Classes_Calendar.MyViewHolder> {
+public class Adapter_Classes_Calendar extends RecyclerView.Adapter<Adapter_Classes_Calendar.MyViewHolder>{
 
     private List<Classes> classes;
     private static ClickListener clickListener;
@@ -60,7 +60,7 @@ public class Adapter_Classes_Calendar extends RecyclerView.Adapter<Adapter_Class
         return classes.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
 
         TextView classSubject1;
         TextView classNameDiscipline1;
@@ -90,11 +90,17 @@ public class Adapter_Classes_Calendar extends RecyclerView.Adapter<Adapter_Class
             clickListener.onItemClick(adapterRef, v, getAdapterPosition());
 
         }
+        @Override
+        public boolean onLongClick(View v) {
+            clickListener.onItemLongClick(adapterRef, v, getAdapterPosition());
+            return false;
+        }
 
     }
 
     public interface ClickListener {
         void onItemClick(Adapter_Classes_Calendar adapter_disciplines, View v, int position);
+        void onItemLongClick(Adapter_Classes_Calendar adapter_disciplines, View v, int position);
     }
 
     public void setOnItemClickListener(ClickListener clickListener) {

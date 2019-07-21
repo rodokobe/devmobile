@@ -1,12 +1,12 @@
 package com.projeto.academicplanner.activity;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,7 +20,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-//import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -36,42 +35,28 @@ import com.projeto.academicplanner.model.Discipline;
 import com.projeto.academicplanner.model.UserProfile;
 import com.squareup.picasso.Picasso;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 import devs.mulham.horizontalcalendar.HorizontalCalendar;
-import devs.mulham.horizontalcalendar.model.CalendarEvent;
-import devs.mulham.horizontalcalendar.utils.CalendarEventsPredicate;
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener;
-
-import com.github.clans.fab.FloatingActionButton;
 
 public class NavMainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private FirebaseAuth auth;
     private FirebaseDatabase firebaseDatabase;
-
     private String userIdLogged, idDiscipline;
     private TextView nameText;
     private HorizontalCalendar horizontalCalendar;
-    private FloatingActionButton fabRClass, fabSClass, fabContactHour;
-
     private String urlImagemSelecionada = "";
-
-
     private List<Classes> classesList;
     private RecyclerView recyclerEvents;
     private RecyclerView.LayoutManager layout;
     private Adapter_Classes_Calendar adapter;
-
     private DatabaseReference databaseReference;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,13 +104,13 @@ public class NavMainActivity extends AppCompatActivity
 
                 String name = firstname + " " + lastname;
 
-                if(dataSnapshot.getValue() != null){
+                if (dataSnapshot.getValue() != null) {
 
                     nameNav.setText(name);
                     urlImagemSelecionada = userProfile.getUrlProfile();
                 }
 
-                if(urlImagemSelecionada != ""){
+                if (urlImagemSelecionada != "") {
                     Picasso.get()
                             .load(urlImagemSelecionada)
                             .into(photoProfileNav);
@@ -149,21 +134,22 @@ public class NavMainActivity extends AppCompatActivity
         /**
          * Implementing Calendar
          */
-
-
-
         /* starts before 1 month from now */
         Calendar startDate = Calendar.getInstance();
-        startDate.add(Calendar.MONTH, -12);
+        startDate.add(Calendar.MONTH, -3);
 
         /* ends after 1 month from now */
         Calendar endDate = Calendar.getInstance();
-        endDate.add(Calendar.MONTH, 12);
+        endDate.add(Calendar.MONTH, 3);
+
+        //DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        Calendar cal = Calendar.getInstance();
+        //Log.i("Onde estou? ", "Aqui: " + dateFormat.format(cal));
 
         // Default Date set to Today.
         final Calendar defaultSelectedDate = Calendar.getInstance();
 
-                horizontalCalendar = new HorizontalCalendar.Builder(this, R.id.calendarView)
+        horizontalCalendar = new HorizontalCalendar.Builder(this, R.id.calendarView)
                 .range(startDate, endDate)
                 .datesNumberOnScreen(5)
                 .configure()
@@ -176,32 +162,9 @@ public class NavMainActivity extends AppCompatActivity
                 .colorTextMiddle(Color.LTGRAY, Color.parseColor("#ffd54f"))
                 .end()
                 .defaultSelectedDate(defaultSelectedDate)
-                /*.addEvents(new CalendarEventsPredicate() {
-
-                    //Random rnd = new Random();
-
-
-                    @Override
-                    public List<CalendarEvent> events(Calendar date) {
-                        List<CalendarEvent> events = new ArrayList<>();
-
-                        //int count = rnd.nextInt(6);
-
-                        for (int i = 0; i <= count; i++) {
-                            events.add(new CalendarEvent(Color.rgb(rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256)), "event"));
-                        }
-
-                        events.add(new CalendarEvent(Color.rgb( 255, 255, 0), "event"));
-
-                        return events;
-                    }
-                })*/
                 .build();
 
-        //Log.i("Default Date", DateFormat.format("EEE, MMM d, yyyy", defaultSelectedDate).toString());
-
         calendarListener();
-
     }
 
 
@@ -218,8 +181,7 @@ public class NavMainActivity extends AppCompatActivity
         }
     }
 
-
-    public void calendarListener(){
+    public void calendarListener() {
 
         horizontalCalendar.setCalendarListener(new HorizontalCalendarListener() {
 
@@ -230,23 +192,18 @@ public class NavMainActivity extends AppCompatActivity
                 int monthSelected = date.get(Calendar.MONTH);
                 int yearSelected = date.get(Calendar.YEAR);
 
-                String dateSelected = String.format("%02d/%02d/%04d", daySelected,monthSelected+1,yearSelected);
-
-                //String selectedDateStr = DateFormat.format("EEE, MMM d, yyyy", date).toString();
-                Toast.makeText(NavMainActivity.this, dateSelected, Toast.LENGTH_SHORT).show();
-                //Log.i("onDateSelected", selectedDateStr + " - Position = " + position);
-
                 classesList = new ArrayList<>();
+
+                String dateSelected = String.format("%02d/%02d/%04d", daySelected, monthSelected + 1, yearSelected);
 
                 DatabaseReference disciplineRef = databaseReference
                         .child("disciplines")
                         .child(userIdLogged);
 
-
                 disciplineRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for (DataSnapshot snap: dataSnapshot.getChildren()){
+                        for (DataSnapshot snap : dataSnapshot.getChildren()) {
                             Discipline discipline = snap.getValue(Discipline.class);
                             idDiscipline = discipline.getIdDiscipline();
 
@@ -256,7 +213,7 @@ public class NavMainActivity extends AppCompatActivity
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                                    for (DataSnapshot snap: dataSnapshot.getChildren()){
+                                    for (DataSnapshot snap : dataSnapshot.getChildren()) {
 
                                         Classes aula = snap.getValue(Classes.class);
 
@@ -264,14 +221,12 @@ public class NavMainActivity extends AppCompatActivity
 
                                         try {
 
-                                            if (dataAula.equals(dateSelected)){
-                                                //Log.i("Onde estou? ", "igual");
-                                                classesList.add(aula);}
-                                            else {
-                                                //Log.i("Onde estou? ", "diff");
+                                            if (dataAula.equals(dateSelected)) {
+                                                classesList.add(aula);
+                                            } else {
                                             }
 
-                                        } catch ( Exception e ){
+                                        } catch (Exception e) {
                                             e.printStackTrace();
                                         }
                                     }
@@ -280,8 +235,25 @@ public class NavMainActivity extends AppCompatActivity
                                     recyclerEvents.setAdapter(adapter);
                                     recyclerEvents.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                                     recyclerEvents.setHasFixedSize(true);
+                                    Collections.reverse(classesList);
                                     adapter.notifyDataSetChanged();
 
+                                    adapter.setOnItemClickListener(new Adapter_Classes_Calendar.ClickListener() {
+                                        @Override
+                                        public void onItemClick(Adapter_Classes_Calendar adapter_disciplines, View v, int position) {
+
+                                        }
+
+                                        @Override
+                                        public void onItemLongClick(Adapter_Classes_Calendar adapter_disciplines, View v, int position) {
+                                            AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+                                            View dialogView = getLayoutInflater().inflate(R.layout.dialog_rv_nav_main, null);
+
+                                            builder.setView(dialogView);
+                                            AlertDialog dialog = builder.create();
+                                            dialog.show();
+                                        }
+                                    });
                                 }
 
                                 @Override
@@ -316,10 +288,10 @@ public class NavMainActivity extends AppCompatActivity
         } else if (id == R.id.nav_messages) {
 
         } else if (id == R.id.nav_settings) {
-            startActivity( new Intent(getApplicationContext(), SettingsMainActivity.class) );
+            startActivity(new Intent(getApplicationContext(), SettingsMainActivity.class));
         } else if (id == R.id.nav_profile) {
 
-            startActivity( new Intent(getApplicationContext(), UserProfileActivity.class) );
+            startActivity(new Intent(getApplicationContext(), UserProfileActivity.class));
 
         } else if (id == R.id.nav_logout) {
 
@@ -334,11 +306,11 @@ public class NavMainActivity extends AppCompatActivity
         return true;
     }
 
-    public void addRegularClass(View view){
-            startActivity( new Intent(this, ClassMainActivity.class) );
+    public void addRegularClass(View view) {
+        startActivity(new Intent(this, ClassMainActivity.class));
     }
 
-    private void initializingComponents(){
+    private void initializingComponents() {
 
         nameText = findViewById(R.id.navNameText);
         recyclerEvents = findViewById(R.id.recyclerEvents);
@@ -349,7 +321,7 @@ public class NavMainActivity extends AppCompatActivity
 
     }
 
-    private void userLogout(){
+    private void userLogout() {
         try {
             auth.signOut();
         } catch (Exception e) {
