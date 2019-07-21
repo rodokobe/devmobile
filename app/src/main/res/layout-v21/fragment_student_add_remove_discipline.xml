@@ -2,7 +2,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".fragment.StudentAddFragment">
+        tools:context=".fragment.StudentUpdateFragment">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -50,35 +50,43 @@
                 android:orientation="vertical"
                 android:padding="10dp">
 
-                <EditText
-                    android:id="@+id/studentFirstName"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="20dp"
                     android:layout_weight="1"
-                    android:background="@drawable/bg_edit_text"
-                    android:ems="10"
-                    android:hint="first name"
-                    android:inputType="textPersonName"
-                    android:padding="10dp"
-                    android:textColorHint="@color/colorLightGray"
-                    android:textSize="14sp"
-                    android:theme="@style/editTextPadrao" />
+                    android:orientation="horizontal">
 
-                <EditText
-                    android:id="@+id/studentLastName"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_edit_text"
-                    android:ems="10"
-                    android:hint="last name"
-                    android:inputType="textPersonName"
-                    android:padding="10dp"
-                    android:textColorHint="@color/colorLightGray"
-                    android:textSize="14sp"
-                    android:theme="@style/editTextPadrao" />
+                    <EditText
+                        android:id="@+id/studentFirstName"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_edit_text"
+                        android:ems="10"
+                        android:enabled="false"
+                        android:hint="first name"
+                        android:inputType="textPersonName"
+                        android:padding="10dp"
+                        android:textColorHint="@color/colorLightGray"
+                        android:textSize="14sp"
+                        android:theme="@style/editTextPadrao" />
+
+                    <EditText
+                        android:id="@+id/studentLastName"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_edit_text"
+                        android:ems="10"
+                        android:enabled="false"
+                        android:hint="last name"
+                        android:inputType="textPersonName"
+                        android:padding="10dp"
+                        android:textColorHint="@color/colorLightGray"
+                        android:textSize="14sp"
+                        android:theme="@style/editTextPadrao"
+                        android:visibility="visible" />
+                </LinearLayout>
 
                 <EditText
                     android:id="@+id/studentEmail"
@@ -88,7 +96,39 @@
                     android:layout_weight="1"
                     android:background="@drawable/bg_edit_text"
                     android:ems="10"
+                    android:enabled="false"
                     android:hint="email"
+                    android:inputType="textPersonName"
+                    android:padding="10dp"
+                    android:textColorHint="@color/colorLightGray"
+                    android:textSize="14sp"
+                    android:theme="@style/editTextPadrao" />
+
+                <EditText
+                    android:id="@+id/studentUniversity"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_edit_text"
+                    android:ems="10"
+                    android:enabled="false"
+                    android:hint="university"
+                    android:inputType="textPersonName"
+                    android:padding="10dp"
+                    android:textColorHint="@color/colorLightGray"
+                    android:textSize="14sp"
+                    android:theme="@style/editTextPadrao" />
+                <EditText
+                    android:id="@+id/studentCourse"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_edit_text"
+                    android:ems="10"
+                    android:enabled="false"
+                    android:hint="course"
                     android:inputType="textPersonName"
                     android:padding="10dp"
                     android:textColorHint="@color/colorLightGray"
@@ -123,6 +163,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
+                            android:enabled="false"
                             android:text="ToggleButton"
                             android:textOff="NO"
                             android:textOn="YES" />
@@ -131,30 +172,52 @@
 
                 </LinearLayout>
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                android:paddingEnd="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp">
+
                 <TextView
                     android:id="@+id/textView3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:layout_weight="0"
-                    android:text="Select an University/Course
-" />
+                    android:text="Add to discipline" />
 
                 <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                    android:id="@+id/spinnerCourses"
+                    android:id="@+id/spinnerDisciplines"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:layout_weight="0" />
 
                 <Button
-                    android:id="@+id/buttonStudents"
+                    android:id="@+id/buttonAddIntoDiscipline"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
+                    android:layout_weight="0"
+                    android:text="Add" />
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    android:text="Listing subscribed disciplines" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerStudentDiscipline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="ADD"
-                    android:theme="@style/botaoPadraoBrown" />
+                    android:padding="2dp">
+
+                </androidx.recyclerview.widget.RecyclerView>
 
             </LinearLayout>
 
