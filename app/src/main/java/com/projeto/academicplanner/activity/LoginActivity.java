@@ -3,56 +3,45 @@ package com.projeto.academicplanner.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.auth.api.signin.GoogleSignInResult;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.firebase.auth.AuthCredential;
+import com.google.android.gms.common.SignInButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GoogleAuthProvider;
 import com.projeto.academicplanner.R;
 import com.projeto.academicplanner.helper.ConfigFirebase;
 
-public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
+public class LoginActivity extends AppCompatActivity {
 
     private EditText emailLogin, senhaLogin;
     private Button botaoLogin;
+    private SignInButton googleLoginButton;
     private TextView createAccount;
-    private ImageView imageFaceLogin, imageGoogleLogin, imageAbout;
+    private ImageView imageFaceLogin, imageAbout;
 
     private FirebaseAuth auth;
-    private GoogleApiClient mGoogleApiClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build();
-
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this, this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build();
-
-
         startComponents();
+
+        googleLoginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
         auth = ConfigFirebase.getReferenciaAutenticacao();
 
         checkLoggedInUser();
@@ -66,11 +55,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 toastMsgLong("Realizar o login com uma conta do FACEBOOK");
         });
 
-        imageGoogleLogin.setOnClickListener( v ->  {
-            signInGoogle();
-
-        });
-
         imageAbout.setOnClickListener( v ->  {
                 Intent about = new Intent(LoginActivity.this, AboutActivity.class);
                 startActivity(about);
@@ -82,6 +66,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         });
 
     }
+
 
     public void signIn() {
 
@@ -108,45 +93,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         }
     }
 
-    public void signInGoogle() {
-        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
-        startActivityForResult(signInIntent, 1);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == 1) {
-            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            firebaseLogin(result);
-        }
-
-    }
-
-    private void firebaseLogin(GoogleSignInResult result) {
-
-        if (result.isSuccess()) {
-
-            GoogleSignInAccount account = result.getSignInAccount();
-            AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(),null);
-            startActivity(new Intent(getApplicationContext(), NavMainActivity.class));
-            toastMsgLong(account.getDisplayName() + " connected!");
-
-        } else {
-            toastMsgLong("Conection Failed by " + result);
-        }
-    }
-
-    @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
-
-        toastMsgLong("Conection Failed! " + connectionResult);
-
-    }
-
-
-
     private void openMainScreen(){
         startActivity(new Intent(getApplicationContext(), NavMainActivity.class));
     }
@@ -161,13 +107,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     public void startComponents() {
 
-
         emailLogin = findViewById(R.id.userEmail);
         senhaLogin = findViewById(R.id.userPassword);
         botaoLogin = findViewById(R.id.botaoLogin);
         createAccount = findViewById(R.id.createAccount);
         imageFaceLogin = findViewById(R.id.imageFaceLogin);
-        imageGoogleLogin = findViewById(R.id.imageGoogleLogin);
+        googleLoginButton = findViewById(R.id.googleLogin);
         imageAbout = findViewById(R.id.imageAbout);
 
     }

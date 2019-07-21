@@ -55,6 +55,9 @@ public class Adapter_Students extends RecyclerView.Adapter<Adapter_Students.MyVi
         holder.studentName.setText(name);
         holder.studentEmail1.setText(student.getStudentEmail());
         holder.studentDelegate1.setText(student.getStudentDelegate());
+        holder.universityName1.setText(student.getUniversityName());
+        holder.courseName1.setText(student.getCourseName());
+        holder.addDiscipline1.setText("ADD/REMOVE DISCIPLINES");
         holder.imageEdit1.setImageResource(R.drawable.ic_edit_white_24dp);
         holder.imageDelete1.setImageResource(R.drawable.ic_delete_white_24dp);
 
@@ -71,6 +74,9 @@ public class Adapter_Students extends RecyclerView.Adapter<Adapter_Students.MyVi
         TextView studentName;
         TextView studentEmail1;
         TextView studentDelegate1;
+        TextView addDiscipline1;
+        TextView universityName1;
+        TextView courseName1;
         ImageView imageEdit1;
         ImageView imageDelete1;
         Adapter_Students adapterRef;
@@ -83,7 +89,9 @@ public class Adapter_Students extends RecyclerView.Adapter<Adapter_Students.MyVi
             studentName = itemView.findViewById(R.id.studentName);
             studentEmail1 = itemView.findViewById(R.id.studentEmail);
             studentDelegate1 = itemView.findViewById(R.id.studentDelegate);
-
+            addDiscipline1 = itemView.findViewById(R.id.addDiscipline);
+            universityName1 = itemView.findViewById(R.id.universityName);
+            courseName1 = itemView.findViewById(R.id.courseName);
             imageEdit1 = itemView.findViewById(R.id.imageEdit);
             imageDelete1 = itemView.findViewById(R.id.imageDelete);
             adapterRef = ref;

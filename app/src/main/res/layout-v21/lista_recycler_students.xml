@@ -25,6 +25,19 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
+                <TextView
+                    android:id="@+id/addDiscipline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right"
+                    android:layout_weight="1"
+                    android:paddingRight="20dp"
+                    android:text="ADD/REMOVE DISCIPLINES"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/colorBright"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -71,6 +84,33 @@
                         android:textColor="@color/colorBright"
                         android:textSize="14sp"
                         android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/universityName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:layout_weight="1"
+                        android:text="University"
+                        android:textColor="@color/colorBright" />
+
+                    <TextView
+                        android:id="@+id/courseName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:layout_weight="1"
+                        android:text="Course"
+                        android:textColor="@color/colorBright" />
+
                 </LinearLayout>
 
             </LinearLayout>

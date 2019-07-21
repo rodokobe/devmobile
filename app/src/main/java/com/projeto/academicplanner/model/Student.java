@@ -21,17 +21,44 @@ public class Student implements Serializable {
     private String studentLastName;
     private String studentEmail;
     private String studentDelegate;
+    private String idUniversity;
+    private String universityName;
+    private String idCourse;
+    private String courseName;
+    private String idDiscipline;
+    private String disciplineName;
     private DatabaseReference firebaseRef = ConfigFirebase.getReferenciaFirebase();
-    DatabaseReference studentRef;
+    private DatabaseReference studentRef;
 
-    Discipline discipline = new Discipline();
+    private Discipline discipline = new Discipline();
 
     public Student() {
 
-        studentRef = firebaseRef
+        DatabaseReference studentRef = firebaseRef
                 .child("students");
         setIdStudent(studentRef.push().getKey());
 
+    }
+
+    public void save() {
+
+        studentRef = firebaseRef.getRef()
+                .child("students")
+                .child(getIdUser())
+                .child(getIdStudent());
+        studentRef.setValue(this);
+
+    }
+
+    public void saveOnDiscipline(String idDiscipline, Student studentToSave) {
+
+        studentRef = firebaseRef
+                .child("disciplines")
+                .child(studentToSave.getIdUser())
+                .child(idDiscipline)
+                .child("students")
+                .child(studentToSave.getIdStudent());
+        studentRef.setValue(studentToSave);
     }
 
     public void recovery(String idUserLoged, final List<Student> students, final Adapter_Students adapter) {
@@ -67,20 +94,7 @@ public class Student implements Serializable {
 
     }
 
-    public void saveOnDiscipline(String studentOnDiscipline)
-    {
-        DatabaseReference disciplineRef = firebaseRef
-                .child("disciplines")
-                .child(getIdUser())
-                .child(discipline.getIdDiscipline())
-                .child("students")
-                .child(getIdStudent());
-        disciplineRef.setValue(studentOnDiscipline);
-
-    }
-
-    public void removeFromDiscipline()
-    {
+    public void removeFromDiscipline() {
         DatabaseReference disciplineRef = firebaseRef
                 .child("disciplines")
                 .child(getIdUser())
@@ -88,15 +102,6 @@ public class Student implements Serializable {
                 .child("students")
                 .child(getIdStudent());
         disciplineRef.removeValue();
-    }
-
-    public void save() {
-
-        DatabaseReference studentsRef = firebaseRef
-                .child("students")
-                .child(getIdUser())
-                .child(getIdStudent());
-        studentsRef.setValue(this);
     }
 
     public void update(Student objectToUpdate) {
@@ -141,4 +146,28 @@ public class Student implements Serializable {
     public String getStudentDelegate() { return studentDelegate; }
 
     public void setStudentDelegate(String studentDelegate) { this.studentDelegate = studentDelegate; }
+
+    public String getIdDiscipline() { return idDiscipline; }
+
+    public void setIdDiscipline(String idDiscipline) { this.idDiscipline = idDiscipline; }
+
+    public String getDisciplineName() { return disciplineName; }
+
+    public void setDisciplineName(String disciplineName) { this.disciplineName = disciplineName; }
+
+    public String getIdUniversity() { return idUniversity; }
+
+    public void setIdUniversity(String idUniversity) { this.idUniversity = idUniversity; }
+
+    public String getUniversityName() { return universityName; }
+
+    public void setUniversityName(String universityName) { this.universityName = universityName; }
+
+    public String getIdCourse() { return idCourse; }
+
+    public void setIdCourse(String idCourse) { this.idCourse = idCourse; }
+
+    public String getCourseName() { return courseName; }
+
+    public void setCourseName(String courseName) { this.courseName = courseName; }
 }

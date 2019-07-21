@@ -9,20 +9,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.projeto.academicplanner.R;
 import com.projeto.academicplanner.adapter.Adapter_Students;
 import com.projeto.academicplanner.helper.ConfigFirebase;
-import com.projeto.academicplanner.model.Discipline;
 import com.projeto.academicplanner.model.Student;
 
 import java.util.ArrayList;
@@ -33,10 +30,11 @@ public class StudentMainFragment extends Fragment {
 
     //general variables
     private Button buttonStudents;
-    private TextView backToPrevious;
+    private TextView backToPrevious, addDiscipline;
     private String idUserLogged;
     private List<Student> students = new ArrayList<>();
     private StudentAddFragment addStudentFragmentF;
+    private StudentAddRemoveDisciplineFragment addRemoveDisciplineStudentFragmentF;
     private StudentUpdateFragment updateStudentFragmentF;
     private SettingsFragment settingsFragment;
 
@@ -95,8 +93,16 @@ public class StudentMainFragment extends Fragment {
 
                 final ImageView imageEdit = v.findViewById(R.id.imageEdit);
                 final ImageView imageDelete = v.findViewById(R.id.imageDelete);
+                final TextView addDiscipline = v.findViewById(R.id.addDiscipline);
 
                 final Student objectToAction = students.get(position);
+
+                addDiscipline.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        goToAddDisciplineFragment(objectToAction);
+                    }
+                });
 
                 imageDelete.setOnClickListener( view -> {
                         studentDelete(objectToAction);
@@ -143,6 +149,20 @@ public class StudentMainFragment extends Fragment {
         dialog.show();
     }
 
+
+
+    public void goToAddDisciplineFragment(Student objectToAction) {
+        addRemoveDisciplineStudentFragmentF = new StudentAddRemoveDisciplineFragment();
+        Bundle dataToUpdate = new Bundle();
+        dataToUpdate.putSerializable("StudentToUpdate", objectToAction);
+
+        addRemoveDisciplineStudentFragmentF.setArguments(dataToUpdate);
+
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frameSettingsMain, addRemoveDisciplineStudentFragmentF);
+        transaction.commit();
+    }
+
     public void goToUpdateFragment(Student objectToAction) {
         updateStudentFragmentF = new StudentUpdateFragment();
         Bundle dataToUpdate = new Bundle();
@@ -184,5 +204,6 @@ public class StudentMainFragment extends Fragment {
         buttonStudents = view.findViewById(R.id.buttonStudents);
         backToPrevious = view.findViewById(R.id.backToPrevious);
         recyclerStudents = view.findViewById(R.id.recyclerStudents);
+        addDiscipline = view.findViewById(R.id.addDiscipline);
     }
 }

@@ -151,8 +151,8 @@
                 android:layout_weight="1"
                 android:src="@drawable/face" />
 
-            <ImageView
-                android:id="@+id/imageGoogleLogin"
+            <com.google.android.gms.common.SignInButton
+                android:id="@+id/googleLogin"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center|top"

@@ -95,6 +95,8 @@ public class Discipline extends Course {
         });
     }
 
+
+
     public String getIdUser() { return idUser; }
 
     public void setIdUser(String idUser) { this.idUser = idUser; }
