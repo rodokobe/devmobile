@@ -83,6 +83,7 @@ public class Adapter_Classes_Calendar extends RecyclerView.Adapter<Adapter_Class
             classTimeDuration1 = itemView.findViewById(R.id.classTimeDuration);
             adapterRef = ref;
             itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
         }
 
         public void onClick(View v) {

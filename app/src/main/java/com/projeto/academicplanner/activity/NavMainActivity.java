@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,8 +31,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.projeto.academicplanner.R;
 import com.projeto.academicplanner.adapter.Adapter_Classes_Calendar;
+import com.projeto.academicplanner.fragment.ClassAddFragment;
+import com.projeto.academicplanner.fragment.ClassUpdateFragment;
 import com.projeto.academicplanner.helper.ConfigFirebase;
 import com.projeto.academicplanner.model.Classes;
+import com.projeto.academicplanner.model.Course;
 import com.projeto.academicplanner.model.Discipline;
 import com.projeto.academicplanner.model.UserProfile;
 import com.squareup.picasso.Picasso;
@@ -57,6 +62,7 @@ public class NavMainActivity extends AppCompatActivity
     private RecyclerView.LayoutManager layout;
     private Adapter_Classes_Calendar adapter;
     private DatabaseReference databaseReference;
+    private ClassUpdateFragment classUpdateFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -246,12 +252,36 @@ public class NavMainActivity extends AppCompatActivity
 
                                         @Override
                                         public void onItemLongClick(Adapter_Classes_Calendar adapter_disciplines, View v, int position) {
-                                            AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+                                            AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
                                             View dialogView = getLayoutInflater().inflate(R.layout.dialog_rv_nav_main, null);
 
                                             builder.setView(dialogView);
                                             AlertDialog dialog = builder.create();
                                             dialog.show();
+
+                                            TextView textDetails = dialogView.findViewById(R.id.textDetails);
+                                            TextView textUpdate = dialogView.findViewById(R.id.textUpdate);
+                                            TextView textRemove = dialogView.findViewById(R.id.textRemove);
+
+                                            final Classes objectToAction = classesList.get(position);
+
+                                            textDetails.setOnClickListener( view -> {
+                                                startActivity(new Intent(getApplicationContext(), ClassDetailActivity.class));
+                                            });
+
+                                            textUpdate.setOnClickListener( view -> {
+                                                classUpdateFragment = new ClassUpdateFragment();
+                                                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                                                transaction.replace(R.id.frameClassMain, classUpdateFragment);
+                                                transaction.commit();
+                                            });
+
+                                            textRemove.setOnClickListener( view -> {
+
+                                                classToDelete(objectToAction);
+
+                                            });
+
                                         }
                                     });
                                 }
@@ -275,6 +305,42 @@ public class NavMainActivity extends AppCompatActivity
         });
     }
 
+    public void toastMsgLong(String text) {
+        Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG).show();
+    }
+
+    private void classToDelete(final Classes selectedToRemove) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+
+        String name = selectedToRemove.getSubject();
+        String msg = "Are you sure, you want to delete this class " + name + "?";
+
+        builder.setTitle(msg);
+        builder.setPositiveButton(android.R.string.yes, (dialog, id) -> {
+            selectedToRemove.delete();
+            toastMsgLong("Class " + name + " has been removed!");
+            adapter.notifyDataSetChanged();
+            dialog.dismiss();
+
+            adapter = new Adapter_Classes_Calendar(classesList, getApplicationContext());
+            recyclerEvents.setAdapter(adapter);
+            recyclerEvents.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+            recyclerEvents.setHasFixedSize(true);
+            Collections.reverse(classesList);
+            adapter.notifyDataSetChanged();
+
+        });
+
+        builder.setNegativeButton(android.R.string.no, (dialog, id) -> {
+            toastMsgLong("Class is alive! :)");
+            dialog.dismiss();
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -284,7 +350,7 @@ public class NavMainActivity extends AppCompatActivity
         if (id == R.id.nav_home) {
             // Handle the camera action
         } else if (id == R.id.nav_events) {
-
+            startActivity(new Intent(getApplicationContext(), NavMainActivity.class));
         } else if (id == R.id.nav_messages) {
 
         } else if (id == R.id.nav_settings) {
