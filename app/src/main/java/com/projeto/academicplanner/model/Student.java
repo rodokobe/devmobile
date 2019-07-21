@@ -7,6 +7,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.projeto.academicplanner.adapter.Adapter_Students;
+import com.projeto.academicplanner.adapter.Adapter_Students_Disciplines;
 import com.projeto.academicplanner.helper.ConfigFirebase;
 
 import java.io.Serializable;
@@ -27,6 +28,9 @@ public class Student implements Serializable {
     private String courseName;
     private String idDiscipline;
     private String disciplineName;
+    private String idYear;
+    private String yearName;
+    private String semester;
     private DatabaseReference firebaseRef = ConfigFirebase.getReferenciaFirebase();
     private DatabaseReference studentRef;
 
@@ -94,14 +98,50 @@ public class Student implements Serializable {
 
     }
 
-    public void removeFromDiscipline() {
-        DatabaseReference disciplineRef = firebaseRef
-                .child("disciplines")
-                .child(getIdUser())
-                .child(discipline.getIdDiscipline())
+    public void recoveryDisciplines(Student studentRefToShow, final List<Student> students, final Adapter_Students_Disciplines adapter) {
+
+        DatabaseReference studentsRef = firebaseRef.getRef()
                 .child("students")
-                .child(getIdStudent());
-        disciplineRef.removeValue();
+                .child(studentRefToShow.getIdUser())
+                .child(studentRefToShow.getIdStudent())
+                .child("disciplines");
+
+
+        studentsRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                students.clear();
+
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+
+                    students.add(ds.getValue(Student.class));
+
+                }
+
+                //put the item added to the top
+//                Collections.reverse(students);
+//                adapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+
+        });
+
+    }
+
+    public void deleteDiscipline(Student studentToUpdate) {
+        studentRef = firebaseRef
+                .child("students")
+                .child(studentToUpdate.getIdUser())
+                .child(studentToUpdate.getIdStudent())
+                .child("disciplines")
+                .child(studentToUpdate.getIdDiscipline());
+        studentRef.removeValue();
     }
 
     public void update(Student objectToUpdate) {
@@ -170,4 +210,16 @@ public class Student implements Serializable {
     public String getCourseName() { return courseName; }
 
     public void setCourseName(String courseName) { this.courseName = courseName; }
+
+    public String getIdYear() { return idYear; }
+
+    public void setIdYear(String idYear) { this.idYear = idYear; }
+
+    public String getYearName() { return yearName; }
+
+    public void setYearName(String yearName) { this.yearName = yearName; }
+
+    public String getSemester() { return semester; }
+
+    public void setSemester(String semester) { this.semester = semester; }
 }

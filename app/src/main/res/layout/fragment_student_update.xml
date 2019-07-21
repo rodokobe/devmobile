@@ -136,6 +136,22 @@
 
                 </LinearLayout>
 
+                <TextView
+                    android:id="@+id/textView10"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:text="Select an University/Course
+" />
+
+                <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                    android:id="@+id/spinnerCourses"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1" />
+
                 <Button
                     android:id="@+id/buttonStudents"
                     android:layout_width="match_parent"
@@ -144,53 +160,6 @@
                     android:layout_weight="1"
                     android:text="UPDATE"
                     android:theme="@style/botaoPadraoBrown" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:paddingLeft="10dp"
-                android:paddingEnd="10dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="10dp">
-
-                <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0"
-                    android:text="Add to discipline" />
-
-                <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                    android:id="@+id/spinnerDisciplines"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0" />
-
-                <Button
-                    android:id="@+id/buttonAddIntoDiscipline"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0"
-                    android:text="Add" />
-
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0"
-                    android:text="Listing subscribed disciplines" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerViewSonD"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:padding="2dp">
-
-                </androidx.recyclerview.widget.RecyclerView>
 
             </LinearLayout>
 

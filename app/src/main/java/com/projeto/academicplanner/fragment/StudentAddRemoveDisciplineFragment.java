@@ -29,7 +29,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.projeto.academicplanner.Interface.IFirebaseLoadDoneDiscipline;
 import com.projeto.academicplanner.R;
-import com.projeto.academicplanner.adapter.Adapter_Disciplines_Students;
+import com.projeto.academicplanner.adapter.Adapter_Students_Disciplines;
 import com.projeto.academicplanner.helper.ConfigFirebase;
 import com.projeto.academicplanner.model.Discipline;
 import com.projeto.academicplanner.model.Student;
@@ -41,7 +41,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class StudentAddRemoveDisciplineFragment extends Fragment implements IFirebaseLoadDoneDiscipline{
+public class StudentAddRemoveDisciplineFragment extends Fragment implements IFirebaseLoadDoneDiscipline {
 
     private SearchableSpinner spinnerDisciplines;
 
@@ -50,12 +50,13 @@ public class StudentAddRemoveDisciplineFragment extends Fragment implements IFir
     private ToggleButton isDelegateButton;
     private Button buttonAddIntoDiscipline;
     private String idUserLogged;
-    private List<Discipline> disciplines = new ArrayList<>();
+    private List<Student> students = new ArrayList<>();
     private String idUniversitySelected, nameUniversitySelected, idCourseSelected, nameCourseSelected,
             idDisciplineSelected, nameDisciplineSelected, idYearSelected, nameYearSelected, semester;
 
     private StudentMainFragment studentMainFragmentF;
-    private Student studentToUpdate;
+    private Student studentToAddInDiscipline;
+    private Discipline disciplineToAddInStudent;
 
     private DatabaseReference firebaseRefDiscipline;
     private IFirebaseLoadDoneDiscipline iFirebaseLoadDoneDiscipline;
@@ -64,7 +65,7 @@ public class StudentAddRemoveDisciplineFragment extends Fragment implements IFir
     //recycler view variables
     private RecyclerView recyclerStudentDiscipline;
     private RecyclerView.LayoutManager layout;
-    private Adapter_Disciplines_Students adapter;
+    private Adapter_Students_Disciplines adapter;
 
     public StudentAddRemoveDisciplineFragment() {
         // Required empty public constructor
@@ -74,7 +75,7 @@ public class StudentAddRemoveDisciplineFragment extends Fragment implements IFir
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        studentToUpdate = (Student) getArguments().getSerializable("StudentToUpdate");
+        studentToAddInDiscipline = (Student) getArguments().getSerializable("StudentToUpdate");
 
     }
 
@@ -91,12 +92,12 @@ public class StudentAddRemoveDisciplineFragment extends Fragment implements IFir
         initializingComponents(addRemoveStudentDisciplines);
         adapterConstructor();
 
-        studentFirstName.setText(studentToUpdate.getStudentFirstName());
-        studentLastName.setText(studentToUpdate.getStudentLastName());
-        studentEmail.setText(studentToUpdate.getStudentEmail());
-        studentUniversity.setText(studentToUpdate.getUniversityName());
-        studentCourse.setText(studentToUpdate.getCourseName());
-        isDelegateButton.setText(studentToUpdate.getStudentDelegate());
+        studentFirstName.setText(studentToAddInDiscipline.getStudentFirstName());
+        studentLastName.setText(studentToAddInDiscipline.getStudentLastName());
+        studentEmail.setText(studentToAddInDiscipline.getStudentEmail());
+        studentUniversity.setText(studentToAddInDiscipline.getUniversityName());
+        studentCourse.setText(studentToAddInDiscipline.getCourseName());
+        isDelegateButton.setText(studentToAddInDiscipline.getStudentDelegate());
 
         //spinnerDisciplines.setTitle(disciplineToUpdate.getCourseName());
 
@@ -118,24 +119,11 @@ public class StudentAddRemoveDisciplineFragment extends Fragment implements IFir
         buttonAddIntoDiscipline.setOnClickListener( v-> {
 
             Student studentOnDiscipline = new Student();
-            studentOnDiscipline.saveOnDiscipline(idDisciplineSelected, studentToUpdate);
+            studentOnDiscipline.saveOnDiscipline(idDisciplineSelected, studentToAddInDiscipline);
 
-            /*
-            studentOnDiscipline.setIdUser(studentToUpdate.getIdUser());
-            studentOnDiscipline.setIdStudent(studentToUpdate.getIdStudent());
-            studentOnDiscipline.setStudentFirstName(studentToUpdate.getStudentFirstName());
-            studentOnDiscipline.setStudentLastName(studentToUpdate.getStudentLastName());
-            studentOnDiscipline.setStudentEmail(studentToUpdate.getStudentEmail());
-            studentOnDiscipline.setStudentDelegate(studentToUpdate.getStudentDelegate());
-            studentOnDiscipline.setIdUniversity(studentToUpdate.getIdUniversity());
-            studentOnDiscipline.setUniversityName(studentToUpdate.getUniversityName());
-            studentOnDiscipline.setIdCourse(studentToUpdate.getIdCourse());
-            studentOnDiscipline.setCourseName(studentToUpdate.getCourseName());
-            studentOnDiscipline.setIdDiscipline(idDisciplineSelected);
-            studentOnDiscipline.setDisciplineName(nameDisciplineSelected);
+            Discipline disciplineOnStudent = new Discipline();
+            disciplineOnStudent.saveOnStudent(studentToAddInDiscipline  , disciplineToAddInStudent);
 
-            studentOnDiscipline.update(studentToUpdate);
-            */
         });
 
         /**
@@ -155,7 +143,7 @@ public class StudentAddRemoveDisciplineFragment extends Fragment implements IFir
 
                             try {
 
-                                if (courseToCompare.equals(studentToUpdate.getIdCourse())) {
+                                if (courseToCompare.equals(studentToAddInDiscipline.getIdCourse())) {
                                     disciplines.add(discipline);
                                 } else {
                                 }
@@ -206,15 +194,9 @@ public class StudentAddRemoveDisciplineFragment extends Fragment implements IFir
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                //idUniversitySelected = disciplinesList.get(position).getIdUniversity();
-                //nameUniversitySelected = disciplinesList.get(position).getUniversityName();
-                //idCourseSelected = disciplinesList.get(position).getIdCourse();
-                //nameCourseSelected = disciplinesList.get(position).getCourseName();
                 idDisciplineSelected = disciplinesList.get(position).getIdDiscipline();
-                nameDisciplineSelected = disciplinesList.get(position).getDisciplineName();
-                //idYearSelected = disciplinesList.get(position).getDisciplineYearId();
-                //nameYearSelected = disciplinesList.get(position).getDisciplineYearName();
-                //semester = disciplinesList.get(position).getDisciplineSemester();
+                disciplineToAddInStudent = disciplinesList.get(position);
+
             }
 
             @Override
@@ -232,7 +214,7 @@ public class StudentAddRemoveDisciplineFragment extends Fragment implements IFir
 
         //recycler view configuration
         layout = new LinearLayoutManager(getContext());
-        adapter = new Adapter_Disciplines_Students(disciplines, getContext());
+        adapter = new Adapter_Students_Disciplines(students, getContext());
         recyclerStudentDiscipline.setAdapter(adapter);
         recyclerStudentDiscipline.setLayoutManager(layout);
         recyclerStudentDiscipline.setHasFixedSize(true);
@@ -241,7 +223,7 @@ public class StudentAddRemoveDisciplineFragment extends Fragment implements IFir
 
             final ImageView imageDelete = v.findViewById(R.id.imageDelete);
 
-            final Discipline objectToAction = disciplines.get(position);
+            final Student objectToAction = students.get(position);
 
             imageDelete.setOnClickListener( view -> {
                 disciplineDelete(objectToAction);
@@ -251,7 +233,7 @@ public class StudentAddRemoveDisciplineFragment extends Fragment implements IFir
 
     }
 
-    private void disciplineDelete(final Discipline selectedToRemove) {
+    private void disciplineDelete(final Student selectedToRemove) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
@@ -261,7 +243,7 @@ public class StudentAddRemoveDisciplineFragment extends Fragment implements IFir
         builder.setTitle(msg);
         builder.setPositiveButton(android.R.string.yes, (dialog, id) -> {
 
-            selectedToRemove.delete();
+            selectedToRemove.deleteDiscipline(selectedToRemove);
             toastMsg("Discipline " + name + " has been removed!");
             adapter.notifyDataSetChanged();
             dialog.dismiss();
@@ -270,11 +252,8 @@ public class StudentAddRemoveDisciplineFragment extends Fragment implements IFir
             adapterConstructor();
 
             //create object and fill recyclerViewCourses
-            Discipline discipline = new Discipline();
-            //discipline.recovery(idUserLogged, disciplines, adapter);
-            //falta configurar o método com o Adapter_Disciplines_Students
-
-
+            Student student = new Student();
+            student.recoveryDisciplines(studentToAddInDiscipline, students, adapter);
 
         });
 
@@ -316,6 +295,10 @@ public class StudentAddRemoveDisciplineFragment extends Fragment implements IFir
         isDelegateButton = view.findViewById(R.id.isDelegateButton);
         buttonAddIntoDiscipline = view.findViewById(R.id.buttonAddIntoDiscipline);
         recyclerStudentDiscipline = view.findViewById(R.id.recyclerStudentDiscipline);
+
+        //create object and fill recyclerViewCourses
+        Student student = new Student();
+        student.recoveryDisciplines(studentToAddInDiscipline, students, adapter);
 
     }
 

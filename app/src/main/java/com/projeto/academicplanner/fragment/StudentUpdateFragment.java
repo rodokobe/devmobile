@@ -17,17 +17,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.projeto.academicplanner.Interface.IFirebaseLoadDoneDiscipline;
+import com.projeto.academicplanner.Interface.IFirebaseLoadDoneCourse;
 import com.projeto.academicplanner.R;
 import com.projeto.academicplanner.helper.ConfigFirebase;
-import com.projeto.academicplanner.model.Discipline;
+import com.projeto.academicplanner.model.Course;
 import com.projeto.academicplanner.model.Student;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
@@ -37,26 +36,23 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class StudentUpdateFragment extends Fragment implements IFirebaseLoadDoneDiscipline{
-
-    private SearchableSpinner spinnerDisciplines;
+public class StudentUpdateFragment extends Fragment implements IFirebaseLoadDoneCourse {
 
     private TextView backToPrevious;
     private EditText studentFirstName, studentLastName, studentEmail;
     private ToggleButton isDelegateButton;
-    private Button buttonStudents, buttonAddIntoDiscipline;
+    private Button buttonStudents;
     private String idUserLogged;
-    private RecyclerView recyclerViewSonD;
+    private SearchableSpinner spinnerCourses;
 
     private String idUniversitySelected, nameUniversitySelected, idCourseSelected, nameCourseSelected,
             idDisciplineSelected, nameDisciplineSelected, idYearSelected, nameYearSelected, semester;
 
     private StudentMainFragment studentMainFragmentF;
-    private Discipline disciplineToUpdate;
     private Student studentToUpdate;
 
-    private DatabaseReference firebaseRefDiscipline;
-    private IFirebaseLoadDoneDiscipline iFirebaseLoadDoneDiscipline;
+    private DatabaseReference firebaseRefCourse;
+    private IFirebaseLoadDoneCourse iFirebaseLoadDoneCourse;
 
     public StudentUpdateFragment() {
         // Required empty public constructor
@@ -67,7 +63,6 @@ public class StudentUpdateFragment extends Fragment implements IFirebaseLoadDone
         super.onCreate(savedInstanceState);
 
         studentToUpdate = (Student) getArguments().getSerializable("StudentToUpdate");
-        disciplineToUpdate = (Discipline) getArguments().getSerializable("DisciplineToUpdate");
 
     }
 
@@ -87,14 +82,14 @@ public class StudentUpdateFragment extends Fragment implements IFirebaseLoadDone
         studentLastName.setText(studentToUpdate.getStudentLastName());
         studentEmail.setText(studentToUpdate.getStudentEmail());
         isDelegateButton.setText(studentToUpdate.getStudentDelegate());
-        //spinnerDisciplines.setTitle(disciplineToUpdate.getCourseName());
+        spinnerCourses.setTitle(studentToUpdate.getCourseName());
 
         /**
          * instances to load data and send to spinners
          */
-        firebaseRefDiscipline = FirebaseDatabase.getInstance().getReference("disciplines").child(idUserLogged);
+        firebaseRefCourse = FirebaseDatabase.getInstance().getReference("courses").child(idUserLogged);
 
-        iFirebaseLoadDoneDiscipline = this;
+        iFirebaseLoadDoneCourse = this;
 
         /**
          * Setting action on buttons
@@ -108,41 +103,30 @@ public class StudentUpdateFragment extends Fragment implements IFirebaseLoadDone
             studentUpdate();
         });
 
-        buttonAddIntoDiscipline.setOnClickListener( v-> {
-
-            Student studentOnDiscipline = new Student();
-
-            String disciplineToSave = spinnerDisciplines.getSelectedItem().toString();
-
-           //studentOnDiscipline.saveOnDiscipline();
-
-
-        });
-
         /**
          * load fields to the Discipline spinner
          */
-        firebaseRefDiscipline
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+        //load fields to the Course spinner
+        firebaseRefCourse.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                        List<Discipline> disciplines = new ArrayList<>();
+                List<Course> courses = new ArrayList<>();
 
-                        for (DataSnapshot disciplinesSnapShot : dataSnapshot.getChildren()) {
+                for (DataSnapshot coursesSnapShot : dataSnapshot.getChildren()) {
 
-                            disciplines.add(disciplinesSnapShot.getValue(Discipline.class));
-                            iFirebaseLoadDoneDiscipline.onFireBaseLoadDisciplineSuccess(disciplines);
-                        }
+                    courses.add(coursesSnapShot.getValue(Course.class));
+                    iFirebaseLoadDoneCourse.onFireBaseLoadCourseSuccess(courses);
+                }
 
-                    }
+            }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                        iFirebaseLoadDoneDiscipline.onFireBaseLoadDisciplineFailed(databaseError.getMessage());
-                    }
-                });
+                iFirebaseLoadDoneCourse.onFireBaseLoadCourseFailed(databaseError.getMessage());
+            }
+        });
 
         return updateStudent;
 
@@ -164,6 +148,12 @@ public class StudentUpdateFragment extends Fragment implements IFirebaseLoadDone
         studentUpdate.setStudentLastName(studentLastName.getText().toString());
         studentUpdate.setStudentEmail(studentEmail.getText().toString());
         studentUpdate.setStudentDelegate(studentSaveDelegate);
+        studentUpdate.setIdUniversity(idUniversitySelected);
+        studentUpdate.setUniversityName(nameUniversitySelected);
+        studentUpdate.setIdCourse(idCourseSelected);
+        studentUpdate.setCourseName(nameCourseSelected);
+
+
         studentUpdate.update(studentUpdate);
 
         toastMsg("Student " + studentUpdate.getStudentFirstName() + " successfully update");
@@ -171,42 +161,29 @@ public class StudentUpdateFragment extends Fragment implements IFirebaseLoadDone
 
     }
 
-    //charge the spinner Discipline values
+    //charge the spinner Course values
     @Override
-    public void onFireBaseLoadDisciplineSuccess(final List<Discipline> disciplinesList) {
+    public void onFireBaseLoadCourseSuccess(final List<Course> coursesList) {
 
+        //universitySpinner = universitiesList;
+        final List<String> university_name = new ArrayList<>();
+        for (Course course : coursesList)
 
-        /**
-         * disciplineSpinner = disciplineList
-         */
-        final List<String> discipline_info = new ArrayList<>();
-        for (Discipline discipline : disciplinesList)
+            university_name.add(course.getUniversityName() + "\n" + course.getCourseName());
 
-            discipline_info.add(discipline.getUniversityAcronym()
-                    + " - " + discipline.getAcronymDiscipline()
-                    + " - " + discipline.getDisciplineName()
-                    + " - " + discipline.getDisciplineYearName()
-                    + " / " + discipline.getDisciplineSemester());
+        //Create adapter
+        ArrayAdapter<String> adapterUniversity = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, university_name);
+        spinnerCourses.setAdapter(adapterUniversity);
 
-        /**
-         * Creates adapter
-         */
-        ArrayAdapter<String> adapterDiscipline = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, discipline_info);
-        spinnerDisciplines.setAdapter(adapterDiscipline);
-
-        spinnerDisciplines.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinnerCourses.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                idUniversitySelected = disciplinesList.get(position).getIdUniversity();
-                nameUniversitySelected = disciplinesList.get(position).getUniversityName();
-                idCourseSelected = disciplinesList.get(position).getIdCourse();
-                nameCourseSelected = disciplinesList.get(position).getCourseName();
-                idDisciplineSelected = disciplinesList.get(position).getIdDiscipline();
-                nameDisciplineSelected = disciplinesList.get(position).getDisciplineName();
-                idYearSelected = disciplinesList.get(position).getDisciplineYearId();
-                nameYearSelected = disciplinesList.get(position).getDisciplineYearName();
-                semester = disciplinesList.get(position).getDisciplineSemester();
+                idUniversitySelected = coursesList.get(position).getIdUniversity();
+                nameUniversitySelected = coursesList.get(position).getUniversityName();
+                idCourseSelected = coursesList.get(position).getIdCourse();
+                nameCourseSelected = coursesList.get(position).getCourseName();
+
             }
 
             @Override
@@ -217,7 +194,7 @@ public class StudentUpdateFragment extends Fragment implements IFirebaseLoadDone
     }
 
     @Override
-    public void onFireBaseLoadDisciplineFailed(String message) {
+    public void onFireBaseLoadCourseFailed(String message) {
     }
 
     public void backToMain() {
@@ -238,15 +215,13 @@ public class StudentUpdateFragment extends Fragment implements IFirebaseLoadDone
 
     private void initializingComponents(View view) {
 
-        spinnerDisciplines = view.findViewById(R.id.spinnerDisciplines);
+        spinnerCourses = view.findViewById(R.id.spinnerCourses);
         backToPrevious = view.findViewById(R.id.backToPrevious);
         studentFirstName = view.findViewById(R.id.studentFirstName);
         studentLastName = view.findViewById(R.id.studentLastName);
         studentEmail = view.findViewById(R.id.studentEmail);
         isDelegateButton = view.findViewById(R.id.isDelegateButton);
         buttonStudents = view.findViewById(R.id.buttonStudents);
-        buttonAddIntoDiscipline = view.findViewById(R.id.buttonAddIntoDiscipline);
-        recyclerViewSonD = view.findViewById(R.id.recyclerViewSonD);
 
     }
 
