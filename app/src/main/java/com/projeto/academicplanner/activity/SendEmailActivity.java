@@ -10,6 +10,7 @@ import android.widget.EditText;
 
 import com.projeto.academicplanner.R;
 import com.projeto.academicplanner.helper.SendMail;
+import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 public class SendEmailActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -17,6 +18,9 @@ public class SendEmailActivity extends AppCompatActivity implements View.OnClick
     private EditText editTextEmail;
     private EditText editTextSubject;
     private EditText editTextMessage;
+
+    //Spinner with search
+    private SearchableSpinner spinnerDisciplines;
 
     //Send button
     private Button buttonSend;
