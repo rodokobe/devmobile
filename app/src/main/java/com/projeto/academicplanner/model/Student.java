@@ -180,7 +180,65 @@ public class Student extends Discipline implements Serializable {
 
     }
 
-    public void deleteStudentIntoDiscipline(Student studentToDelete) {
+
+    public void deleteStudentIntoOneDiscipline(Student studentToDelete, Discipline disciplineToDelete) {
+
+        DatabaseReference disciplineRef = FirebaseDatabase.getInstance().getReference("disciplines").child(studentToDelete.getIdUser());
+
+        disciplineRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snap : dataSnapshot.getChildren()) {
+                    Discipline discipline = snap.getValue(Discipline.class);
+                    String idDisciplineToRemove = discipline.getIdDiscipline();
+                    final boolean[] update = {true};
+
+                    DatabaseReference studentsRef = disciplineRef.child(idDisciplineToRemove).child("students");
+
+                    studentsRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                            for (DataSnapshot snap : dataSnapshot.getChildren()) {
+
+                                Student student = snap.getValue(Student.class);
+                                String studentToRemove = student.getIdStudent();
+
+                                try {
+
+                                    if ((idDisciplineToRemove.equals(disciplineToDelete.getIdDiscipline()) && (studentToRemove.equals(studentToDelete.getIdStudent())) && update[0]==true)) {
+                                        studentsRef.child(studentToDelete.getIdStudent()).removeValue();
+                                        update[0] = false;
+                                    } else {
+
+                                    }
+
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+
+    public void deleteStudentIntoAllDisciplines(Student studentToDelete) {
 
         DatabaseReference disciplineRef = FirebaseDatabase.getInstance().getReference("disciplines").child(studentToDelete.getIdUser());
 

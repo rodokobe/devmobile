@@ -287,6 +287,7 @@ public class StudentAddRemoveDisciplineFragment extends Fragment implements IFir
         builder.setPositiveButton(android.R.string.yes, (dialog, id) -> {
 
             selectedToRemove.deleteDisciplineIntoStudent(selectedToRemove, studentToAddInDiscipline);
+            studentToAddInDiscipline.deleteStudentIntoOneDiscipline(studentToAddInDiscipline, selectedToRemove);
             toastMsg("Discipline " + name + " has been removed!");
             adapter.notifyDataSetChanged();
             dialog.dismiss();

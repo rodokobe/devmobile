@@ -127,7 +127,7 @@ public class StudentMainFragment extends Fragment {
         builder.setPositiveButton(android.R.string.yes, (dialog, id) -> {
 
             selectedToRemove.delete();
-            selectedToRemove.deleteStudentIntoDiscipline(selectedToRemove);
+            selectedToRemove.deleteStudentIntoAllDisciplines(selectedToRemove);
             toastMsgLong("Student " + name + " has been removed!");
             adapter.notifyDataSetChanged();
             dialog.dismiss();
