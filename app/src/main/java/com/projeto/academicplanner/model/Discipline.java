@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.projeto.academicplanner.adapter.Adapter_Disciplines;
 import com.projeto.academicplanner.helper.ConfigFirebase;
@@ -27,7 +28,7 @@ public class Discipline extends Course {
     private String disciplineSemester;
 
     private DatabaseReference firebaseRef = ConfigFirebase.getReferenciaFirebase();
-    private DatabaseReference disciplineRef;
+    private DatabaseReference disciplineRef, databaseReference;
 
     public Discipline() {
 
@@ -67,6 +68,7 @@ public class Discipline extends Course {
 
     }
 
+
     public void delete() {
 
         disciplineRef = firebaseRef
@@ -75,6 +77,64 @@ public class Discipline extends Course {
                 .child(getIdDiscipline());
         disciplineRef.removeValue();
     }
+
+
+    public void deleteDisciplineIntoStudent(Discipline disciplineToDelete, Student studentParameter) {
+
+        DatabaseReference studentRef = FirebaseDatabase.getInstance().getReference("students").child(studentParameter.getIdUser());
+
+        studentRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snap : dataSnapshot.getChildren()) {
+                    Student student = snap.getValue(Student.class);
+                    String studentIdToRemove = student.getIdStudent();
+                    final boolean[] update = {true};
+
+                    DatabaseReference disciplineRef = studentRef.child(studentIdToRemove).child("disciplines");
+
+                    disciplineRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                            for (DataSnapshot snap : dataSnapshot.getChildren()) {
+
+                                Discipline discipline = snap.getValue(Discipline.class);
+                                String disciplineIdToRemove = discipline.getIdDiscipline();
+
+                                try {
+
+                                    if ((disciplineToDelete.getIdDiscipline().equals(disciplineIdToRemove)) && (update[0]==true)) {
+                                        disciplineRef.child(disciplineToDelete.getIdDiscipline()).removeValue();
+                                        update[0] = false;
+                                    } else {
+
+                                    }
+
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
 
     public void recovery(String idUserLogged, final List<Discipline> disciplines, final Adapter_Disciplines adapter) {
 
@@ -105,8 +165,6 @@ public class Discipline extends Course {
             }
         });
     }
-
-
 
     public String getIdUser() { return idUser; }
 

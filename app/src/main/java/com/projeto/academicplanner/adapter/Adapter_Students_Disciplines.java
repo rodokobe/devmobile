@@ -11,25 +11,25 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.projeto.academicplanner.R;
-import com.projeto.academicplanner.model.Student;
+import com.projeto.academicplanner.model.Discipline;
 
 import java.util.List;
 
 public class Adapter_Students_Disciplines extends RecyclerView.Adapter<Adapter_Students_Disciplines.MyViewHolder> {
 
-    private List<Student> students;
+    private List<Discipline> disciplines;
     private static ClickListener clickListener;
     private Context context;
 
-    public Adapter_Students_Disciplines(List<Student> students, Context context) {
+    public Adapter_Students_Disciplines(List<Discipline> disciplines, Context context) {
 
-        this.students = students;
+        this.disciplines = disciplines;
         this.context = context;
 
     }
 
-    public List<Student> getStudents() {
-        return students;
+    public List<Discipline> getDisciplines() {
+        return disciplines;
     }
 
     @NonNull
@@ -46,17 +46,18 @@ public class Adapter_Students_Disciplines extends RecyclerView.Adapter<Adapter_S
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
-        Student student = students.get(position);
-        holder.nameDiscipline1.setText(student.getDisciplineName());
-        holder.yearDiscipline1.setText(student.getYearName());
-        holder.semesterDiscipline1.setText(student.getSemester());
+        Discipline discipline = disciplines.get(position);
+
+        holder.nameDiscipline1.setText(discipline.getDisciplineName());
+        holder.yearDiscipline1.setText(discipline.getDisciplineYearName());
+        holder.semesterDiscipline1.setText(discipline.getDisciplineSemester());
         holder.imageDelete1.setImageResource(R.drawable.ic_delete_white_24dp);
 
     }
 
     @Override
     public int getItemCount() {
-        return students.size();
+        return disciplines.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

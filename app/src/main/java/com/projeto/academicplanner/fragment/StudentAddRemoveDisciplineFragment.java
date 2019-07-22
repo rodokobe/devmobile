@@ -9,11 +9,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -45,18 +43,15 @@ public class StudentAddRemoveDisciplineFragment extends Fragment implements IFir
 
     private SearchableSpinner spinnerDisciplines;
 
-    private TextView backToPrevious;
-    private EditText studentFirstName, studentLastName, studentEmail, studentUniversity, studentCourse;
-    private ToggleButton isDelegateButton;
+    private TextView backToPrevious, studentName,  studentDelegate, studentEmail, studentUniversity, studentCourse;
     private Button buttonAddIntoDiscipline;
     private String idUserLogged;
-    private List<Student> students = new ArrayList<>();
-    private String idUniversitySelected, nameUniversitySelected, idCourseSelected, nameCourseSelected,
-            idDisciplineSelected, nameDisciplineSelected, idYearSelected, nameYearSelected, semester;
+    private List<Discipline> disciplines = new ArrayList<>();
+    private List<Discipline> disciplinesRecycler = new ArrayList<>();
 
     private StudentMainFragment studentMainFragmentF;
     private Student studentToAddInDiscipline;
-    private Discipline disciplineToAddInStudent;
+    private Discipline disciplineSelected;
 
     private DatabaseReference firebaseRefDiscipline;
     private IFirebaseLoadDoneDiscipline iFirebaseLoadDoneDiscipline;
@@ -90,22 +85,20 @@ public class StudentAddRemoveDisciplineFragment extends Fragment implements IFir
         idUserLogged = ConfigFirebase.getUserId();
 
         initializingComponents(addRemoveStudentDisciplines);
-        adapterConstructor();
 
-        studentFirstName.setText(studentToAddInDiscipline.getStudentFirstName());
-        studentLastName.setText(studentToAddInDiscipline.getStudentLastName());
+        String fullName = studentToAddInDiscipline.getStudentFirstName() + " " + studentToAddInDiscipline.getStudentLastName();
+
+        studentName.setText(fullName);
         studentEmail.setText(studentToAddInDiscipline.getStudentEmail());
         studentUniversity.setText(studentToAddInDiscipline.getUniversityName());
         studentCourse.setText(studentToAddInDiscipline.getCourseName());
-        isDelegateButton.setText(studentToAddInDiscipline.getStudentDelegate());
+        studentDelegate.setText(studentToAddInDiscipline.getStudentDelegate());
 
-        //spinnerDisciplines.setTitle(disciplineToUpdate.getCourseName());
 
         /**
          * instances to load data and send to spinners
          */
         firebaseRefDiscipline = FirebaseDatabase.getInstance().getReference("disciplines").child(idUserLogged);
-
         iFirebaseLoadDoneDiscipline = this;
 
         /**
@@ -119,10 +112,9 @@ public class StudentAddRemoveDisciplineFragment extends Fragment implements IFir
         buttonAddIntoDiscipline.setOnClickListener( v-> {
 
             Student studentOnDiscipline = new Student();
-            studentOnDiscipline.saveOnDiscipline(idDisciplineSelected, studentToAddInDiscipline);
-
-            Discipline disciplineOnStudent = new Discipline();
-            disciplineOnStudent.saveOnStudent(studentToAddInDiscipline  , disciplineToAddInStudent);
+            studentOnDiscipline.saveStudentInDiscipline(disciplineSelected, studentToAddInDiscipline);
+            studentOnDiscipline.saveDisciplineInStudent(disciplineSelected, studentToAddInDiscipline);
+            backToMain();
 
         });
 
@@ -134,7 +126,7 @@ public class StudentAddRemoveDisciplineFragment extends Fragment implements IFir
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                        List<Discipline> disciplines = new ArrayList<>();
+                        List<Discipline> disciplines1 = new ArrayList<>();
 
                         for (DataSnapshot disciplinesSnapShot : dataSnapshot.getChildren()) {
 
@@ -144,7 +136,7 @@ public class StudentAddRemoveDisciplineFragment extends Fragment implements IFir
                             try {
 
                                 if (courseToCompare.equals(studentToAddInDiscipline.getIdCourse())) {
-                                    disciplines.add(discipline);
+                                    disciplines1.add(discipline);
                                 } else {
                                 }
 
@@ -152,7 +144,7 @@ public class StudentAddRemoveDisciplineFragment extends Fragment implements IFir
                                 e.printStackTrace();
                             }
 
-                            iFirebaseLoadDoneDiscipline.onFireBaseLoadDisciplineSuccess(disciplines);
+                            iFirebaseLoadDoneDiscipline.onFireBaseLoadDisciplineSuccess(disciplines1);
                         }
 
                     }
@@ -164,6 +156,82 @@ public class StudentAddRemoveDisciplineFragment extends Fragment implements IFir
                     }
                 });
 
+
+            DatabaseReference studentRef = FirebaseDatabase.getInstance().getReference("students").child(idUserLogged);
+
+            studentRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                    disciplinesRecycler.clear();
+
+                    for (DataSnapshot snap : dataSnapshot.getChildren()) {
+                        Student student = snap.getValue(Student.class);
+                        String studentIdToShow = student.getIdStudent();
+
+                        DatabaseReference disciplineRef = studentRef.child(studentIdToShow).child("disciplines");
+
+                        disciplineRef.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                                for (DataSnapshot disciplineSnapshot : dataSnapshot.getChildren()) {
+
+                                    Discipline discipline = disciplineSnapshot.getValue(Discipline.class);
+
+                                    try {
+
+                                        if (studentIdToShow.equals(studentToAddInDiscipline.getIdStudent())) {
+                                            disciplinesRecycler.add(discipline);
+
+                                        } else {
+
+                                        }
+
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+
+                                }
+
+                                //recycler view configuration
+                                layout = new LinearLayoutManager(getContext());
+                                adapter = new Adapter_Students_Disciplines(disciplinesRecycler, getContext());
+                                recyclerStudentDiscipline.setAdapter(adapter);
+                                recyclerStudentDiscipline.setLayoutManager(layout);
+                                recyclerStudentDiscipline.setHasFixedSize(true);
+
+                                adapter.setOnItemClickListener( (adapter_students_disciplines, v, position) ->  {
+
+                                    final ImageView imageDelete = v.findViewById(R.id.imageDelete);
+
+                                    final Discipline objectToAction = disciplinesRecycler.get(position);
+
+                                    imageDelete.setOnClickListener( view -> {
+                                        disciplineDelete(objectToAction);
+                                    });
+
+                                });
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+
         return addRemoveStudentDisciplines;
 
     }
@@ -171,7 +239,6 @@ public class StudentAddRemoveDisciplineFragment extends Fragment implements IFir
     //charge the spinner Discipline values
     @Override
     public void onFireBaseLoadDisciplineSuccess(final List<Discipline> disciplinesList) {
-
 
         /**
          * disciplineSpinner = disciplineList
@@ -194,8 +261,7 @@ public class StudentAddRemoveDisciplineFragment extends Fragment implements IFir
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                idDisciplineSelected = disciplinesList.get(position).getIdDiscipline();
-                disciplineToAddInStudent = disciplinesList.get(position);
+                disciplineSelected = disciplinesList.get(position);
 
             }
 
@@ -210,30 +276,7 @@ public class StudentAddRemoveDisciplineFragment extends Fragment implements IFir
     public void onFireBaseLoadDisciplineFailed(String message) {
     }
 
-    private void adapterConstructor() {
-
-        //recycler view configuration
-        layout = new LinearLayoutManager(getContext());
-        adapter = new Adapter_Students_Disciplines(students, getContext());
-        recyclerStudentDiscipline.setAdapter(adapter);
-        recyclerStudentDiscipline.setLayoutManager(layout);
-        recyclerStudentDiscipline.setHasFixedSize(true);
-
-        adapter.setOnItemClickListener( (adapter_disciplines, v, position) ->  {
-
-            final ImageView imageDelete = v.findViewById(R.id.imageDelete);
-
-            final Student objectToAction = students.get(position);
-
-            imageDelete.setOnClickListener( view -> {
-                disciplineDelete(objectToAction);
-            });
-
-        });
-
-    }
-
-    private void disciplineDelete(final Student selectedToRemove) {
+    private void disciplineDelete(final Discipline selectedToRemove) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
@@ -243,18 +286,11 @@ public class StudentAddRemoveDisciplineFragment extends Fragment implements IFir
         builder.setTitle(msg);
         builder.setPositiveButton(android.R.string.yes, (dialog, id) -> {
 
-            selectedToRemove.deleteDiscipline(selectedToRemove);
+            selectedToRemove.deleteDisciplineIntoStudent(selectedToRemove, studentToAddInDiscipline);
             toastMsg("Discipline " + name + " has been removed!");
             adapter.notifyDataSetChanged();
             dialog.dismiss();
-
-            //call methods
-            adapterConstructor();
-
-            //create object and fill recyclerViewCourses
-            Student student = new Student();
-            student.recoveryDisciplines(studentToAddInDiscipline, students, adapter);
-
+            backToMain();
         });
 
         builder.setNegativeButton(android.R.string.no, (dialog, id) -> {
@@ -287,18 +323,13 @@ public class StudentAddRemoveDisciplineFragment extends Fragment implements IFir
 
         spinnerDisciplines = view.findViewById(R.id.spinnerDisciplines);
         backToPrevious = view.findViewById(R.id.backToPrevious);
-        studentFirstName = view.findViewById(R.id.studentFirstName);
-        studentLastName = view.findViewById(R.id.studentLastName);
+        studentName = view.findViewById(R.id.studentName);
         studentEmail = view.findViewById(R.id.studentEmail);
         studentUniversity = view.findViewById(R.id.studentUniversity);
         studentCourse = view.findViewById(R.id.studentCourse);
-        isDelegateButton = view.findViewById(R.id.isDelegateButton);
+        studentDelegate = view.findViewById(R.id.studentDelegate);
         buttonAddIntoDiscipline = view.findViewById(R.id.buttonAddIntoDiscipline);
         recyclerStudentDiscipline = view.findViewById(R.id.recyclerStudentDiscipline);
-
-        //create object and fill recyclerViewCourses
-        Student student = new Student();
-        student.recoveryDisciplines(studentToAddInDiscipline, students, adapter);
 
     }
 

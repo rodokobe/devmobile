@@ -33,6 +33,7 @@ public class StudentMainFragment extends Fragment {
     private TextView backToPrevious, addDiscipline;
     private String idUserLogged;
     private List<Student> students = new ArrayList<>();
+
     private StudentAddFragment addStudentFragmentF;
     private StudentAddRemoveDisciplineFragment addRemoveDisciplineStudentFragmentF;
     private StudentUpdateFragment updateStudentFragmentF;
@@ -126,6 +127,7 @@ public class StudentMainFragment extends Fragment {
         builder.setPositiveButton(android.R.string.yes, (dialog, id) -> {
 
             selectedToRemove.delete();
+            selectedToRemove.deleteStudentIntoDiscipline(selectedToRemove);
             toastMsgLong("Student " + name + " has been removed!");
             adapter.notifyDataSetChanged();
             dialog.dismiss();
@@ -148,8 +150,6 @@ public class StudentMainFragment extends Fragment {
         AlertDialog dialog = builder.create();
         dialog.show();
     }
-
-
 
     public void goToAddDisciplineFragment(Student objectToAction) {
         addRemoveDisciplineStudentFragmentF = new StudentAddRemoveDisciplineFragment();

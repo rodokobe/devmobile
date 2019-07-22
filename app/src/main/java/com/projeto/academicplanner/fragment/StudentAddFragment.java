@@ -161,8 +161,6 @@ public class StudentAddFragment extends Fragment implements IFirebaseLoadDoneCou
                 student.setUniversityName(nameUniversitySelected);
                 student.setIdCourse(idCourseSelected);
                 student.setCourseName(nameCourseSelected);
-                student.setIdDiscipline("sem chave");
-                student.setDisciplineName("Don't have disciplines associated");
 
                 student.save();
                 toastMsg("Student " + student.getStudentFirstName() + " successfully added ");

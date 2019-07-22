@@ -5,16 +5,16 @@ import androidx.annotation.NonNull;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.projeto.academicplanner.adapter.Adapter_Students;
-import com.projeto.academicplanner.adapter.Adapter_Students_Disciplines;
 import com.projeto.academicplanner.helper.ConfigFirebase;
 
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
-public class Student implements Serializable {
+public class Student extends Discipline implements Serializable {
 
     private String idUser;
     private String idStudent;
@@ -26,15 +26,8 @@ public class Student implements Serializable {
     private String universityName;
     private String idCourse;
     private String courseName;
-    private String idDiscipline;
-    private String disciplineName;
-    private String idYear;
-    private String yearName;
-    private String semester;
     private DatabaseReference firebaseRef = ConfigFirebase.getReferenciaFirebase();
-    private DatabaseReference studentRef;
-
-    private Discipline discipline = new Discipline();
+    private DatabaseReference studentRef, disciplineRef;
 
     public Student() {
 
@@ -54,15 +47,30 @@ public class Student implements Serializable {
 
     }
 
-    public void saveOnDiscipline(String idDiscipline, Student studentToSave) {
+    public void saveStudentInDiscipline(Discipline disciplineToSave, Student studentToSave) {
 
-        studentRef = firebaseRef
+        //save student on discipline
+        disciplineRef = firebaseRef.getRef()
                 .child("disciplines")
                 .child(studentToSave.getIdUser())
-                .child(idDiscipline)
+                .child(disciplineToSave.getIdDiscipline())
                 .child("students")
                 .child(studentToSave.getIdStudent());
-        studentRef.setValue(studentToSave);
+        disciplineRef.setValue(studentToSave);
+
+    }
+
+    public void saveDisciplineInStudent(Discipline disciplineToSave, Student studentToSave) {
+
+        //save discipline on Student
+        studentRef = firebaseRef.getRef()
+                .child("students")
+                .child(studentToSave.getIdUser())
+                .child(studentToSave.getIdStudent())
+                .child("disciplines")
+                .child(disciplineToSave.getIdDiscipline());
+        studentRef.setValue(disciplineToSave);
+
     }
 
     public void recovery(String idUserLoged, final List<Student> students, final Adapter_Students adapter) {
@@ -98,70 +106,138 @@ public class Student implements Serializable {
 
     }
 
-    public void recoveryDisciplines(Student studentRefToShow, final List<Student> students, final Adapter_Students_Disciplines adapter) {
-
-        DatabaseReference studentsRef = firebaseRef.getRef()
-                .child("students")
-                .child(studentRefToShow.getIdUser())
-                .child(studentRefToShow.getIdStudent())
-                .child("disciplines");
-
-
-        studentsRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                students.clear();
-
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-
-                    students.add(ds.getValue(Student.class));
-
-                }
-
-                //put the item added to the top
-//                Collections.reverse(students);
-//                adapter.notifyDataSetChanged();
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-
-        });
-
-    }
-
-    public void deleteDiscipline(Student studentToUpdate) {
-        studentRef = firebaseRef
-                .child("students")
-                .child(studentToUpdate.getIdUser())
-                .child(studentToUpdate.getIdStudent())
-                .child("disciplines")
-                .child(studentToUpdate.getIdDiscipline());
-        studentRef.removeValue();
-    }
 
     public void update(Student objectToUpdate) {
 
         DatabaseReference studentsRef = firebaseRef
                 .child("students")
                 .child(getIdUser())
-                .child(getIdStudent());
+                .child(objectToUpdate.getIdStudent());
         studentsRef.setValue(objectToUpdate);
+
+    }
+
+
+    public void updateStudentOnDiscipline(Student studentToUpdate) {
+
+        DatabaseReference disciplineRef = FirebaseDatabase.getInstance().getReference("disciplines").child(studentToUpdate.getIdUser());
+
+        disciplineRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snap : dataSnapshot.getChildren()) {
+                    Discipline discipline = snap.getValue(Discipline.class);
+                    String idDiscipline = discipline.getIdDiscipline();
+
+                    DatabaseReference studentsRef = disciplineRef.child(idDiscipline).child("students");
+
+                    studentsRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                            for (DataSnapshot snap : dataSnapshot.getChildren()) {
+
+                                Student student = snap.getValue(Student.class);
+
+                                String studentDisciplineToUpdate = student.getIdStudent();
+                                String studentDiscipline = student.getIdDiscipline();
+
+                                try {
+
+                                    if (studentToUpdate.getIdStudent().equals(studentDisciplineToUpdate)) {
+                                        studentsRef.child(studentDisciplineToUpdate).setValue(studentToUpdate);
+                                    } else {
+                                    }
+
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
     }
 
     public void delete() {
 
-        DatabaseReference studentsRef = firebaseRef
-                .child("students")
-                .child(getIdUser())
-                .child(getIdStudent());
+        DatabaseReference studentsRef = firebaseRef.child("students").child(getIdUser()).child(getIdStudent());
         studentsRef.removeValue();
+
     }
+
+    public void deleteStudentIntoDiscipline(Student studentToDelete) {
+
+        DatabaseReference disciplineRef = FirebaseDatabase.getInstance().getReference("disciplines").child(studentToDelete.getIdUser());
+
+        disciplineRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snap : dataSnapshot.getChildren()) {
+                    Discipline discipline = snap.getValue(Discipline.class);
+                    String idDiscipline = discipline.getIdDiscipline();
+                    final boolean[] update = {true};
+
+                    DatabaseReference studentsRef = disciplineRef.child(idDiscipline).child("students");
+
+                    studentsRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                            for (DataSnapshot snap : dataSnapshot.getChildren()) {
+
+                                Student student = snap.getValue(Student.class);
+
+                                String studentToRemove = student.getIdStudent();
+
+                                try {
+
+                                    if (studentToRemove.equals(studentToDelete.getIdStudent()) && update[0]==true) {
+                                        studentsRef.child(studentToDelete.getIdStudent()).removeValue();
+                                        update[0] = false;
+                                    } else {
+
+                                    }
+
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+
 
     public String getIdUser() { return idUser; }
 
@@ -187,14 +263,6 @@ public class Student implements Serializable {
 
     public void setStudentDelegate(String studentDelegate) { this.studentDelegate = studentDelegate; }
 
-    public String getIdDiscipline() { return idDiscipline; }
-
-    public void setIdDiscipline(String idDiscipline) { this.idDiscipline = idDiscipline; }
-
-    public String getDisciplineName() { return disciplineName; }
-
-    public void setDisciplineName(String disciplineName) { this.disciplineName = disciplineName; }
-
     public String getIdUniversity() { return idUniversity; }
 
     public void setIdUniversity(String idUniversity) { this.idUniversity = idUniversity; }
@@ -211,15 +279,4 @@ public class Student implements Serializable {
 
     public void setCourseName(String courseName) { this.courseName = courseName; }
 
-    public String getIdYear() { return idYear; }
-
-    public void setIdYear(String idYear) { this.idYear = idYear; }
-
-    public String getYearName() { return yearName; }
-
-    public void setYearName(String yearName) { this.yearName = yearName; }
-
-    public String getSemester() { return semester; }
-
-    public void setSemester(String semester) { this.semester = semester; }
 }
