@@ -20,6 +20,9 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -30,10 +33,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.projeto.academicplanner.R;
 import com.projeto.academicplanner.adapter.Adapter_Classes_Calendar;
 import com.projeto.academicplanner.fragment.ClassUpdateFragment;
-import com.projeto.academicplanner.fragment.CourseUpdateFragment;
 import com.projeto.academicplanner.helper.ConfigFirebase;
 import com.projeto.academicplanner.model.Classes;
-import com.projeto.academicplanner.model.Course;
 import com.projeto.academicplanner.model.Discipline;
 import com.projeto.academicplanner.model.UserProfile;
 import com.squareup.picasso.Picasso;
@@ -61,6 +62,7 @@ public class NavMainActivity extends AppCompatActivity
     private Adapter_Classes_Calendar adapter;
     private DatabaseReference databaseReference;
     private ClassUpdateFragment classUpdateFragment;
+    private GoogleSignInClient mGoogleSignInClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +85,14 @@ public class NavMainActivity extends AppCompatActivity
         databaseReference = ConfigFirebase.getReferenciaFirebase();
 
         initializingComponents();
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+        // [END config_signin]
+
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
         /**
          * Setting name and photo on NavigationView
@@ -460,8 +470,11 @@ public class NavMainActivity extends AppCompatActivity
     private void userLogout() {
         try {
             auth.signOut();
+            mGoogleSignInClient.signOut();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 }
+
