@@ -36,7 +36,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button botaoLogin;
     private SignInButton googleLoginButton;
     private TextView createAccount;
-    private ImageView imageFaceLogin, imageAbout;
+    private ImageView imageAbout;
 
     private FirebaseAuth auth;
     private FirebaseUser user;
@@ -69,10 +69,6 @@ public class LoginActivity extends AppCompatActivity {
 
         botaoLogin.setOnClickListener( v -> {
                 signInNormal();
-        });
-
-        imageFaceLogin.setOnClickListener( v ->  {
-                toastMsgLong("Realizar o login com uma conta do FACEBOOK");
         });
 
         imageAbout.setOnClickListener( v ->  {
@@ -144,7 +140,6 @@ public class LoginActivity extends AppCompatActivity {
         senhaLogin = findViewById(R.id.userPassword);
         botaoLogin = findViewById(R.id.botaoLogin);
         createAccount = findViewById(R.id.createAccount);
-        imageFaceLogin = findViewById(R.id.imageFaceLogin);
         googleLoginButton = findViewById(R.id.googleLogin);
         imageAbout = findViewById(R.id.imageAbout);
 
@@ -195,7 +190,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            toastMsgLong("signInWithCredential:success");
+                            toastMsgLong("Sign In with Google Success");
                             user = mAuth.getCurrentUser();
                             startActivity(new Intent(getApplicationContext(), NavMainActivity.class));
                         } else {

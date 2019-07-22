@@ -143,19 +143,12 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
 
-            <ImageView
-                android:id="@+id/imageFaceLogin"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center|top"
-                android:layout_weight="1"
-                android:src="@drawable/face" />
-
             <com.google.android.gms.common.SignInButton
                 android:id="@+id/googleLogin"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center|top"
+                android:layout_marginTop="10dp"
                 android:layout_weight="1"
                 android:src="@drawable/google" />
 
