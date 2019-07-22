@@ -30,8 +30,10 @@ import com.google.firebase.database.ValueEventListener;
 import com.projeto.academicplanner.R;
 import com.projeto.academicplanner.adapter.Adapter_Classes_Calendar;
 import com.projeto.academicplanner.fragment.ClassUpdateFragment;
+import com.projeto.academicplanner.fragment.CourseUpdateFragment;
 import com.projeto.academicplanner.helper.ConfigFirebase;
 import com.projeto.academicplanner.model.Classes;
+import com.projeto.academicplanner.model.Course;
 import com.projeto.academicplanner.model.Discipline;
 import com.projeto.academicplanner.model.UserProfile;
 import com.squareup.picasso.Picasso;
@@ -79,7 +81,6 @@ public class NavMainActivity extends AppCompatActivity
         toggle.syncState();
 
         databaseReference = ConfigFirebase.getReferenciaFirebase();
-        userIdLogged = UserFirebase.getUserId();
 
         initializingComponents();
 
@@ -283,6 +284,8 @@ public class NavMainActivity extends AppCompatActivity
 
                                         }
                                     });
+
+                                    adapterConstructor();
                                 }
 
                                 @Override
@@ -308,36 +311,109 @@ public class NavMainActivity extends AppCompatActivity
         Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG).show();
     }
 
+    private void adapterConstructor() {
+
+        //recycler view configuration
+        layout = new LinearLayoutManager(getApplicationContext());
+        adapter = new Adapter_Classes_Calendar(classesList, getApplicationContext());
+        recyclerEvents.setAdapter(adapter);
+        recyclerEvents.setLayoutManager(layout);
+        recyclerEvents.setHasFixedSize(true);
+        Collections.reverse(classesList);
+        adapter.notifyDataSetChanged();
+
+        adapter.setOnItemClickListener(new Adapter_Classes_Calendar.ClickListener() {
+            @Override
+            public void onItemClick(Adapter_Classes_Calendar adapter_disciplines, View v, int position) {
+
+
+            }
+
+            @Override
+            public void onItemLongClick(Adapter_Classes_Calendar adapter_disciplines, View v, int position) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                View dialogView = getLayoutInflater().inflate(R.layout.dialog_rv_nav_main, null);
+
+                builder.setView(dialogView);
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
+                TextView textDetails = dialogView.findViewById(R.id.textDetails);
+                TextView textUpdate = dialogView.findViewById(R.id.textUpdate);
+                TextView textRemove = dialogView.findViewById(R.id.textRemove);
+
+                final Classes objectToAction = classesList.get(position);
+
+                textDetails.setOnClickListener(view -> {
+                    startActivity(new Intent(getApplicationContext(), ClassDetailActivity.class));
+                });
+
+                textUpdate.setOnClickListener(view -> {
+                    goToUpdateClass(objectToAction);
+                });
+
+                textRemove.setOnClickListener(view -> {
+
+                    classToDelete(objectToAction);
+
+                });
+
+            }
+        });
+
+    }
+
     private void classToDelete(final Classes selectedToRemove) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
 
         String name = selectedToRemove.getSubject();
-        String msg = "Are you sure, you want to delete this class " + name + "?";
+        String msg = "Are you sure, you want to delete the discipline " + name + "?";
 
         builder.setTitle(msg);
         builder.setPositiveButton(android.R.string.yes, (dialog, id) -> {
+
             selectedToRemove.delete();
-            toastMsgLong("Class " + name + " has been removed!");
+            toastMsgLong("Discipline " + name + " has been removed!");
             adapter.notifyDataSetChanged();
             dialog.dismiss();
 
-            adapter = new Adapter_Classes_Calendar(classesList, getApplicationContext());
-            recyclerEvents.setAdapter(adapter);
-            recyclerEvents.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-            recyclerEvents.setHasFixedSize(true);
-            Collections.reverse(classesList);
-            adapter.notifyDataSetChanged();
+            //call methods
+            adapterConstructor();
+
+            //create object and fill recyclerViewCourses
+            Classes classes = new Classes();
+            classes.recovery(userIdLogged, classesList, adapter);
 
         });
 
         builder.setNegativeButton(android.R.string.no, (dialog, id) -> {
-            toastMsgLong("Class is alive! :)");
+            //method to cancel the delete operation
+            toastMsgLong("Action it was canceled");
             dialog.dismiss();
         });
 
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    public void goToUpdateClass(Classes objectToAction) {
+
+        Bundle dataToUpdate = new Bundle();
+        dataToUpdate.putSerializable("ClassToUpdate", objectToAction);
+
+        classUpdateFragment = new ClassUpdateFragment();
+        classUpdateFragment.setArguments(dataToUpdate);
+
+        Intent intent = new Intent(getApplicationContext(), ClassMainActivity.class);
+
+        //intent.putExtra("to", classUpdateFragment);
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frmClassesAddEdit, classUpdateFragment);
+        transaction.commit();
+
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -346,18 +422,16 @@ public class NavMainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_home) {
-            // Handle the camera action
-        } else if (id == R.id.nav_events) {
+        if (id == R.id.nav_events) {
             startActivity(new Intent(getApplicationContext(), NavMainActivity.class));
-        } else if (id == R.id.nav_messages) {
-            startActivity( new Intent(getApplicationContext(), SendEmailActivity.class));
         } else if (id == R.id.nav_settings) {
             startActivity(new Intent(getApplicationContext(), SettingsMainActivity.class));
+        } else if (id == R.id.nav_messages) {
+            startActivity(new Intent(getApplicationContext(), SendEmailActivity.class));
+        } else if (id == R.id.nav_preferences) {
+            startActivity(new Intent(getApplicationContext(), PreferencesActivity.class));
         } else if (id == R.id.nav_profile) {
-
             startActivity(new Intent(getApplicationContext(), UserProfileActivity.class));
-
         } else if (id == R.id.nav_logout) {
 
             userLogout();
@@ -376,14 +450,11 @@ public class NavMainActivity extends AppCompatActivity
     }
 
     private void initializingComponents() {
-
         nameText = findViewById(R.id.navNameText);
         recyclerEvents = findViewById(R.id.recyclerEvents);
 
         //recovery logged user ID
         userIdLogged = ConfigFirebase.getUserId();
-
-
     }
 
     private void userLogout() {
