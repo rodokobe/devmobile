@@ -21,8 +21,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -36,11 +34,9 @@ import com.projeto.academicplanner.R;
 import com.projeto.academicplanner.activity.NavMainActivity;
 import com.projeto.academicplanner.helper.ConfigFirebase;
 import com.projeto.academicplanner.model.Classes;
-import com.projeto.academicplanner.model.Course;
 import com.projeto.academicplanner.model.Discipline;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -59,7 +55,7 @@ public class ClassUpdateFragment extends Fragment implements IFirebaseLoadDoneDi
     private String idUserLogged, idUniversitySelected, nameUniversitySelected, idCourseSelected, nameCourseSelected,
             idDisciplineSelected, nameDisciplineSelected, idYearSelected, nameYearSelected, semester;
 
-    private DatabaseReference databaseClassesReference, databaseDisciplineReference;
+    private DatabaseReference firebaseRefDisciplines;
     private IFirebaseLoadDoneDiscipline iFirebaseLoadDoneDiscipline;
     private DatePickerDialog.OnDateSetListener setListener;
 
@@ -91,21 +87,6 @@ public class ClassUpdateFragment extends Fragment implements IFirebaseLoadDoneDi
 
         idUserLogged = ConfigFirebase.getUserId();
 
-        buttonClassAdd.setText("update");
-
-        Discipline discipline = new Discipline();
-        Classes classes = new Classes();
-
-        databaseClassesReference = FirebaseDatabase.getInstance()
-                .getReference("disciplines").child(idUserLogged)
-                .child(discipline.getIdDiscipline())
-                .child("classes")
-                .child(classes.getIdClass());
-
-
-
-        initializingComponents(updateClass);
-
         spinnerDiscipline.setTitle(classToUpdate.getNameDiscipline());
         subjectEditText.setText(classToUpdate.getSubject());
         editTextDate.setText(classToUpdate.getClassDate());
@@ -113,6 +94,14 @@ public class ClassUpdateFragment extends Fragment implements IFirebaseLoadDoneDi
         editTextClassroom.setText(classToUpdate.getClassroom());
         editTextContent.setText(classToUpdate.getTopicsAndContents());
         spinnerDuration.setTitle(classToUpdate.getTimeDuration());
+
+        buttonClassAdd.setText("update");
+
+        //instances to load data and send to spinners
+        firebaseRefDisciplines = FirebaseDatabase.getInstance().getReference("disciplines").child(idUserLogged);
+
+        iFirebaseLoadDoneDiscipline = this;
+
 
         Calendar calendar = Calendar.getInstance();
         final int year = calendar.get(Calendar.YEAR);
@@ -166,23 +155,13 @@ public class ClassUpdateFragment extends Fragment implements IFirebaseLoadDoneDi
          */
         buttonClassAdd.setOnClickListener( view -> {
 
-            String subjectEditTextToSave = subjectEditText.getText().toString();
-            String editTextDateToSave = editTextDate.getText().toString();
-            String editTextHourToSave = editTextHour.getText().toString();
-            String editTextTimeDurationToSave = spinnerDuration.getSelectedItem().toString();
-            toastMsgShort(editTextTimeDurationToSave);
-            String editTextClassroomToSave = editTextClassroom.getText().toString();
-            String editTextContentToSave = editTextContent.getText().toString();
-
-            classAddNew(subjectEditTextToSave, editTextDateToSave, editTextHourToSave, editTextTimeDurationToSave, editTextClassroomToSave,
-                    editTextContentToSave, idUniversitySelected, nameUniversitySelected, idCourseSelected, nameCourseSelected, idDisciplineSelected,
-                    nameDisciplineSelected, idYearSelected, nameYearSelected, semester);
+            classUpdate();
         });
 
         /**
          * load fields to the Discipline spinner
          */
-        databaseDisciplineReference
+        firebaseRefDisciplines
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -251,6 +230,7 @@ public class ClassUpdateFragment extends Fragment implements IFirebaseLoadDoneDi
     public void onFireBaseLoadDisciplineFailed(String message) {
     }
 
+
     private void classAddNew(String subjectEditTextToSave, String editTextDateToSave, String
             editTextHourToSave, String spinnerDurationToSave, String editTextClassroomToSave,
                              String editTextContentToSave, String idUniversitySelected, String
@@ -306,6 +286,25 @@ public class ClassUpdateFragment extends Fragment implements IFirebaseLoadDoneDi
         } else {
             toastMsgShort("Enter a Class subject");
         }
+
+    }
+
+    private void classUpdate() {
+
+        String subjectEditTextToSave = subjectEditText.getText().toString();
+        String editTextDateToSave = editTextDate.getText().toString();
+        String editTextHourToSave = editTextHour.getText().toString();
+        String editTextTimeDurationToSave = spinnerDuration.getSelectedItem().toString();
+        toastMsgShort(editTextTimeDurationToSave);
+        String editTextClassroomToSave = editTextClassroom.getText().toString();
+        String editTextContentToSave = editTextContent.getText().toString();
+
+        classAddNew(subjectEditTextToSave, editTextDateToSave, editTextHourToSave, editTextTimeDurationToSave, editTextClassroomToSave,
+                editTextContentToSave, idUniversitySelected, nameUniversitySelected, idCourseSelected, nameCourseSelected, idDisciplineSelected,
+                nameDisciplineSelected, idYearSelected, nameYearSelected, semester);
+
+        toastMsgShort("Class " + subjectEditTextToSave + " successfully update");
+        backToMain();
 
     }
 

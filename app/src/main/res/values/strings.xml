@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AcademicPlanner</string>
+    <string name="app_name">Academic Planner</string>
     <string name="title_activity_scrolling">ScrollingActivity</string>
     <string name="mainButton">Choose an option do add</string>
     <string name="action_settings">Settings</string>

@@ -9,6 +9,8 @@ public class UserProfile {
     private String firstname;
     private String lastname;
     private String email;
+    private String defaultHour;
+    private String defaultTimeDuration;
     private String urlProfile;
 
     public UserProfile() {
@@ -21,6 +23,17 @@ public class UserProfile {
         userFirebaseRef
                 .child("users")
                 .child(getIdUser())
+                .setValue(this);
+
+    }
+
+    public void savePreferences(){
+
+        DatabaseReference userFirebaseRef = ConfigFirebase.getReferenciaFirebase();
+        userFirebaseRef
+                .child("users")
+                .child(getIdUser())
+                .child("preferences")
                 .setValue(this);
 
     }
@@ -64,5 +77,21 @@ public class UserProfile {
 
     public void setUrlProfile(String urlProfile) {
         this.urlProfile = urlProfile;
+    }
+
+    public String getDefaultHour() {
+        return defaultHour;
+    }
+
+    public void setDefaultHour(String defaultHour) {
+        this.defaultHour = defaultHour;
+    }
+
+    public String getDefaultTimeDuration() {
+        return defaultTimeDuration;
+    }
+
+    public void setDefaultTimeDuration(String defaultTimeDuration) {
+        this.defaultTimeDuration = defaultTimeDuration;
     }
 }

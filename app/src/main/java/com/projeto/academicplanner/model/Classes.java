@@ -89,15 +89,6 @@ public class Classes implements Serializable {
                 .child("classes")
                 .child(getIdClass());
         disciplineRef.setValue(this);
-
-
-        disciplineRef.setValue(this);
-
-        classesRef = firebaseRef
-                .child("classes")
-                .child(getIdUser())
-                .child(getIdClass());
-        classesRef.setValue(this);
     }
 
     public void update(Classes objectToUpdate) {

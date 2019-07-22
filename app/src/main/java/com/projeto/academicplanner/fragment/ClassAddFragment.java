@@ -22,6 +22,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,6 +34,7 @@ import com.projeto.academicplanner.activity.NavMainActivity;
 import com.projeto.academicplanner.helper.ConfigFirebase;
 import com.projeto.academicplanner.model.Classes;
 import com.projeto.academicplanner.model.Discipline;
+import com.projeto.academicplanner.model.UserProfile;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import java.text.SimpleDateFormat;
@@ -54,9 +56,14 @@ public class ClassAddFragment extends Fragment implements IFirebaseLoadDoneDisci
     private String idUserLogged, idUniversitySelected, nameUniversitySelected, idCourseSelected, nameCourseSelected,
             idDisciplineSelected, nameDisciplineSelected, idYearSelected, nameYearSelected, semester;
 
+    private String[] numbers = new String[]{"1 hour", "2 hours", "3 hours", "4 hours", "5 hours", "6 hours", "7 hours", "8 hours"};
+
     private DatabaseReference databaseDisciplineReference;
     private IFirebaseLoadDoneDiscipline iFirebaseLoadDoneDiscipline;
     private DatePickerDialog.OnDateSetListener setListener;
+
+    private FirebaseAuth auth;
+    private DatabaseReference firebaseRef;
 
 
     public ClassAddFragment() {
@@ -69,6 +76,8 @@ public class ClassAddFragment extends Fragment implements IFirebaseLoadDoneDisci
         // Inflate the layout for this fragment
         View addClass = inflater.inflate(R.layout.fragment_class_add, container, false);
 
+        auth = ConfigFirebase.getReferenciaAutenticacao();
+        firebaseRef = ConfigFirebase.getReferenciaFirebase();
         idUserLogged = ConfigFirebase.getUserId();
 
         initializingComponents(addClass);
@@ -163,6 +172,8 @@ public class ClassAddFragment extends Fragment implements IFirebaseLoadDoneDisci
                     }
                 });
 
+        preferencesRecovery();
+
         return addClass;
     }
 
@@ -208,6 +219,43 @@ public class ClassAddFragment extends Fragment implements IFirebaseLoadDoneDisci
 
     @Override
     public void onFireBaseLoadDisciplineFailed(String message) {
+    }
+
+
+    public void preferencesRecovery(){
+        DatabaseReference userProfileRef = firebaseRef
+                .child("users")
+                .child(idUserLogged)
+                .child("preferences");
+
+        userProfileRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue() != null){
+                    UserProfile userProfilePref = dataSnapshot.getValue(UserProfile.class);
+
+                    String hour = userProfilePref.getDefaultHour();
+                    String timeDuration = userProfilePref.getDefaultTimeDuration();
+
+                    editTextHour.setText(hour);
+
+                    for (int i =0; i < numbers.length; i++){
+                        if (numbers[i].equals(timeDuration)){
+                            spinnerDuration.setSelection(i);
+                        }
+                    }
+
+                } else {
+                    editTextHour.setText("-");
+                    spinnerDuration.setTitle("-");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void classAddNew(String subjectEditTextToSave, String editTextDateToSave, String
