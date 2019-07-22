@@ -9,13 +9,29 @@ import com.google.firebase.database.ValueEventListener;
 import com.projeto.academicplanner.adapter.Adapter_Classes_Calendar;
 import com.projeto.academicplanner.helper.ConfigFirebase;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
-public class Classes {
+public class Classes implements Serializable {
 
-    private String idUser, idClass, subject, classDate, classTime, timeDuration, classroom, topicsAndContents,
-            idUniversity, nameUniversity, idCourse, nameCourse, idDiscipline, nameDiscipline, idYear, nameYear, semester;
+    private String idUser;
+    private String idClass;
+    private String subject;
+    private String classDate;
+    private String classTime;
+    private String timeDuration;
+    private String classroom;
+    private String topicsAndContents;
+    private String idUniversity;
+    private String nameUniversity;
+    private String idCourse;
+    private String nameCourse;
+    private String idDiscipline;
+    private String nameDiscipline;
+    private String idYear;
+    private String nameYear;
+    private String semester;
 
     private DatabaseReference firebaseRef = ConfigFirebase.getReferenciaFirebase();
     private DatabaseReference classesRef, disciplineRef;
@@ -216,4 +232,5 @@ public class Classes {
     public String getSemester() { return semester; }
 
     public void setSemester(String semester) { this.semester = semester; }
+
 }

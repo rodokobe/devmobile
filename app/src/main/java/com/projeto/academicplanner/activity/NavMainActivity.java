@@ -262,7 +262,10 @@ public class NavMainActivity extends AppCompatActivity
                                             final Classes objectToAction = classesList.get(position);
 
                                             textDetails.setOnClickListener( view -> {
-                                                startActivity(new Intent(getApplicationContext(), ClassDetailActivity.class));
+                                                Intent classDetail = new Intent(getApplicationContext(), ClassDetailActivity.class);
+                                                classDetail.putExtra("ClassToOpen", objectToAction);
+                                                startActivity(classDetail);
+
                                             });
 
                                             textUpdate.setOnClickListener( view -> {

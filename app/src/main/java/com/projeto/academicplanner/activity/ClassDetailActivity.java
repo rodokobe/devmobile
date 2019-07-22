@@ -1,24 +1,22 @@
 package com.projeto.academicplanner.activity;
 
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.projeto.academicplanner.R;
 import com.projeto.academicplanner.helper.ConfigFirebase;
-import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
-
-import org.w3c.dom.Text;
+import com.projeto.academicplanner.model.Classes;
 
 public class ClassDetailActivity extends AppCompatActivity {
 
-    private Text subjectEditText, editTextClassroom, editTextContent, editTextDate, editTextHour;
-    private Text textDiscipline;
+    private TextView classType, classHour, classDate, classDuration, classUniversity, classCourse,
+                     classDiscipline, classSubject, classTopicsAndContents;
     private Button buttonClassAdd;
 
     private String userIdLogged;
@@ -40,12 +38,42 @@ public class ClassDetailActivity extends AppCompatActivity {
         firebaseRef = ConfigFirebase.getReferenciaFirebase();
         userIdLogged = ConfigFirebase.getUserId();
 
+        Bundle dataToShow = getIntent().getExtras();
+        Classes classToShow = (Classes) dataToShow.getSerializable("ClassToOpen");
+
+        String hour = classToShow.getClassTime();
+        String date = classToShow.getClassDate();
+        String duration = classToShow.getTimeDuration();
+        String university = classToShow.getNameUniversity();
+        String course = classToShow.getNameCourse();
+        String discipline = classToShow.getNameDiscipline();
+        String subject = classToShow.getSubject();
+        String topicsAndContents = classToShow.getTopicsAndContents();
+
         initializingComponentes();
+
+        classType.setText("CLASS TYPE");
+        classHour.setText(hour);
+        classDate.setText(date);
+        classDuration.setText(duration);
+        classUniversity.setText(university);
+        classCourse.setText(course);
+        classDiscipline.setText(discipline);
+        classSubject.setText(subject);
+        classTopicsAndContents.setText(topicsAndContents);
     }
 
     private void initializingComponentes(){
 
-
+        classType = findViewById(R.id.classType);
+        classHour = findViewById(R.id.classHour);
+        classDate = findViewById(R.id.classDate);
+        classDuration = findViewById(R.id.classDuration);
+        classUniversity = findViewById(R.id.classUniversity);
+        classCourse = findViewById(R.id.classCourse);
+        classDiscipline = findViewById(R.id.classDiscipline);
+        classSubject = findViewById(R.id.classSubject);
+        classTopicsAndContents = findViewById(R.id.classTopicsAndContents);
 
     };
 }

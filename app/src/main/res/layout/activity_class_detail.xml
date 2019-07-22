@@ -24,124 +24,352 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/colorBackGroundBrown"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:padding="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/white"
+                    android:scaleType="center"
+                    app:srcCompat="@drawable/ic_class_detail" />
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:background="@android:color/white"
+                    android:text="Class"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorGray"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="2dp"
+            android:background="@android:color/white"
             android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/textDiscipline"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="dadosCurso"
-                android:textAlignment="center"
-                android:textColor="@color/colorGray"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/textSubject"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Subject"
-                android:textAlignment="center"
-                android:textColor="@color/colorButtonNewBrown"
-                android:textSize="18sp"
-                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.1"
-                    android:orientation="vertical">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/textDate"
+                        android:id="@+id/textEvent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="Date"
-                        android:textAlignment="center"
-                        android:textSize="16sp" />
+                        android:layout_weight="1.1"
+                        android:text="Event Type:"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
 
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.1"
-                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/classType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Regular Class" />
 
                     <TextView
                         android:id="@+id/textHour"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="Hour"
-                        android:textAlignment="center"
-                        android:textSize="16sp" />
+                        android:layout_weight="1.1"
+                        android:text="Start Hour:"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
 
+                    <TextView
+                        android:id="@+id/classHour"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="20:00" />
                 </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.1"
+                        android:text="Date:"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/classDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="21/07/2019" />
+
+                    <TextView
+                        android:id="@+id/textDuration"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.1"
+                        android:text="Duration:"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/classDuration"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="04:00" />
+                </LinearLayout>
+
             </LinearLayout>
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/textTimeDuration"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="Time Duration"
-                        android:textAlignment="center"
-                        android:textSize="16sp" />
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textSubject2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:layout_weight="3.6"
+                            android:text="University:"
+                            android:textAlignment="viewStart"
+                            android:textColor="@color/colorButtonNewBrown"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/classUniversity"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:layout_weight="1"
+                            android:text="universityName"
+                            android:textAlignment="viewStart"
+                            android:textColor="@color/colorGray"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
 
                 </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/textClassroom"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="Classroom"
-                        android:textAlignment="center"
-                        android:textSize="16sp" />
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textSubject2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:layout_weight="3.6"
+                            android:text="Course:"
+                            android:textAlignment="viewStart"
+                            android:textColor="@color/colorButtonNewBrown"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/classCourse"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:layout_weight="1"
+                            android:text="courseName"
+                            android:textAlignment="viewStart"
+                            android:textColor="@color/colorGray"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
 
                 </LinearLayout>
+
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textSubject2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:layout_weight="3.6"
+                            android:text="Discipline:"
+                            android:textAlignment="viewStart"
+                            android:textColor="@color/colorButtonNewBrown"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/classDiscipline"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:layout_weight="1"
+                            android:text="disciplineName"
+                            android:textAlignment="viewStart"
+                            android:textColor="@color/colorGray"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textSubject3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:layout_weight="3.6"
+                            android:text="Subject:"
+                            android:textAlignment="viewStart"
+                            android:textColor="@color/colorButtonNewBrown"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/classSubject"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:layout_weight="1"
+                            android:text="subject"
+                            android:textAlignment="viewStart"
+                            android:textColor="@color/colorGray"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:orientation="horizontal" />
+
 
             <TextView
                 android:id="@+id/textViewConteudo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/colorLightGray"
                 android:text="Topics and contents:"
-                android:textSize="16sp" />
+                android:textAlignment="center"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <ScrollView
                 android:layout_width="match_parent"
@@ -153,10 +381,12 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/textTopicsContents"
+                        android:id="@+id/classTopicsAndContents"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="TextView" />
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="10dp"
+                        android:text="Topics And Contents here" />
                 </LinearLayout>
             </ScrollView>
 
