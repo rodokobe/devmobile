@@ -16,6 +16,8 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -59,6 +61,11 @@ public class ClassAddActivity extends AppCompatActivity implements IFirebaseLoad
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_class_add);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Add New Class");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         auth = ConfigFirebase.getReferenciaAutenticacao();
         firebaseRef = ConfigFirebase.getReferenciaFirebase();

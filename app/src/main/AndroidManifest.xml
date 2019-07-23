@@ -28,7 +28,7 @@
             android:name=".activity.SettingsMainActivity"
             android:parentActivityName=".activity.NavMainActivity" />
         <activity
-            android:name=".activity.ClassMainActivity"
+            android:name=".activity.ClassAddActivity"
             android:parentActivityName=".activity.NavMainActivity" />
         <activity
             android:name=".activity.NavMainActivity"
