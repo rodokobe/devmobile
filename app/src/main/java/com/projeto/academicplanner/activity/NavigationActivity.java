@@ -3,10 +3,10 @@ package com.projeto.academicplanner.activity;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,13 +20,11 @@ import java.util.List;
 
 public class NavigationActivity extends AppCompatActivity {
 
+
     //recycler view variables
-    private RecyclerView recyclerDisciplines;
+    private RecyclerView recyclerClasses;
     private RecyclerView.LayoutManager layout;
     private Adapter_Classes_Calendar adapter;
-
-    //searchview
-    private SearchView searchView;
 
 
     //arrayList recycler
@@ -40,12 +38,18 @@ public class NavigationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
 
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Navigation");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         //start configurations
         initializingComponents();
 
         //recovery loged user ID
         userIdLogged = ConfigFirebase.getUserId();
+
 
         //call methods
         adapterConstructor();
@@ -61,9 +65,9 @@ public class NavigationActivity extends AppCompatActivity {
         //recycler view configuration
         layout = new LinearLayoutManager(this);
         adapter = new Adapter_Classes_Calendar(classesList, this);
-        recyclerDisciplines.setAdapter(adapter);
-        recyclerDisciplines.setLayoutManager(layout);
-        recyclerDisciplines.setHasFixedSize(true);
+        recyclerClasses.setAdapter(adapter);
+        recyclerClasses.setLayoutManager(layout);
+        recyclerClasses.setHasFixedSize(true);
 
         adapter.setOnItemClickListener(new Adapter_Classes_Calendar.ClickListener() {
 
@@ -91,28 +95,7 @@ public class NavigationActivity extends AppCompatActivity {
 
     private void initializingComponents() {
 
-        recyclerDisciplines = findViewById(R.id.recyclerDiscipline);
-        searchView = findViewById(R.id.searchView);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        if (searchView != null) {
-            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                @Override
-                public boolean onQueryTextSubmit(String query) {
-                    return false;
-                }
-
-                @Override
-                public boolean onQueryTextChange(String newText) {
-                    search(newText);
-                    return true;
-                }
-            });
-        }
+        recyclerClasses = findViewById(R.id.recyclerClasses);
     }
 
     private void search(String str) {
@@ -126,9 +109,9 @@ public class NavigationActivity extends AppCompatActivity {
 
         }
         adapter = new Adapter_Classes_Calendar(classesList, this);
-        recyclerDisciplines.setAdapter(adapter);
-        recyclerDisciplines.setLayoutManager(layout);
-        recyclerDisciplines.setHasFixedSize(true);
+        recyclerClasses.setAdapter(adapter);
+        recyclerClasses.setLayoutManager(layout);
+        recyclerClasses.setHasFixedSize(true);
 
         adapter.setOnItemClickListener(new Adapter_Classes_Calendar.ClickListener() {
 

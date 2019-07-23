@@ -188,6 +188,11 @@ public class Classes implements Parcelable {
                 .child("classes")
                 .child(getIdClass());
         disciplineRef.setValue(this);
+
+        disciplineRef = firebaseRef
+                .child("classes")
+                .child(getIdClass());
+        disciplineRef.setValue(this);
     }
 
     public void update(Classes objectToUpdate) {
