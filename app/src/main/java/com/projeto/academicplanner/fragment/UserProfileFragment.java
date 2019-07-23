@@ -1,13 +1,7 @@
 package com.projeto.academicplanner.fragment;
 
 
-import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,13 +9,16 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.projeto.academicplanner.R;
-import com.projeto.academicplanner.activity.NavMainActivity;
 import com.projeto.academicplanner.helper.ConfigFirebase;
 import com.projeto.academicplanner.model.UserProfile;
 import com.squareup.picasso.Picasso;
@@ -109,11 +106,11 @@ public class UserProfileFragment extends Fragment {
                     String name;
 
                     if ( firstName == null && lastname == null) {
-                        name = "Fulano de tal";
+                        name = "No name defined";
                     } else if (firstName == null ){
-                        name = "Sem nome e " + lastname;
+                        name = "No first name defined" + lastname;
                     } else if ( lastname == null ) {
-                        name = firstName + " e sem apelido";
+                        name = firstName + " no last name defined";
                     } else {
                         name = firstName + " " + lastname;
                     }
