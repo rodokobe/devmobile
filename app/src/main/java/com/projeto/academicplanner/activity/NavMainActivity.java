@@ -453,14 +453,13 @@ public class NavMainActivity extends AppCompatActivity
 
         }
 
-
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
     public void addRegularClass(View view) {
-        startActivity(new Intent(this, ClassMainActivity.class));
+        startActivity(new Intent(this, ClassAddActivity.class));
     }
 
     public void addSpecialClass(View view) {
