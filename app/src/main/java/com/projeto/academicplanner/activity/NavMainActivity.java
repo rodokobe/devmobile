@@ -203,7 +203,7 @@ public class NavMainActivity extends AppCompatActivity
 
             @Override
             public void onDateSelected(Calendar date, int position) {
-
+                topicEvents.setText("Select a date to show events");
                 int daySelected = date.get(Calendar.DAY_OF_MONTH);
                 int monthSelected = date.get(Calendar.MONTH);
                 int yearSelected = date.get(Calendar.YEAR);
@@ -244,6 +244,8 @@ public class NavMainActivity extends AppCompatActivity
                                                 classesList.add(aula);
                                                 topicEvents.setText("Events to selected date:");
                                             } else {
+
+
                                             }
 
                                         } catch (Exception e) {
