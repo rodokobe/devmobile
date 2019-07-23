@@ -460,6 +460,10 @@ public class NavMainActivity extends AppCompatActivity
         startActivity(new Intent(this, SpecialClassActivity.class));
     }
 
+    public void addContactHour(View view) {
+        startActivity(new Intent( this, SpecialEventActivity.class));
+    }
+
     private void initializingComponents() {
         nameText = findViewById(R.id.navNameText);
         recyclerEvents = findViewById(R.id.recyclerEvents);

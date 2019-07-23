@@ -11,7 +11,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -22,7 +21,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.projeto.academicplanner.Interface.IFirebaseLoadDoneDiscipline;
 import com.projeto.academicplanner.R;
@@ -34,18 +32,17 @@ import com.projeto.academicplanner.model.Student;
 
 import java.util.Calendar;
 
-
-public class ClassUpdateActivity extends AppCompatActivity {
+public class SpecialClassUpdateActivity extends AppCompatActivity {
 
     private TextView classHour, classDate, classSubject, classTopicsAndContents, classRoom,
-            classUniversity, classCourse, classDuration, classDiscipline, classSemester, classYear, textViewConteudo;
+            classUniversity, classCourse, classDuration, classDiscipline, classSemester, classYear;
     private Button buttonClassAdd;
 
-    private EditText editTextDate, editTextHour, subjectEditText, editTextContent;
+    private EditText editTextDate, editTextHour, subjectEditText;
 
     private String semester1, yearD, classroom, university, course, discipline, duration, subject,
             topicsAndContents, idDiscipline, idClass, idUniversity, idCourse, hour, date, newClassDate,
-            newClassTime, newSubject, isSpecialEvent;
+            newClassTime, newSubject;
 
     private String userIdLogged;
     private DatabaseReference databaseDisciplineReference, firebaseRefDisciplines;
@@ -60,7 +57,7 @@ public class ClassUpdateActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_class_update);
+        setContentView(R.layout.activity_special_class_update);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -86,12 +83,10 @@ public class ClassUpdateActivity extends AppCompatActivity {
         course = classToShow.getNameCourse();
         discipline = classToShow.getNameDiscipline();
         subject = classToShow.getSubject();
-        topicsAndContents = classToShow.getTopicsAndContents();
         idDiscipline = classToShow.getIdDiscipline();
         idClass = classToShow.getIdClass();
         idUniversity = classToShow.getIdUniversity();
         idCourse = classToShow.getIdCourse();
-        isSpecialEvent = classToShow.getIsSpecialEvent();
 
         //classType.setText("Special Class");
         editTextHour.setText(hour);
@@ -103,7 +98,6 @@ public class ClassUpdateActivity extends AppCompatActivity {
         classCourse.setText(course);
         classDiscipline.setText(discipline);
         subjectEditText.setText(subject);
-        editTextContent.setText(topicsAndContents);
 
         Calendar calendar = Calendar.getInstance();
         final int year = calendar.get(Calendar.YEAR);
@@ -150,76 +144,28 @@ public class ClassUpdateActivity extends AppCompatActivity {
             timePickerDialog.show();
         });
 
-        if (topicsAndContents == null){
-            editTextContent.setVisibility(View.GONE);
-            textViewConteudo.setVisibility(View.GONE);
-            getSupportActionBar().setTitle("Edit Special Class");
-        }
-
-        if (isSpecialEvent.equals("Yes")) {
-            getSupportActionBar().setTitle("Edit Special Event");
-        }
-
         buttonClassAdd.setOnClickListener(v -> {
             newClassDate = editTextDate.getText().toString();
             newClassTime = editTextHour.getText().toString();
             newSubject = subjectEditText.getText().toString();
 
-
             Classes classes = new Classes();
+            classes.setIdUser(userIdLogged);
+            classes.setClassDate(newClassDate);
+            classes.setClassTime(newClassTime);
+            classes.setSubject(newSubject);
+            classes.setIdUniversity(idUniversity);
+            classes.setIdDiscipline(idDiscipline);
+            classes.setIdCourse(idCourse);
+            classes.setIdClass(idClass);
+            classes.setTimeDuration(duration);
+            classes.setNameUniversity(university);
+            classes.setNameCourse(course);
+            classes.setNameDiscipline(discipline);
+            classes.setNameYear(yearD);
+            classes.setClassroom(classroom);
+            classes.setSemester(semester1);
 
-            if (isSpecialEvent.equals("Yes")) {
-                classes.setIdUser(userIdLogged);
-                classes.setClassDate(newClassDate);
-                classes.setClassTime(newClassTime);
-                classes.setSubject(newSubject);
-                classes.setTopicsAndContents(editTextContent.getText().toString());
-                classes.setIdUniversity(idUniversity);
-                classes.setIdDiscipline(idDiscipline);
-                classes.setIdCourse(idCourse);
-                classes.setIdClass(idClass);
-                classes.setTimeDuration(duration);
-                classes.setNameUniversity(university);
-                classes.setNameCourse(course);
-                classes.setNameDiscipline(discipline);
-                classes.setNameYear(yearD);
-                classes.setClassroom(classroom);
-                classes.setSemester(semester1);
-                classes.setIsSpecialEvent(isSpecialEvent);
-            } else if (topicsAndContents == null){
-                classes.setIdUser(userIdLogged);
-                classes.setClassDate(newClassDate);
-                classes.setClassTime(newClassTime);
-                classes.setSubject(newSubject);
-                classes.setIdUniversity(idUniversity);
-                classes.setIdDiscipline(idDiscipline);
-                classes.setIdCourse(idCourse);
-                classes.setIdClass(idClass);
-                classes.setTimeDuration(duration);
-                classes.setNameUniversity(university);
-                classes.setNameCourse(course);
-                classes.setNameDiscipline(discipline);
-                classes.setNameYear(yearD);
-                classes.setClassroom(classroom);
-                classes.setSemester(semester1);
-            }else {
-                classes.setIdUser(userIdLogged);
-                classes.setClassDate(newClassDate);
-                classes.setClassTime(newClassTime);
-                classes.setSubject(newSubject);
-                classes.setTopicsAndContents(editTextContent.getText().toString());
-                classes.setIdUniversity(idUniversity);
-                classes.setIdDiscipline(idDiscipline);
-                classes.setIdCourse(idCourse);
-                classes.setIdClass(idClass);
-                classes.setTimeDuration(duration);
-                classes.setNameUniversity(university);
-                classes.setNameCourse(course);
-                classes.setNameDiscipline(discipline);
-                classes.setNameYear(yearD);
-                classes.setClassroom(classroom);
-                classes.setSemester(semester1);
-            }
             classes.save();
 
             if (!date.equals(newClassDate) || !hour.equals(newClassTime)) {
@@ -323,11 +269,8 @@ public class ClassUpdateActivity extends AppCompatActivity {
         classCourse = findViewById(R.id.txtCourse);
         classDiscipline = findViewById(R.id.txtDiscipline);
         subjectEditText = findViewById(R.id.subjectEditText);
-        editTextContent = findViewById(R.id.editTextContent);
-        textViewConteudo = findViewById(R.id.textViewConteudo);
+
         buttonClassAdd = findViewById(R.id.buttonClassAdd);
-        databaseDisciplineReference = FirebaseDatabase.getInstance().getReference("disciplines").child(userIdLogged);
+
     }
 }
-
-
