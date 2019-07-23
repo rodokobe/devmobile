@@ -42,8 +42,7 @@ import java.util.List;
 
 public class ClassMainActivity extends AppCompatActivity implements Serializable {
 
-    private ClassUpdateFragment classUpdateFragment;
-    private NavMainActivity navMainActivity;
+    private ClassAddFragment classAddFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,26 +54,18 @@ public class ClassMainActivity extends AppCompatActivity implements Serializable
         getSupportActionBar().setTitle("Add New Class");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Bundle bundle = getIntent().getExtras();
-
-        navMainActivity = (NavMainActivity)bundle.getSerializable("ClassToUpdate");
-
-        classUpdateFragment.setArguments(bundle);
-
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameClassMain, classUpdateFragment);
-        transaction.commit();
+        addClassFragment();
 
     }
 
-    /*private void addClassFragment() {
+    private void addClassFragment() {
         classAddFragment = new ClassAddFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frameClassMain, classAddFragment);
         transaction.commit();
     }
 
-    private void updateClassFragment() {
+    /*private void updateClassFragment() {
         classUpdateFragment = new ClassUpdateFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frameClassMain, classUpdateFragment);
