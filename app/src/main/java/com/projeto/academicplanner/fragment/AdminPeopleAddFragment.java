@@ -39,6 +39,7 @@ public class AdminPeopleAddFragment extends Fragment {
         //recovery logged user ID
         idUserLogged = ConfigFirebase.getUserId();
 
+
         backToPrevious.setOnClickListener( view -> {
                 backToMain();
         });
@@ -49,6 +50,7 @@ public class AdminPeopleAddFragment extends Fragment {
                 String adminPeopleSaveEmail = adminPeopleEmail.getText().toString();
 
                 adminPeopleAddNew(adminPeopleSaveFirstName, adminPeopleSaveLastName, adminPeopleSaveEmail);
+
         });
 
         return addAdminPeople;

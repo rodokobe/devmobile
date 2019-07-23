@@ -12,14 +12,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,21 +30,15 @@ import com.projeto.academicplanner.helper.ConfigFirebase;
 import com.projeto.academicplanner.model.Discipline;
 import com.projeto.academicplanner.model.Student;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
-
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class StudentAddRemoveDisciplineFragment extends Fragment implements IFirebaseLoadDoneDiscipline {
 
     private SearchableSpinner spinnerDisciplines;
-
     private TextView backToPrevious, studentName,  studentDelegate, studentEmail, studentUniversity, studentCourse;
     private Button buttonAddIntoDiscipline;
     private String idUserLogged;
-    private List<Discipline> disciplines = new ArrayList<>();
     private List<Discipline> disciplinesRecycler = new ArrayList<>();
 
     private StudentMainFragment studentMainFragmentF;
@@ -114,7 +106,6 @@ public class StudentAddRemoveDisciplineFragment extends Fragment implements IFir
             Student studentOnDiscipline = new Student();
             studentOnDiscipline.saveStudentInDiscipline(disciplineSelected, studentToAddInDiscipline);
             studentOnDiscipline.saveDisciplineInStudent(disciplineSelected, studentToAddInDiscipline);
-            backToMain();
 
         });
 
@@ -291,7 +282,6 @@ public class StudentAddRemoveDisciplineFragment extends Fragment implements IFir
             toastMsg("Discipline " + name + " has been removed!");
             adapter.notifyDataSetChanged();
             dialog.dismiss();
-            backToMain();
         });
 
         builder.setNegativeButton(android.R.string.no, (dialog, id) -> {

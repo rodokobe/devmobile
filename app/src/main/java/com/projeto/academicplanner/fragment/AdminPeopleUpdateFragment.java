@@ -80,7 +80,9 @@ public class AdminPeopleUpdateFragment extends Fragment {
         admPeopleUpdate.setAdminPeopleFirstName(adminPeopleFirstName.getText().toString());
         admPeopleUpdate.setAdminPeopleLastName(adminPeopleLastName.getText().toString());
         admPeopleUpdate.setAdminPeopleEmail(adminPeopleEmail.getText().toString());
+
         admPeopleUpdate.update(admPeopleUpdate);
+        admPeopleUpdate.updateAdminPeopleInCourse(admPeopleUpdate);
 
         toastMsg("Admin " + admPeopleUpdate.getAdminPeopleFirstName() + " successfully update");
         backToMain();

@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.projeto.academicplanner.adapter.Adapter_Courses;
 import com.projeto.academicplanner.helper.ConfigFirebase;
@@ -57,6 +58,64 @@ public class Course extends University implements Serializable {
                 .child(getIdCourse());
         courseRef.removeValue();
     }
+
+
+    public void deleteCourseIntoAdminPeople(Course courseToDelete, AdminPeople adminPeopleParameter) {
+
+        DatabaseReference adminPeopleRef = FirebaseDatabase.getInstance().getReference("adminpeople").child(adminPeopleParameter.getIdUser());
+
+        adminPeopleRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snap : dataSnapshot.getChildren()) {
+                    AdminPeople adminPeople = snap.getValue(AdminPeople.class);
+                    String adminPeopleIdToRemove = adminPeople.getIdAdminPeople();
+                    final boolean[] update = {true};
+
+                    DatabaseReference courseRef = adminPeopleRef.child(adminPeopleIdToRemove).child("courses");
+
+                    courseRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                            for (DataSnapshot snap : dataSnapshot.getChildren()) {
+
+                                Course course = snap.getValue(Course.class);
+                                String courseIdToRemove = course.getIdCourse();
+
+                                try {
+
+                                    if ((courseToDelete.getIdCourse().equals(courseIdToRemove)) && (update[0]==true)) {
+                                        courseRef.child(courseToDelete.getIdCourse()).removeValue();
+                                        update[0] = false;
+                                    } else {
+
+                                    }
+
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
 
     public void recovery(String idUserLoged, final List<Course> courses, final Adapter_Courses adapter) {
 

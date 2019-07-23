@@ -9,13 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -32,14 +30,14 @@ public class AdminPeopleMainFragment extends Fragment {
 
     //general variables
     private Button buttonAdminPeople;
-    private TextView backToPrevious;
+    private TextView backToPrevious, addCourse;
     private String idUserLogged;
     private List<AdminPeople> adminPeopleS = new ArrayList<>();
     private AdminPeopleAddFragment addAdminPeopleFragmentF;
     private AdminPeopleUpdateFragment updateAdminPeopleFragmentF;
     private SettingsFragment settingsFragment;
 
-    //private StudentMainFragment studentMainFragmentF;
+    private AdminPeopleAddRemoveCourseFragment addRemoveCourseAdminPeopleFragmentF;
 
     //recycler view variables
     private RecyclerView recyclerAdminPeople;
@@ -96,8 +94,16 @@ public class AdminPeopleMainFragment extends Fragment {
 
             final ImageView imageEdit = v.findViewById(R.id.imageEdit);
             final ImageView imageDelete = v.findViewById(R.id.imageDelete);
+            final TextView addCourse = v.findViewById(R.id.addCourse);
 
             final AdminPeople objectToAction = adminPeopleS.get(position);
+
+            addCourse.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    goToAddCourseFragment(objectToAction);
+                }
+            });
 
             imageDelete.setOnClickListener(view -> {
                 courseDelete(objectToAction);
@@ -118,6 +124,7 @@ public class AdminPeopleMainFragment extends Fragment {
         builder.setPositiveButton(android.R.string.yes, (dialog, id) -> {
 
             selectedToRemove.delete();
+            selectedToRemove.deleteAdminPeopleIntoAllCourses(selectedToRemove);
             toastMsg("Administrative People, " + name + ", has been removed!");
             adapter.notifyDataSetChanged();
             dialog.dismiss();
@@ -139,6 +146,18 @@ public class AdminPeopleMainFragment extends Fragment {
 
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    public void goToAddCourseFragment(AdminPeople objectToAction) {
+        addRemoveCourseAdminPeopleFragmentF = new AdminPeopleAddRemoveCourseFragment();
+        Bundle dataToUpdate = new Bundle();
+        dataToUpdate.putSerializable("AdminPeopleToAddCourse", objectToAction);
+
+        addRemoveCourseAdminPeopleFragmentF.setArguments(dataToUpdate);
+
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frameSettingsMain, addRemoveCourseAdminPeopleFragmentF);
+        transaction.commit();
     }
 
     public void goToUpdateFragment(AdminPeople objectToAction) {
@@ -182,5 +201,6 @@ public class AdminPeopleMainFragment extends Fragment {
         buttonAdminPeople = view.findViewById(R.id.buttonAdminPeople);
         backToPrevious = view.findViewById(R.id.backToPrevious);
         recyclerAdminPeople = view.findViewById(R.id.recylcerAdminPeople);
+        addCourse = view.findViewById(R.id.addCourse);
     }
 }

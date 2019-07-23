@@ -2,7 +2,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".fragment.StudentAddRemoveDisciplineFragment">
+        tools:context=".fragment.StudentUpdateFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -73,7 +73,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@color/colorLightGray"
-                    android:text="is Delegate?"
+                    android:text="E-mail"
                     android:textAlignment="viewStart"
                     android:textColor="@color/colorGray"
                     android:textSize="14sp"
@@ -94,7 +94,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/studentName"
+                        android:id="@+id/adminPeopleName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
@@ -103,114 +103,13 @@
                         android:textColor="@color/colorGray" />
 
                     <TextView
-                        android:id="@+id/studentDelegate"
+                        android:id="@+id/adminPeopleEmail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:layout_weight="1"
-                        android:text="YES/NO"
+                        android:text="e-mail"
                         android:textAlignment="viewStart"
-                        android:textColor="@color/colorGray" />
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/textViewEmail"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_weight="1"
-                    android:background="@color/colorLightGray"
-                    android:text="E-mail"
-                    android:textColor="@color/colorGray"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/studentEmail"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:layout_weight="1"
-                    android:text="e-mail"
-                    android:textColor="@color/colorGray" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/textViewUniversity"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_weight="1"
-                    android:background="@color/colorLightGray"
-                    android:text="University"
-                    android:textColor="@color/colorGray"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/textViewCourse"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_weight="1"
-                    android:background="@color/colorLightGray"
-                    android:text="Course"
-                    android:textColor="@color/colorGray"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/studentUniversity"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:layout_weight="1"
-                        android:text="university"
-                        android:textColor="@color/colorGray" />
-
-                    <TextView
-                        android:id="@+id/studentCourse"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:layout_weight="1"
-                        android:text="course"
                         android:textColor="@color/colorGray" />
                 </LinearLayout>
 
@@ -235,18 +134,18 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
                 android:background="@color/colorLightGray"
-                android:text="Add to discipline"
+                android:text="Add to course"
                 android:textStyle="bold" />
 
             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                android:id="@+id/spinnerDisciplines"
+                android:id="@+id/spinnerCourse"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_weight="0" />
 
             <Button
-                android:id="@+id/buttonAddIntoDiscipline"
+                android:id="@+id/buttonAddIntoCourse"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
@@ -258,11 +157,11 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
                 android:background="@color/colorLightGray"
-                android:text="Listing subscribed disciplines"
+                android:text="Listing subscribed courses"
                 android:textStyle="bold" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerStudentDiscipline"
+                android:id="@+id/recyclerAdminCourses"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

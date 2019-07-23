@@ -140,7 +140,6 @@ public class Student extends Discipline implements Serializable {
                                 Student student = snap.getValue(Student.class);
 
                                 String studentDisciplineToUpdate = student.getIdStudent();
-                                String studentDiscipline = student.getIdDiscipline();
 
                                 try {
 

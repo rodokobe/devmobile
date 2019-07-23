@@ -54,8 +54,10 @@ public class Adapter_AdminPeople extends RecyclerView.Adapter<Adapter_AdminPeopl
         String lastname = adminPeople.getAdminPeopleLastName();
         String name = firstname + " " + lastname;
 
-        holder.adminPeopleName.setText(name);
+        holder.adminPeopleName1.setText(name);
         holder.adminPeopleEmail1.setText(adminPeople.getAdminPeopleEmail());
+
+        holder.addCourse1.setText("ADD/REMOVE COURSES");
         holder.imageEdit1.setImageResource(R.drawable.ic_edit_gray_24dp);
         holder.imageDelete1.setImageResource(R.drawable.ic_delete_gray_24dp);
 
@@ -69,8 +71,10 @@ public class Adapter_AdminPeople extends RecyclerView.Adapter<Adapter_AdminPeopl
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView adminPeopleName;
+        TextView adminPeopleName1;
         TextView adminPeopleEmail1;
+
+        TextView addCourse1;
         ImageView imageEdit1;
         ImageView imageDelete1;
         Adapter_AdminPeople adapterRef;
@@ -78,9 +82,10 @@ public class Adapter_AdminPeople extends RecyclerView.Adapter<Adapter_AdminPeopl
         public MyViewHolder(@NonNull View itemView, Adapter_AdminPeople ref) {
             super(itemView);
 
-            adminPeopleName = itemView.findViewById(R.id.adminPeopleName);
+            adminPeopleName1 = itemView.findViewById(R.id.adminPeopleName);
             adminPeopleEmail1 = itemView.findViewById(R.id.adminPeopleEmail);
 
+            addCourse1 = itemView.findViewById(R.id.addCourse);
             imageEdit1 = itemView.findViewById(R.id.imageEdit);
             imageDelete1 = itemView.findViewById(R.id.imageDelete);
             adapterRef = ref;
