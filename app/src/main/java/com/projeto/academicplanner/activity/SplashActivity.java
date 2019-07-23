@@ -20,7 +20,7 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
                 abrirTelaLogin();
             }
-        }, 300);
+        }, 3000);
     }
 
     private void abrirTelaLogin() {

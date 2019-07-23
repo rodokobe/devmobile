@@ -263,7 +263,6 @@ public class DisciplineDuplicateFragment extends Fragment implements IFirebaseLo
 
     }
 
-
     private void disciplineUpdate() {
 
         String disciplineSaveSemester = "1";

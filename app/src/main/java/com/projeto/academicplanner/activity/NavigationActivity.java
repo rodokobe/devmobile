@@ -1,29 +1,19 @@
 package com.projeto.academicplanner.activity;
 
-import androidx.annotation.NonNull;
+import android.os.Bundle;
+import android.view.Gravity;
+import android.view.View;
+import android.widget.SearchView;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Bundle;
-import android.view.Gravity;
-import android.widget.ImageView;
-import android.widget.SearchView;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
 import com.projeto.academicplanner.R;
-import com.projeto.academicplanner.adapter.Adapter_Classes;
 import com.projeto.academicplanner.adapter.Adapter_Classes_Calendar;
-import com.projeto.academicplanner.adapter.Adapter_Classes_To_Filter;
-import com.projeto.academicplanner.adapter.Adapter_Disciplines;
-import com.projeto.academicplanner.fragment.DisciplineMainFragment;
 import com.projeto.academicplanner.helper.ConfigFirebase;
 import com.projeto.academicplanner.model.Classes;
-import com.projeto.academicplanner.model.Discipline;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,9 +65,18 @@ public class NavigationActivity extends AppCompatActivity {
         recyclerDisciplines.setLayoutManager(layout);
         recyclerDisciplines.setHasFixedSize(true);
 
-        // adapter.setOnItemClickListener( (adapter, v, position) -> {
+        adapter.setOnItemClickListener(new Adapter_Classes_Calendar.ClickListener() {
 
-        //});
+            @Override
+            public void onItemClick(Adapter_Classes_Calendar adapter_disciplines, View v, int position) {
+
+            }
+
+            @Override
+            public void onItemLongClick(Adapter_Classes_Calendar adapter_disciplines, View v, int position) {
+
+            }
+        });
 
     }
 
@@ -130,6 +129,19 @@ public class NavigationActivity extends AppCompatActivity {
         recyclerDisciplines.setAdapter(adapter);
         recyclerDisciplines.setLayoutManager(layout);
         recyclerDisciplines.setHasFixedSize(true);
+
+        adapter.setOnItemClickListener(new Adapter_Classes_Calendar.ClickListener() {
+
+            @Override
+            public void onItemClick(Adapter_Classes_Calendar adapter_disciplines, View v, int position) {
+
+            }
+
+            @Override
+            public void onItemLongClick(Adapter_Classes_Calendar adapter_disciplines, View v, int position) {
+
+            }
+        });
 
     }
 
