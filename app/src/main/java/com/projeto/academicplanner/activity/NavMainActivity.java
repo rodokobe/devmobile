@@ -365,7 +365,9 @@ public class NavMainActivity extends AppCompatActivity
                 });
 
                 textUpdate.setOnClickListener(view -> {
-                    goToUpdateClass(objectToAction);
+                    Intent intentUpdate = new Intent(getApplicationContext(), ClassDetailActivity.class);
+                    intentUpdate.putExtra("ClassToDetail", objectToAction);
+                    startActivity(intentUpdate);
                     dialog.dismiss();
                 });
 
