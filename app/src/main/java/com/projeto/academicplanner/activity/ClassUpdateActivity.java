@@ -109,13 +109,13 @@ public class ClassUpdateActivity extends AppCompatActivity {
             classes.setIdDiscipline(idDiscipline);
             classes.setIdCourse(idCourse);
             classes.setIdClass(idClass);
-            classes.setSubject(subject);
             classes.setTimeDuration(duration);
             classes.setNameUniversity(university);
             classes.setNameCourse(course);
             classes.setNameDiscipline(discipline);
             classes.setNameYear(yearD);
             classes.setClassroom(classroom);
+            classes.setSemester(semester1);
 
             classes.save();
 
@@ -126,7 +126,7 @@ public class ClassUpdateActivity extends AppCompatActivity {
 
             toastMessageShort("Class has been updated");
 
-            finish();
+            startActivity(new Intent(this, NavMainActivity.class));
         });
 
     }
