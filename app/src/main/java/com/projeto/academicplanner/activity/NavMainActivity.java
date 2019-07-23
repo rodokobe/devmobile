@@ -279,9 +279,9 @@ public class NavMainActivity extends AppCompatActivity
                                             });
 
                                             textUpdate.setOnClickListener( view -> {
-                                                Intent classUpdate = new Intent(getApplicationContext(), ClassUpdateActivity.class);
+                                            /*    Intent classUpdate = new Intent(getApplicationContext(), ClassUpdateActivity.class);
                                                 classUpdate.putExtra("ClassToUpdate", objectToAction);
-                                                startActivity(classUpdate);
+                                                startActivity(classUpdate);*/
                                             });
 
                                             textRemove.setOnClickListener( view -> {
@@ -362,7 +362,7 @@ public class NavMainActivity extends AppCompatActivity
                 });
 
                 textUpdate.setOnClickListener(view -> {
-                    Intent intentUpdate = new Intent(getApplicationContext(), ClassDetailActivity.class);
+                    Intent intentUpdate = new Intent(getApplicationContext(), ClassUpdateActivity.class);
                     intentUpdate.putExtra("ClassToUpdate", objectToAction);
                     startActivity(intentUpdate);
                     dialog.dismiss();
