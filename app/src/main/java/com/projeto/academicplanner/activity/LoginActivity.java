@@ -82,7 +82,10 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 
-        //GOOGLE LOGIN CONFIGURATION BEGIN
+        /**
+         * GOOGLE LOGIN CONFIGURATION BEGIN
+         */
+
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -93,10 +96,11 @@ public class LoginActivity extends AppCompatActivity {
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         mAuth = FirebaseAuth.getInstance();
 
-        //GOOGLE LOGIN CONFIGURATION END
-
     }
 
+    /**
+     * SignIn via email and password
+     */
     public void signInNormal() {
 
         String email = emailLogin.getText().toString();
@@ -153,7 +157,9 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    //GOOGLE LOGIN CONFIGURATION BEGIN
+    /**
+     * SignIn via Google
+     */
 
     // [START on_start_check_user]
     @Override

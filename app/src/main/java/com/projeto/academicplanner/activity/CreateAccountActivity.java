@@ -38,6 +38,9 @@ public class CreateAccountActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Method to create an account
+     */
     private void createAccount() {
 
         String firstname = userFirstName.getText().toString();

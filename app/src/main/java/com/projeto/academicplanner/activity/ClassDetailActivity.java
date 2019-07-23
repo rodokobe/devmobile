@@ -41,6 +41,10 @@ public class ClassDetailActivity extends AppCompatActivity {
 
         initializingComponentes();
 
+        /**
+         * Getting parameters sent via parcelable from NavMainActivity
+         */
+
         Intent intentGetParameters = getIntent();
         Classes classToShow = intentGetParameters.getParcelableExtra("ClassToDetail");
 
@@ -56,6 +60,10 @@ public class ClassDetailActivity extends AppCompatActivity {
         String subject = classToShow.getSubject();
         String topicsAndContents = classToShow.getTopicsAndContents();
 
+
+        /**
+         * Setting data received on components
+         */
         classType.setText("CLASS TYPE");
         classHour.setText(hour);
         classDate.setText(date);

@@ -49,8 +49,6 @@
         <activity
             android:name=".activity.CreateAccountActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.DetalheActivity" />
-        <activity android:name=".activity.PlannerMainActivity" />
         <activity android:name=".activity.AboutActivity" />
         <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.SplashActivity">

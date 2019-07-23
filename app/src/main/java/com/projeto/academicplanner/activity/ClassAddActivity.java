@@ -66,21 +66,26 @@ public class ClassAddActivity extends AppCompatActivity implements IFirebaseLoad
         getSupportActionBar().setTitle("Add New Class");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        /**
+         * Initializing firebase config and getting userIdLogged
+         */
+
         auth = ConfigFirebase.getReferenciaAutenticacao();
         firebaseRef = ConfigFirebase.getReferenciaFirebase();
         idUserLogged = ConfigFirebase.getUserId();
 
         initializingComponents();
 
+
+        /**
+         * Date Picker
+         */
+
         Calendar calendar = Calendar.getInstance();
         final int year = calendar.get(Calendar.YEAR);
         final int month = calendar.get(Calendar.MONTH);
         final int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-
-        /**
-         * Date Picker
-         */
         editTextDate.setOnClickListener(v -> {
             DatePickerDialog datePickerDialog = new DatePickerDialog(this, android.R.style.Theme_Holo_Light_Dialog_MinWidth, setListener, year, month, day);
             datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -166,7 +171,10 @@ public class ClassAddActivity extends AppCompatActivity implements IFirebaseLoad
 
     }
 
-    //charge the spinner Discipline values
+    /**
+     * Charging the spinner Discipline values
+     */
+
     @Override
     public void onFireBaseLoadDisciplineSuccess(final List<Discipline> disciplinesList) {
 
@@ -211,6 +219,9 @@ public class ClassAddActivity extends AppCompatActivity implements IFirebaseLoad
     }
 
 
+    /**
+     * Recovering preferences data from database
+     */
     public void preferencesRecovery(){
         DatabaseReference userProfileRef = firebaseRef
                 .child("users")
@@ -247,6 +258,24 @@ public class ClassAddActivity extends AppCompatActivity implements IFirebaseLoad
         });
     }
 
+    /**
+     * Adding a new Class
+     * @param subjectEditTextToSave
+     * @param editTextDateToSave
+     * @param editTextHourToSave
+     * @param spinnerDurationToSave
+     * @param editTextClassroomToSave
+     * @param editTextContentToSave
+     * @param idUniversitySelected
+     * @param nameUniversitySelected
+     * @param idCourseSelected
+     * @param nameCourseSelected
+     * @param idDisciplineSelected
+     * @param nameDisciplineSelected
+     * @param idYearSelected
+     * @param nameYearSelected
+     * @param semester
+     */
     private void classAddNew(String subjectEditTextToSave, String editTextDateToSave, String
             editTextHourToSave, String spinnerDurationToSave, String editTextClassroomToSave,
                              String editTextContentToSave, String idUniversitySelected, String
