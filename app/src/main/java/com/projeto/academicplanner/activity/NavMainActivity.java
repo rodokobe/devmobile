@@ -213,6 +213,9 @@ public class NavMainActivity extends AppCompatActivity
                 disciplineRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        classesList.clear();
+
                         for (DataSnapshot snap : dataSnapshot.getChildren()) {
                             Discipline discipline = snap.getValue(Discipline.class);
                             idDiscipline = discipline.getIdDiscipline();
@@ -246,7 +249,6 @@ public class NavMainActivity extends AppCompatActivity
                                     recyclerEvents.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                                     recyclerEvents.setHasFixedSize(true);
                                     Collections.reverse(classesList);
-                                    adapter.notifyDataSetChanged();
 
                                     adapter.setOnItemClickListener(new Adapter_Classes_Calendar.ClickListener() {
                                         @Override
@@ -285,13 +287,17 @@ public class NavMainActivity extends AppCompatActivity
                                             });
 
                                             textRemove.setOnClickListener( view -> {
-
-                                                classToDelete(objectToAction);
+                                                objectToAction.delete();
+                                                toastMsgLong("Class " + objectToAction.getSubject() + " has been removed!");
+                                                adapter.notifyDataSetChanged();
+                                                dialog.dismiss();
 
                                             });
 
                                         }
                                     });
+
+                                    adapter.notifyDataSetChanged();
 
                                     //adapterConstructor();
                                 }
@@ -319,7 +325,7 @@ public class NavMainActivity extends AppCompatActivity
         Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG).show();
     }
 
-    private void adapterConstructor() {
+    /*private void adapterConstructor() {
 
         //recycler view configuration
         layout = new LinearLayoutManager(getApplicationContext());
@@ -370,7 +376,9 @@ public class NavMainActivity extends AppCompatActivity
 
                 textRemove.setOnClickListener(view -> {
 
-                    classToDelete(objectToAction);
+                    objectToAction.delete();
+                    toastMsgLong("Class " + objectToAction.getSubject() + " has been removed!");
+                    adapter.notifyDataSetChanged();
                     dialog.dismiss();
 
                 });
@@ -378,7 +386,7 @@ public class NavMainActivity extends AppCompatActivity
             }
         });
 
-    }
+   }
 
     private void classToDelete(final Classes selectedToRemove) {
 
@@ -396,7 +404,7 @@ public class NavMainActivity extends AppCompatActivity
             dialog.dismiss();
 
             //call methods
-            adapterConstructor();
+            //adapterConstructor();
 
             //create object and fill recyclerViewCourses
             Classes classes = new Classes();
@@ -412,7 +420,7 @@ public class NavMainActivity extends AppCompatActivity
 
         AlertDialog dialog = builder.create();
         dialog.show();
-    }
+    }*/
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
