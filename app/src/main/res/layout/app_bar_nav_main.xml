@@ -51,8 +51,8 @@
                     android:id="@+id/topicEvents"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Recent Classes and Events"
-                    android:textSize="20sp"
+                    android:text="Select a date to show events"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <androidx.recyclerview.widget.RecyclerView

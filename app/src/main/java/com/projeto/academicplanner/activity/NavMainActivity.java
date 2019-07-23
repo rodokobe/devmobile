@@ -52,9 +52,9 @@ public class NavMainActivity extends AppCompatActivity
     private FirebaseAuth auth;
     private FirebaseDatabase firebaseDatabase;
     private String userIdLogged, idDiscipline;
-    private TextView nameText;
+    private TextView nameText, topicEvents;
     private HorizontalCalendar horizontalCalendar;
-    private String urlImagemSelecionada = "";
+    private String urlImagemSelecionada = "", dateSelected;
     private List<Classes> classesList;
     private RecyclerView recyclerEvents;
     private RecyclerView.LayoutManager layout;
@@ -204,7 +204,7 @@ public class NavMainActivity extends AppCompatActivity
 
                 classesList = new ArrayList<>();
 
-                String dateSelected = String.format("%02d/%02d/%04d", daySelected, monthSelected + 1, yearSelected);
+                dateSelected = String.format("%02d/%02d/%04d", daySelected, monthSelected + 1, yearSelected);
 
                 DatabaseReference disciplineRef = databaseReference
                         .child("disciplines")
@@ -236,6 +236,7 @@ public class NavMainActivity extends AppCompatActivity
 
                                             if (dataAula.equals(dateSelected)) {
                                                 classesList.add(aula);
+                                                topicEvents.setText("Events to selected date:");
                                             } else {
                                             }
 
@@ -467,6 +468,7 @@ public class NavMainActivity extends AppCompatActivity
     private void initializingComponents() {
         nameText = findViewById(R.id.navNameText);
         recyclerEvents = findViewById(R.id.recyclerEvents);
+        topicEvents = findViewById(R.id.topicEvents);
 
         //recovery logged user ID
         userIdLogged = ConfigFirebase.getUserId();
