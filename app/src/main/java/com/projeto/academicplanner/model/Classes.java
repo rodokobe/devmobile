@@ -36,6 +36,8 @@ public class Classes implements Parcelable {
     private String idYear;
     private String nameYear;
     private String semester;
+    private String isSpecial;
+
 
     private DatabaseReference firebaseRef = ConfigFirebase.getReferenciaFirebase();
     private DatabaseReference classesRef, disciplineRef;
@@ -69,6 +71,7 @@ public class Classes implements Parcelable {
         idYear = in.readString();
         nameYear = in.readString();
         semester = in.readString();
+        isSpecial = in.readString();
     }
 
     public static final Creator<Classes> CREATOR = new Creator<Classes>() {
@@ -293,6 +296,14 @@ public class Classes implements Parcelable {
 
     public void setSemester(String semester) { this.semester = semester; }
 
+    public String getIsSpecial() {
+        return isSpecial;
+    }
+
+    public void setIsSpecial(String isSpecial) {
+        this.isSpecial = isSpecial;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -317,5 +328,6 @@ public class Classes implements Parcelable {
         dest.writeString(idYear);
         dest.writeString(nameYear);
         dest.writeString(semester);
+        dest.writeString(isSpecial);
     }
 }

@@ -40,7 +40,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ClassMainActivity extends AppCompatActivity implements Serializable {
+public class ClassMainActivity extends AppCompatActivity {
 
     private ClassAddFragment classAddFragment;
 
