@@ -279,9 +279,9 @@ public class NavMainActivity extends AppCompatActivity
                                             });
 
                                             textUpdate.setOnClickListener( view -> {
-                                            /*    Intent classUpdate = new Intent(getApplicationContext(), ClassUpdateActivity.class);
+                                                Intent classUpdate = new Intent(getApplicationContext(), ClassUpdateActivity.class);
                                                 classUpdate.putExtra("ClassToUpdate", objectToAction);
-                                                startActivity(classUpdate);*/
+                                                startActivity(classUpdate);
                                             });
 
                                             textRemove.setOnClickListener( view -> {
@@ -293,7 +293,7 @@ public class NavMainActivity extends AppCompatActivity
                                         }
                                     });
 
-                                    adapterConstructor();
+                                    //adapterConstructor();
                                 }
 
                                 @Override
