@@ -17,7 +17,7 @@ import com.projeto.academicplanner.model.Classes;
 public class ClassDetailActivity extends AppCompatActivity {
 
     private TextView classType, classHour, classDate, classDuration, classUniversity, classCourse,
-                     classDiscipline, classSubject, classTopicsAndContents;
+                     classDiscipline, classSubject, classTopicsAndContents, classSemester, classYear, classRoom;
     private Button buttonClassAdd;
 
     private String userIdLogged;
@@ -46,6 +46,9 @@ public class ClassDetailActivity extends AppCompatActivity {
 
         String hour = classToShow.getClassTime();
         String date = classToShow.getClassDate();
+        String semester = classToShow.getSemester();
+        String year = classToShow.getNameYear();
+        String classroom = classToShow.getClassroom();
         String duration = classToShow.getTimeDuration();
         String university = classToShow.getNameUniversity();
         String course = classToShow.getNameCourse();
@@ -57,6 +60,9 @@ public class ClassDetailActivity extends AppCompatActivity {
         classHour.setText(hour);
         classDate.setText(date);
         classDuration.setText(duration);
+        classSemester.setText(semester);
+        classYear.setText(year);
+        classRoom.setText(classroom);
         classUniversity.setText(university);
         classCourse.setText(course);
         classDiscipline.setText(discipline);
@@ -70,6 +76,9 @@ public class ClassDetailActivity extends AppCompatActivity {
         classHour = findViewById(R.id.classHour);
         classDate = findViewById(R.id.classDate);
         classDuration = findViewById(R.id.classDuration);
+        classSemester = findViewById(R.id.classSemester);
+        classYear = findViewById(R.id.classYear);
+        classRoom = findViewById(R.id.classRoom);
         classUniversity = findViewById(R.id.classUniversity);
         classCourse = findViewById(R.id.classCourse);
         classDiscipline = findViewById(R.id.classDiscipline);
