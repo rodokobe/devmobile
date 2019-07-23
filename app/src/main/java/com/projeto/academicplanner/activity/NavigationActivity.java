@@ -20,7 +20,6 @@ import java.util.List;
 
 public class NavigationActivity extends AppCompatActivity {
 
-
     //recycler view variables
     private RecyclerView recyclerClasses;
     private RecyclerView.LayoutManager layout;
