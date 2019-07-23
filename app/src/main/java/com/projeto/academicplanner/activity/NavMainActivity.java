@@ -16,7 +16,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -179,7 +178,6 @@ public class NavMainActivity extends AppCompatActivity
         calendarListener();
     }
 
-
     /**
      * Pressing Navigation Menu
      */
@@ -275,6 +273,7 @@ public class NavMainActivity extends AppCompatActivity
                                                 Intent classDetail = new Intent(getApplicationContext(), ClassDetailActivity.class);
                                                 classDetail.putExtra("ClassToDetail", objectToAction);
                                                 startActivity(classDetail);
+                                                dialog.dismiss();
 
                                             });
 
@@ -282,6 +281,7 @@ public class NavMainActivity extends AppCompatActivity
                                                 Intent classUpdate = new Intent(getApplicationContext(), ClassUpdateActivity.class);
                                                 classUpdate.putExtra("ClassToUpdate", objectToAction);
                                                 startActivity(classUpdate);
+                                                dialog.dismiss();
                                             });
 
                                             textRemove.setOnClickListener( view -> {

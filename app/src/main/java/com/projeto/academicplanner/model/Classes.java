@@ -13,7 +13,6 @@ import com.projeto.academicplanner.adapter.Adapter_Classes_Calendar;
 import com.projeto.academicplanner.adapter.Adapter_Classes_To_Filter;
 import com.projeto.academicplanner.helper.ConfigFirebase;
 
-import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
@@ -117,6 +116,33 @@ public class Classes implements Parcelable {
 
         });
 
+    }
+
+    public void recoveryClassesInDiscipline(String idUserLogged, String idDisciplineParameter, final List<Classes> classes, final Adapter_Classes_Calendar adapter) {
+
+        classesRef = firebaseRef
+                .child("disciplines")
+                .child(idUserLogged)
+                .child(idDisciplineParameter)
+                .child("classes");
+
+        classesRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                classes.clear();
+
+                for (DataSnapshot snap : dataSnapshot.getChildren()) {
+                    Classes classe = snap.getValue(Classes.class);
+                    classes.add(classe);
+
+                }
+            }
+            @Override
+            public void onCancelled (@NonNull DatabaseError databaseError){
+
+            }
+        });
     }
 
     public void recoverySimple(String idUserLogged, final List<Classes> classes, final Adapter_Classes_To_Filter adapter) {

@@ -17,6 +17,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,7 +28,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.projeto.academicplanner.Interface.IFirebaseLoadDoneCourse;
 import com.projeto.academicplanner.Interface.IFirebaseLoadDoneYears;
 import com.projeto.academicplanner.R;
+import com.projeto.academicplanner.adapter.Adapter_Classes_Calendar;
 import com.projeto.academicplanner.helper.ConfigFirebase;
+import com.projeto.academicplanner.model.Classes;
 import com.projeto.academicplanner.model.Course;
 import com.projeto.academicplanner.model.Discipline;
 import com.projeto.academicplanner.model.Years;
@@ -35,7 +39,7 @@ import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DisciplineUpdateFragment extends Fragment implements IFirebaseLoadDoneCourse, IFirebaseLoadDoneYears {
+public class DisciplineDuplicateFragment extends Fragment implements IFirebaseLoadDoneCourse, IFirebaseLoadDoneYears {
 
     private EditText disciplineName, acronymDiscipline;
     private TextView backToPrevious;
@@ -43,14 +47,20 @@ public class DisciplineUpdateFragment extends Fragment implements IFirebaseLoadD
     private Switch switchSemester;
     private Button buttonDisciplines;
     private String idUserLogged, idUniversitySelected, nameUniversitySelected, idCourseSelected, nameCourseSelected, idYearSelected, nameYearSelected;
-    private Discipline disciplineToUpdate;
+    private Discipline disciplineToDuplicate;
+    private List<Classes> classes = new ArrayList<>();
 
     private DatabaseReference firebaseRefCourse, firebaseRefYear;
     private IFirebaseLoadDoneCourse iFirebaseLoadDoneCourse;
     private IFirebaseLoadDoneYears iFirebaseLoadDoneYears;
     private DisciplineMainFragment disciplineMainFragmentF;
 
-    public DisciplineUpdateFragment() {
+    //recycler view variables
+    private RecyclerView recyclerClasses;
+    private RecyclerView.LayoutManager layout;
+    private Adapter_Classes_Calendar adapter;
+
+    public DisciplineDuplicateFragment() {
         // Required empty public constructor
     }
 
@@ -58,26 +68,36 @@ public class DisciplineUpdateFragment extends Fragment implements IFirebaseLoadD
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        disciplineToUpdate = (Discipline) getArguments().getSerializable("DisciplineToUpdate");
+        disciplineToDuplicate = (Discipline) getArguments().getSerializable("DisciplineToDuplicate");
 
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View updateDiscipline = inflater.inflate(R.layout.fragment_discipline_add, container, false);
+        View duplicateDiscipline = inflater.inflate(R.layout.fragment_discipline_duplicate, container, false);
 
         //configurações iniciais
-        initializingComponents(updateDiscipline);
+        initializingComponents(duplicateDiscipline);
 
         idUserLogged = ConfigFirebase.getUserId();
 
-        disciplineName.setText(disciplineToUpdate.getDisciplineName());
-        acronymDiscipline.setText(disciplineToUpdate.getAcronymDiscipline());
-        spinnerUniversity.setTitle(disciplineToUpdate.getCourseName());
-        spinnerYear.setTitle(disciplineToUpdate.getDisciplineYearName());
 
-        String switchSem = disciplineToUpdate.getDisciplineSemester();
+        //call methods
+        adapterConstructor();
+
+        //create object and fill recyclerViewCourses
+        Classes classe = new Classes();
+        classe.recoveryClassesInDiscipline(idUserLogged, disciplineToDuplicate.getIdDiscipline(), classes, adapter);
+
+
+
+        disciplineName.setText(disciplineToDuplicate.getDisciplineName());
+        acronymDiscipline.setText(disciplineToDuplicate.getAcronymDiscipline());
+        spinnerUniversity.setTitle(disciplineToDuplicate.getCourseName());
+        spinnerYear.setTitle(disciplineToDuplicate.getDisciplineYearName());
+
+        String switchSem = disciplineToDuplicate.getDisciplineSemester();
 
         if (switchSem.equals("1")){
             switchSemester.setChecked(false);
@@ -85,17 +105,12 @@ public class DisciplineUpdateFragment extends Fragment implements IFirebaseLoadD
             switchSemester.setChecked(true);
         }
 
-
-        buttonDisciplines.setText("Update");
-
         //instances to load data and send to spinners
         firebaseRefCourse = FirebaseDatabase.getInstance().getReference("courses").child(idUserLogged);
         firebaseRefYear = FirebaseDatabase.getInstance().getReference("years").child(idUserLogged);
 
-
         iFirebaseLoadDoneCourse = this;
         iFirebaseLoadDoneYears = this;
-
 
         buttonDisciplines.setOnClickListener( v-> {
                 disciplineUpdate();
@@ -150,7 +165,7 @@ public class DisciplineUpdateFragment extends Fragment implements IFirebaseLoadD
                 backToMain();
         });
 
-        return updateDiscipline;
+        return duplicateDiscipline;
 
     }
 
@@ -224,6 +239,31 @@ public class DisciplineUpdateFragment extends Fragment implements IFirebaseLoadD
     public void onFireBaseLoadYearFailed(String message) {
     }
 
+
+    private void adapterConstructor() {
+
+        layout = new LinearLayoutManager(getContext());
+        adapter = new Adapter_Classes_Calendar(classes, getContext());
+        recyclerClasses.setAdapter(adapter);
+        recyclerClasses.setLayoutManager(layout);
+        recyclerClasses.setHasFixedSize(true);
+
+        adapter.setOnItemClickListener(new Adapter_Classes_Calendar.ClickListener() {
+
+            @Override
+            public void onItemClick(Adapter_Classes_Calendar adapter_disciplines, View v, int position) {
+
+            }
+
+            @Override
+            public void onItemLongClick(Adapter_Classes_Calendar adapter_disciplines, View v, int position) {
+
+            }
+        });
+
+    }
+
+
     private void disciplineUpdate() {
 
         String disciplineSaveSemester = "1";
@@ -232,22 +272,21 @@ public class DisciplineUpdateFragment extends Fragment implements IFirebaseLoadD
             disciplineSaveSemester = "2";
         }
 
-        final Discipline disciplineUpdate = new Discipline();
+        final Discipline disciplineDuplicate = new Discipline();
 
-        disciplineUpdate.setIdUser(idUserLogged);
-        disciplineUpdate.setIdDiscipline(disciplineToUpdate.getIdDiscipline());
-        disciplineUpdate.setDisciplineName(disciplineName.getText().toString());
-        disciplineUpdate.setAcronymDiscipline(acronymDiscipline.getText().toString());
-        disciplineUpdate.setDisciplineYearId(idYearSelected);
-        disciplineUpdate.setDisciplineYearName(nameYearSelected);
-        disciplineUpdate.setDisciplineSemester(disciplineSaveSemester);
-        disciplineUpdate.setIdUniversity(idUniversitySelected);
-        disciplineUpdate.setUniversityName(nameUniversitySelected);
-        disciplineUpdate.setIdCourse(idCourseSelected);
-        disciplineUpdate.setCourseName(nameCourseSelected);
+        disciplineDuplicate.setIdUser(idUserLogged);
+        disciplineDuplicate.setDisciplineName(disciplineName.getText().toString());
+        disciplineDuplicate.setAcronymDiscipline(acronymDiscipline.getText().toString());
+        disciplineDuplicate.setDisciplineYearId(idYearSelected);
+        disciplineDuplicate.setDisciplineYearName(nameYearSelected);
+        disciplineDuplicate.setDisciplineSemester(disciplineSaveSemester);
+        disciplineDuplicate.setIdUniversity(idUniversitySelected);
+        disciplineDuplicate.setUniversityName(nameUniversitySelected);
+        disciplineDuplicate.setIdCourse(idCourseSelected);
+        disciplineDuplicate.setCourseName(nameCourseSelected);
 
-        disciplineUpdate.update(disciplineUpdate);
-        toastMsg("Discipline " + disciplineUpdate.getDisciplineName() + " successfully update");
+        disciplineDuplicate.saveObject(disciplineToDuplicate);
+        toastMsg("Discipline " + disciplineDuplicate.getDisciplineName() + " successfully saved");
         backToMain();
 
     }
@@ -270,6 +309,7 @@ public class DisciplineUpdateFragment extends Fragment implements IFirebaseLoadD
     }
 
     private void initializingComponents(View view){
+
         disciplineName = view.findViewById(R.id.disciplineName);
         acronymDiscipline = view.findViewById(R.id.acronymDiscipline);
         backToPrevious = view.findViewById(R.id.backToPrevious);
@@ -277,6 +317,7 @@ public class DisciplineUpdateFragment extends Fragment implements IFirebaseLoadD
         spinnerYear = view.findViewById(R.id.spinnerYear);
         switchSemester = view.findViewById(R.id.switchSemester);
         buttonDisciplines = view.findViewById(R.id.buttonDisciplines);
+        recyclerClasses = view.findViewById(R.id.recyclerClasses);
     }
 
 }

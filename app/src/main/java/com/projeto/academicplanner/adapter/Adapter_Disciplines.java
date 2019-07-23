@@ -53,6 +53,7 @@ public class Adapter_Disciplines extends RecyclerView.Adapter<Adapter_Discipline
         holder.disciplineSemester1.setText(discipline.getDisciplineSemester());
         holder.nameUniversity1.setText(discipline.getUniversityName());
         holder.nameCourse1.setText(discipline.getCourseName());
+        holder.disciplineDuplicate1.setText("duplicate?");
         holder.imageEdit1.setImageResource(R.drawable.ic_edit_gray_24dp);
         holder.imageDelete1.setImageResource(R.drawable.ic_delete_gray_24dp);
 
@@ -71,6 +72,7 @@ public class Adapter_Disciplines extends RecyclerView.Adapter<Adapter_Discipline
         TextView disciplineSemester1;
         TextView nameUniversity1;
         TextView nameCourse1;
+        TextView disciplineDuplicate1;
         ImageView imageEdit1;
         ImageView imageDelete1;
         Adapter_Disciplines adapterRef;
@@ -84,6 +86,7 @@ public class Adapter_Disciplines extends RecyclerView.Adapter<Adapter_Discipline
             disciplineSemester1 = itemView.findViewById(R.id.disciplineSemester);
             nameUniversity1 = itemView.findViewById(R.id.nameUniversity);
             nameCourse1 = itemView.findViewById(R.id.nameCourse);
+            disciplineDuplicate1 = itemView.findViewById(R.id.nameCourse);
             imageEdit1 = itemView.findViewById(R.id.imageEdit);
             imageDelete1 = itemView.findViewById(R.id.imageDelete);
             adapterRef = ref;

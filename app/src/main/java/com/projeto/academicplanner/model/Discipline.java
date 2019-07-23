@@ -47,6 +47,14 @@ public class Discipline extends Course {
         disciplineRef.setValue(this);
     }
 
+    public void saveObject(Discipline objectToDuplicate) {
+
+        disciplineRef = firebaseRef.getRef()
+                .child("disciplines");
+        disciplineRef.setValue(objectToDuplicate);
+    }
+
+
     public void saveOnStudent(Student studentToSave, Discipline disciplineToSave) {
 
         disciplineRef = firebaseRef.getRef()

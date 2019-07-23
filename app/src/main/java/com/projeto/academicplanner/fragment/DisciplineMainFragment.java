@@ -9,20 +9,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.projeto.academicplanner.R;
 import com.projeto.academicplanner.adapter.Adapter_Disciplines;
 import com.projeto.academicplanner.helper.ConfigFirebase;
-import com.projeto.academicplanner.model.Course;
 import com.projeto.academicplanner.model.Discipline;
 
 import java.util.ArrayList;
@@ -38,6 +35,7 @@ public class DisciplineMainFragment extends Fragment {
     private List<Discipline> disciplines = new ArrayList<>();
     private DisciplineAddFragment addDisciplineFragment;
     private DisciplineUpdateFragment updateDisciplineFragment;
+    private DisciplineDuplicateFragment duplicateDisciplineFragment;
     private SettingsFragment settingsFragment;
 
     //recycler view variables
@@ -92,10 +90,15 @@ public class DisciplineMainFragment extends Fragment {
 
         adapter.setOnItemClickListener( (adapter_disciplines, v, position) ->  {
 
+                final TextView disciplineDuplicate = v.findViewById(R.id.disciplineDuplicate);
                 final ImageView imageEdit = v.findViewById(R.id.imageEdit);
                 final ImageView imageDelete = v.findViewById(R.id.imageDelete);
 
                 final Discipline objectToAction = disciplines.get(position);
+
+                disciplineDuplicate.setOnClickListener( view -> {
+                        goToDuplicateFragment(objectToAction);
+                });
 
                 imageDelete.setOnClickListener( view -> {
                         disciplineDelete(objectToAction);
@@ -140,6 +143,19 @@ public class DisciplineMainFragment extends Fragment {
 
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    public void goToDuplicateFragment(Discipline objectToAction) {
+        duplicateDisciplineFragment = new DisciplineDuplicateFragment();
+
+        Bundle dataToDuplicate = new Bundle();
+        dataToDuplicate.putSerializable("DisciplineToDuplicate", objectToAction);
+
+        duplicateDisciplineFragment.setArguments(dataToDuplicate);
+
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frameSettingsMain, duplicateDisciplineFragment);
+        transaction.commit();
     }
 
     public void goToUpdateFragment(Discipline objectToAction) {
