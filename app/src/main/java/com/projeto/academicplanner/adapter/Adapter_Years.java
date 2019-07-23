@@ -48,7 +48,7 @@ public class Adapter_Years extends RecyclerView.Adapter<Adapter_Years.MyViewHold
 
         Years myYears = years.get(position);
         holder.yearName.setText(myYears.getYearName());
-        holder.imageDelete1.setImageResource(R.drawable.ic_delete_white_24dp);
+        holder.imageDelete1.setImageResource(R.drawable.ic_delete_gray_24dp);
 
     }
 

@@ -55,8 +55,8 @@ public class Adapter_Classes extends RecyclerView.Adapter<Adapter_Classes.MyView
         holder.timeClass.setText(thisClass.getClassTime().toString());
         holder.classroomClass.setText(thisClass.getClassroom());
 
-        holder.imageEdit.setImageResource(R.drawable.ic_edit_white_24dp);
-        holder.imageDelete.setImageResource(R.drawable.ic_delete_white_24dp);
+        holder.imageEdit.setImageResource(R.drawable.ic_edit_gray_24dp);
+        holder.imageDelete.setImageResource(R.drawable.ic_delete_gray_24dp);
 
     }
 

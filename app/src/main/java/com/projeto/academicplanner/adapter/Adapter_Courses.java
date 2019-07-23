@@ -50,8 +50,8 @@ public class Adapter_Courses extends RecyclerView.Adapter<Adapter_Courses.MyView
         holder.nameUniversity1.setText(course.getUniversityName());
         holder.nameCourse1.setText(course.getCourseName());
         holder.acronCourse1.setText(course.getAcronymCourse());
-        holder.imageEdit1.setImageResource(R.drawable.ic_edit_white_24dp);
-        holder.imageDelete1.setImageResource(R.drawable.ic_delete_white_24dp);
+        holder.imageEdit1.setImageResource(R.drawable.ic_edit_gray_24dp);
+        holder.imageDelete1.setImageResource(R.drawable.ic_delete_gray_24dp);
 
     }
 

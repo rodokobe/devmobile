@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="2dp"
-        android:background="#807E57"
+        android:background="@color/colorLightGray"
         android:orientation="horizontal"
         android:padding="10dp">
 
@@ -34,7 +34,7 @@
                     android:layout_weight="8"
                     android:text="acron"
                     android:textAlignment="viewStart"
-                    android:textColor="@android:color/white"
+                    android:textColor="@color/colorGray"
                     android:textSize="14sp"
                     android:textStyle="bold" />
 
@@ -44,7 +44,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="nameDiscipline"
-                    android:textColor="@android:color/white"
+                    android:textColor="@color/colorGray"
                     android:textSize="14sp"
                     android:textStyle="bold" />
 
@@ -63,7 +63,7 @@
                     android:layout_weight="1.5"
                     android:text="2019-2020"
                     android:textAlignment="textStart"
-                    android:textColor="@android:color/white"
+                    android:textColor="@color/colorGray"
                     android:textSize="12sp" />
 
                 <TextView
@@ -73,7 +73,7 @@
                     android:layout_weight="1"
                     android:text="Semester: "
                     android:textAlignment="textEnd"
-                    android:textColor="@android:color/white"
+                    android:textColor="@color/colorGray"
                     android:textSize="12sp" />
 
                 <TextView
@@ -83,7 +83,7 @@
                     android:layout_weight="2"
                     android:text="1"
                     android:textAlignment="viewStart"
-                    android:textColor="@android:color/white"
+                    android:textColor="@color/colorGray"
                     android:textSize="12sp" />
 
             </LinearLayout>
@@ -94,7 +94,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="nameCourse"
-                android:textColor="@android:color/white"
+                android:textColor="@color/colorGray"
                 android:textSize="12sp" />
 
             <TextView
@@ -103,7 +103,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="nameUniversity"
-                android:textColor="@android:color/white"
+                android:textColor="@color/colorGray"
                 android:textSize="12sp" />
 
         </LinearLayout>
@@ -115,7 +115,7 @@
             android:layout_gravity="end"
             android:layout_weight="1"
             android:scaleType="centerInside"
-            app:srcCompat="@drawable/ic_edit_white_24dp" />
+            app:srcCompat="@drawable/ic_edit_gray_24dp" />
 
         <ImageView
             android:id="@+id/imageDelete"
@@ -124,6 +124,6 @@
             android:layout_gravity="end"
             android:layout_weight="1"
             android:scaleType="centerInside"
-            app:srcCompat="@drawable/ic_delete_white_24dp" />
+            app:srcCompat="@drawable/ic_delete_gray_24dp" />
     </LinearLayout>
 </LinearLayout>

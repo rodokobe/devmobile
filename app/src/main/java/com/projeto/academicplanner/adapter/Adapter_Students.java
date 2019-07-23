@@ -58,8 +58,8 @@ public class Adapter_Students extends RecyclerView.Adapter<Adapter_Students.MyVi
         holder.universityName1.setText(student.getUniversityName());
         holder.courseName1.setText(student.getCourseName());
         holder.addDiscipline1.setText("ADD/REMOVE DISCIPLINES");
-        holder.imageEdit1.setImageResource(R.drawable.ic_edit_white_24dp);
-        holder.imageDelete1.setImageResource(R.drawable.ic_delete_white_24dp);
+        holder.imageEdit1.setImageResource(R.drawable.ic_edit_gray_24dp);
+        holder.imageDelete1.setImageResource(R.drawable.ic_delete_gray_24dp);
 
     }
 

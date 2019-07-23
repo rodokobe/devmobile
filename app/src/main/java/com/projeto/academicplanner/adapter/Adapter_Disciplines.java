@@ -53,8 +53,8 @@ public class Adapter_Disciplines extends RecyclerView.Adapter<Adapter_Discipline
         holder.disciplineSemester1.setText(discipline.getDisciplineSemester());
         holder.nameUniversity1.setText(discipline.getUniversityName());
         holder.nameCourse1.setText(discipline.getCourseName());
-        holder.imageEdit1.setImageResource(R.drawable.ic_edit_white_24dp);
-        holder.imageDelete1.setImageResource(R.drawable.ic_delete_white_24dp);
+        holder.imageEdit1.setImageResource(R.drawable.ic_edit_gray_24dp);
+        holder.imageDelete1.setImageResource(R.drawable.ic_delete_gray_24dp);
 
     }
 

@@ -51,7 +51,7 @@ public class Adapter_Students_Disciplines extends RecyclerView.Adapter<Adapter_S
         holder.nameDiscipline1.setText(discipline.getDisciplineName());
         holder.yearDiscipline1.setText(discipline.getDisciplineYearName());
         holder.semesterDiscipline1.setText(discipline.getDisciplineSemester());
-        holder.imageDelete1.setImageResource(R.drawable.ic_delete_white_24dp);
+        holder.imageDelete1.setImageResource(R.drawable.ic_delete_gray_24dp);
 
     }
 
