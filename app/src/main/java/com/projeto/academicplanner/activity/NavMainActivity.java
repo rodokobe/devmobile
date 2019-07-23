@@ -432,6 +432,8 @@ public class NavMainActivity extends AppCompatActivity
             startActivity(new Intent(getApplicationContext(), NavMainActivity.class));
         } else if (id == R.id.nav_settings) {
             startActivity(new Intent(getApplicationContext(), SettingsMainActivity.class));
+        } else if (id == R.id.nav_navigation) {
+            startActivity(new Intent(getApplicationContext(), NavigationActivity.class));
         } else if (id == R.id.nav_messages) {
             startActivity(new Intent(getApplicationContext(), SendEmailActivity.class));
         } else if (id == R.id.nav_preferences) {
@@ -473,6 +475,13 @@ public class NavMainActivity extends AppCompatActivity
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        calendarListener();
     }
 
 }

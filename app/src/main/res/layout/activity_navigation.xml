@@ -19,6 +19,14 @@
             android:background="@drawable/bg_add_edit_brown"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
+        <SearchView
+            android:id="@+id/searchView"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_margin="5dp"
+            android:padding="10dp"
+            android:queryHint="Search..." />
+
     </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
@@ -27,6 +35,7 @@
         android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerDiscipline"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="10dp" />
