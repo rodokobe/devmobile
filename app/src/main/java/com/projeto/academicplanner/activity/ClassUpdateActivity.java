@@ -154,202 +154,210 @@ public class ClassUpdateActivity extends AppCompatActivity {
         /**
          * Setting title do activity among Regular Class, Special Class and Special Event when Update
          */
-        if (topicsAndContents == null){
+
+        if (topicsAndContents == null) {
             editTextContent.setVisibility(View.GONE);
             textViewConteudo.setVisibility(View.GONE);
             getSupportActionBar().setTitle("Edit Special Class");
-        }
-
-        if (isSpecialEvent.equals("Yes")) {
+        } else if (isSpecialEvent == null) {
+            getSupportActionBar().setTitle("Edit Class");
+        } else if (isSpecialEvent.equals("Yes")) {
             getSupportActionBar().setTitle("Edit Special Event");
         }
 
 
+            /**
+             * Save new data
+             */
+            buttonClassAdd.setOnClickListener(v -> {
+                newClassDate = editTextDate.getText().toString();
+                newClassTime = editTextHour.getText().toString();
+                newSubject = subjectEditText.getText().toString();
+
+
+                Classes classes = new Classes();
+
+                if (isSpecialEvent.equals("Yes")) {
+                    classes.setIdUser(userIdLogged);
+                    classes.setClassDate(newClassDate);
+                    classes.setClassTime(newClassTime);
+                    classes.setSubject(newSubject);
+                    classes.setTopicsAndContents(editTextContent.getText().toString());
+                    classes.setIdUniversity(idUniversity);
+                    classes.setIdDiscipline(idDiscipline);
+                    classes.setIdCourse(idCourse);
+                    classes.setIdClass(idClass);
+                    classes.setTimeDuration(duration);
+                    classes.setNameUniversity(university);
+                    classes.setNameCourse(course);
+                    classes.setNameDiscipline(discipline);
+                    classes.setNameYear(yearD);
+                    classes.setClassroom(classroom);
+                    classes.setSemester(semester1);
+                    classes.setIsSpecialEvent(isSpecialEvent);
+                } else if (topicsAndContents == null) {
+                    classes.setIdUser(userIdLogged);
+                    classes.setClassDate(newClassDate);
+                    classes.setClassTime(newClassTime);
+                    classes.setSubject(newSubject);
+                    classes.setIdUniversity(idUniversity);
+                    classes.setIdDiscipline(idDiscipline);
+                    classes.setIdCourse(idCourse);
+                    classes.setIdClass(idClass);
+                    classes.setTimeDuration(duration);
+                    classes.setNameUniversity(university);
+                    classes.setNameCourse(course);
+                    classes.setNameDiscipline(discipline);
+                    classes.setNameYear(yearD);
+                    classes.setClassroom(classroom);
+                    classes.setSemester(semester1);
+                } else {
+                    classes.setIdUser(userIdLogged);
+                    classes.setClassDate(newClassDate);
+                    classes.setClassTime(newClassTime);
+                    classes.setSubject(newSubject);
+                    classes.setTopicsAndContents(editTextContent.getText().toString());
+                    classes.setIdUniversity(idUniversity);
+                    classes.setIdDiscipline(idDiscipline);
+                    classes.setIdCourse(idCourse);
+                    classes.setIdClass(idClass);
+                    classes.setTimeDuration(duration);
+                    classes.setNameUniversity(university);
+                    classes.setNameCourse(course);
+                    classes.setNameDiscipline(discipline);
+                    classes.setNameYear(yearD);
+                    classes.setClassroom(classroom);
+                    classes.setSemester(semester1);
+                }
+                classes.save();
+
+                if (topicsAndContents == null || !isSpecialEvent.equals("Yes")) {
+                    if (!date.equals(newClassDate) || !hour.equals(newClassTime)) {
+                        allStudentsEmail(idDiscipline);
+                        adminPeopleCourseEmail(idCourse);
+                    }
+                }
+
+                toastMessageShort("Class has been updated");
+
+                startActivity(new Intent(this, NavMainActivity.class));
+            });
+
+        }
+
         /**
-         * Save new data
+         * Receives idCourse to send email only for administrative people assigned on course
+         *
+         * @param idCourse
          */
-        buttonClassAdd.setOnClickListener(v -> {
-            newClassDate = editTextDate.getText().toString();
-            newClassTime = editTextHour.getText().toString();
-            newSubject = subjectEditText.getText().toString();
 
+        public void adminPeopleCourseEmail (String idCourse){
 
-            Classes classes = new Classes();
+            DatabaseReference adminPeople = adminPeopleRef
+                    .child("courses")
+                    .child(userIdLogged)
+                    .child(idCourse)
+                    .child("adminPeople");
 
-            if (isSpecialEvent.equals("Yes")) {
-                classes.setIdUser(userIdLogged);
-                classes.setClassDate(newClassDate);
-                classes.setClassTime(newClassTime);
-                classes.setSubject(newSubject);
-                classes.setTopicsAndContents(editTextContent.getText().toString());
-                classes.setIdUniversity(idUniversity);
-                classes.setIdDiscipline(idDiscipline);
-                classes.setIdCourse(idCourse);
-                classes.setIdClass(idClass);
-                classes.setTimeDuration(duration);
-                classes.setNameUniversity(university);
-                classes.setNameCourse(course);
-                classes.setNameDiscipline(discipline);
-                classes.setNameYear(yearD);
-                classes.setClassroom(classroom);
-                classes.setSemester(semester1);
-                classes.setIsSpecialEvent(isSpecialEvent);
-            } else if (topicsAndContents == null){
-                classes.setIdUser(userIdLogged);
-                classes.setClassDate(newClassDate);
-                classes.setClassTime(newClassTime);
-                classes.setSubject(newSubject);
-                classes.setIdUniversity(idUniversity);
-                classes.setIdDiscipline(idDiscipline);
-                classes.setIdCourse(idCourse);
-                classes.setIdClass(idClass);
-                classes.setTimeDuration(duration);
-                classes.setNameUniversity(university);
-                classes.setNameCourse(course);
-                classes.setNameDiscipline(discipline);
-                classes.setNameYear(yearD);
-                classes.setClassroom(classroom);
-                classes.setSemester(semester1);
-            }else {
-                classes.setIdUser(userIdLogged);
-                classes.setClassDate(newClassDate);
-                classes.setClassTime(newClassTime);
-                classes.setSubject(newSubject);
-                classes.setTopicsAndContents(editTextContent.getText().toString());
-                classes.setIdUniversity(idUniversity);
-                classes.setIdDiscipline(idDiscipline);
-                classes.setIdCourse(idCourse);
-                classes.setIdClass(idClass);
-                classes.setTimeDuration(duration);
-                classes.setNameUniversity(university);
-                classes.setNameCourse(course);
-                classes.setNameDiscipline(discipline);
-                classes.setNameYear(yearD);
-                classes.setClassroom(classroom);
-                classes.setSemester(semester1);
-            }
-            classes.save();
+            System.out.println("Emails -> " + adminPeople);
 
-            if (topicsAndContents == null || !isSpecialEvent.equals("Yes")) {
-                if (!date.equals(newClassDate) || !hour.equals(newClassTime)) {
-                    allStudentsEmail(idDiscipline);
-                    adminPeopleCourseEmail(idCourse);
+            adminPeople.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for (DataSnapshot snap : dataSnapshot.getChildren()) {
+                        AdminPeople adminPeople2 = snap.getValue(AdminPeople.class);
+
+                        String adminPeopleEmail = adminPeople2.getAdminPeopleEmail();
+                        System.out.println("Emails -> " + adminPeople);
+
+                        sendEmail(adminPeopleEmail);
+                    }
                 }
-            }
 
-            toastMessageShort("Class has been updated");
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            startActivity(new Intent(this, NavMainActivity.class));
-        });
-
-    }
-
-    /**
-     * Receives idCourse to send email only for administrative people assigned on course
-     * @param idCourse
-     */
-
-    public void adminPeopleCourseEmail (String idCourse) {
-
-        DatabaseReference adminPeople = adminPeopleRef
-                .child("courses")
-                .child(userIdLogged)
-                .child(idCourse)
-                .child("adminPeople");
-
-        adminPeople.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot snap: dataSnapshot.getChildren()){
-                    AdminPeople adminPeople = snap.getValue(AdminPeople.class);
-
-                    String adminPeopleEmail = adminPeople.getAdminPeopleEmail();
-                    System.out.println("Emails -> " + adminPeople);
-
-                    sendEmail(adminPeopleEmail);
                 }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+            });
+        }
 
-            }
-        });
-    }
+        /**
+         * Receives idDiscipline to send email only for students subscribed on discipline
+         *
+         * @param idDiscipline
+         */
+        public void allStudentsEmail (String idDiscipline){
 
-    /**
-     * Receives idDiscipline to send email only for students subscribed on discipline
-     * @param idDiscipline
-     */
-    public void allStudentsEmail(String idDiscipline) {
+            DatabaseReference students = databaseDisciplineReference
+                    .child(idDiscipline)
+                    .child("students");
 
-        DatabaseReference students = databaseDisciplineReference
-                .child(idDiscipline)
-                .child("students");
+            students.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for (DataSnapshot snap : dataSnapshot.getChildren()) {
+                        Student student = snap.getValue(Student.class);
 
-        students.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot snap: dataSnapshot.getChildren()){
-                    Student student = snap.getValue(Student.class);
+                        String studentEmail = student.getStudentEmail();
 
-                    String studentEmail = student.getStudentEmail();
-
-                    Log.i("Emails: ", studentEmail);
-                    sendEmail(studentEmail);
+                        Log.i("Emails: ", studentEmail);
+                        sendEmail(studentEmail);
+                    }
                 }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
+
+        /**
+         * Email sender. Receives Student email or Administrative People email
+         *
+         * @param sendTo
+         */
+        private void sendEmail (String sendTo){
+            //Getting content for email
+
+            String email = sendTo;
+            String subject = "Info :: Alteração na aula de " + classDate + " às " + classHour;
+            String message = "A aula foi alterada de " + classDate + " às " + classHour + " para " + newClassDate + " às " + newClassTime + ".\n" +
+                    "Cumprimentos.";
+
+
+            //Creating SendMail object
+            SendMail sm = new SendMail(getApplicationContext(), email, subject, message);
+
+            //Executing sendmail to send email
+            sm.execute();
+        }
+
+        private void toastMessageShort (String msg){
+            Toast.makeText(this, msg,
+                    Toast.LENGTH_SHORT).show();
+        }
+
+        /**
+         * to initialize components
+         */
+
+        private void initializingComponentes () {
+
+            editTextHour = findViewById(R.id.editTextHour);
+            editTextDate = findViewById(R.id.editTextDate);
+            classDuration = findViewById(R.id.txtTImeDuration);
+            classSemester = findViewById(R.id.txtSemester);
+            classRoom = findViewById(R.id.txtClassroom);
+            classUniversity = findViewById(R.id.textUniversity);
+            classCourse = findViewById(R.id.txtCourse);
+            classDiscipline = findViewById(R.id.txtDiscipline);
+            subjectEditText = findViewById(R.id.subjectEditText);
+            editTextContent = findViewById(R.id.editTextContent);
+            textViewConteudo = findViewById(R.id.textViewConteudo);
+            buttonClassAdd = findViewById(R.id.buttonClassAdd);
+            databaseDisciplineReference = FirebaseDatabase.getInstance().getReference("disciplines").child(userIdLogged);
+        }
     }
-
-    /**
-     * Email sender. Receives Student email or Administrative People email
-     * @param sendTo
-     */
-    private void sendEmail (String sendTo) {
-        //Getting content for email
-
-        String email = sendTo;
-        String subject = "Info :: Alteração na aula de " + classDate + " às " + classHour;
-        String message = "A aula foi alterada de " + classDate + " às " + classHour + " para " + newClassDate + " às " + newClassTime + ".\n" +
-                "Cumprimentos.";
-
-
-        //Creating SendMail object
-        SendMail sm = new SendMail(getApplicationContext(), email, subject, message);
-
-        //Executing sendmail to send email
-        sm.execute();
-    }
-
-    private void toastMessageShort(String msg) {
-        Toast.makeText(this, msg,
-                Toast.LENGTH_SHORT).show();
-    }
-
-    /**
-     * to initialize components
-     */
-
-    private void initializingComponentes() {
-
-        editTextHour = findViewById(R.id.editTextHour);
-        editTextDate = findViewById(R.id.editTextDate);
-        classDuration = findViewById(R.id.txtTImeDuration);
-        classSemester = findViewById(R.id.txtSemester);
-        classRoom = findViewById(R.id.txtClassroom);
-        classUniversity = findViewById(R.id.textUniversity);
-        classCourse = findViewById(R.id.txtCourse);
-        classDiscipline = findViewById(R.id.txtDiscipline);
-        subjectEditText = findViewById(R.id.subjectEditText);
-        editTextContent = findViewById(R.id.editTextContent);
-        textViewConteudo = findViewById(R.id.textViewConteudo);
-        buttonClassAdd = findViewById(R.id.buttonClassAdd);
-        databaseDisciplineReference = FirebaseDatabase.getInstance().getReference("disciplines").child(userIdLogged);
-    }
-}
 
 
