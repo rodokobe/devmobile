@@ -25,6 +25,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.projeto.academicplanner.Interface.IFirebaseLoadDoneDiscipline;
 import com.projeto.academicplanner.R;
 import com.projeto.academicplanner.helper.ConfigFirebase;
 import com.projeto.academicplanner.model.UserProfile;
@@ -42,6 +43,9 @@ public class PreferencesEditFragment extends Fragment {
     private TextView backToPrevious;
     private SearchableSpinner spinnerDuration;
     private String userIdLogged;
+
+    private DatabaseReference databaseDisciplineReference;
+    private IFirebaseLoadDoneDiscipline iFirebaseLoadDoneDiscipline;
 
     private FirebaseAuth auth;
     private DatabaseReference firebaseRef;

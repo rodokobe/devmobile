@@ -39,9 +39,8 @@ import java.util.List;
 
 public class ClassAddActivity extends AppCompatActivity implements IFirebaseLoadDoneDiscipline {
 
-    private SearchableSpinner spinnerDiscipline;
+    private SearchableSpinner spinnerDiscipline, spinnerDuration;
     private EditText subjectEditText, editTextClassroom, editTextContent, editTextDate, editTextHour;
-    private SearchableSpinner spinnerDuration;
     private Button buttonClassAdd;
 
     private String idUserLogged, idUniversitySelected, nameUniversitySelected, idCourseSelected, nameCourseSelected,

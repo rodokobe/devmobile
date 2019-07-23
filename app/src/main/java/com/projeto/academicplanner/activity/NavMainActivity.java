@@ -32,7 +32,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.projeto.academicplanner.R;
 import com.projeto.academicplanner.adapter.Adapter_Classes_Calendar;
-import com.projeto.academicplanner.fragment.ClassUpdateFragment;
 import com.projeto.academicplanner.helper.ConfigFirebase;
 import com.projeto.academicplanner.model.Classes;
 import com.projeto.academicplanner.model.Discipline;
@@ -62,7 +61,6 @@ public class NavMainActivity extends AppCompatActivity
     private RecyclerView.LayoutManager layout;
     private Adapter_Classes_Calendar adapter;
     private DatabaseReference databaseReference;
-    private ClassUpdateFragment classUpdateFragment;
     private GoogleSignInClient mGoogleSignInClient;
 
     @Override
@@ -281,10 +279,9 @@ public class NavMainActivity extends AppCompatActivity
                                             });
 
                                             textUpdate.setOnClickListener( view -> {
-                                                classUpdateFragment = new ClassUpdateFragment();
-                                                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                                                transaction.replace(R.id.frameClassMain, classUpdateFragment);
-                                                transaction.commit();
+                                                Intent classUpdate = new Intent(getApplicationContext(), ClassUpdateActivity.class);
+                                                classUpdate.putExtra("ClassToUpdate", objectToAction);
+                                                startActivity(classUpdate);
                                             });
 
                                             textRemove.setOnClickListener( view -> {
@@ -366,7 +363,7 @@ public class NavMainActivity extends AppCompatActivity
 
                 textUpdate.setOnClickListener(view -> {
                     Intent intentUpdate = new Intent(getApplicationContext(), ClassDetailActivity.class);
-                    intentUpdate.putExtra("ClassToDetail", objectToAction);
+                    intentUpdate.putExtra("ClassToUpdate", objectToAction);
                     startActivity(intentUpdate);
                     dialog.dismiss();
                 });
@@ -415,19 +412,6 @@ public class NavMainActivity extends AppCompatActivity
 
         AlertDialog dialog = builder.create();
         dialog.show();
-    }
-
-    public void goToUpdateClass(Classes objectToAction) {
-
-        Bundle dataToUpdate = new Bundle();
-        //dataToUpdate.putSerializable("ClassToUpdate", objectToAction);
-
-        Intent intent = new Intent(getApplicationContext(), ClassMainActivity.class);
-
-        intent.putExtra("ClassToUpdate", dataToUpdate);
-
-        startActivity(intent);
-
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -484,4 +468,3 @@ public class NavMainActivity extends AppCompatActivity
     }
 
 }
-

@@ -3,7 +3,6 @@ package com.projeto.academicplanner.activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -28,12 +27,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.projeto.academicplanner.Interface.IFirebaseLoadDoneDiscipline;
 import com.projeto.academicplanner.R;
-import com.projeto.academicplanner.fragment.ClassAddFragment;
-import com.projeto.academicplanner.fragment.SpecialClassAddFragment;
 import com.projeto.academicplanner.helper.ConfigFirebase;
 import com.projeto.academicplanner.model.Classes;
 import com.projeto.academicplanner.model.Discipline;
-import com.projeto.academicplanner.model.UserProfile;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import java.text.SimpleDateFormat;
@@ -169,7 +165,7 @@ public class SpecialClassActivity extends AppCompatActivity implements IFirebase
                     }
                 });
 
-        preferencesRecovery();
+        //preferencesRecovery();
 
     }
 
@@ -218,7 +214,7 @@ public class SpecialClassActivity extends AppCompatActivity implements IFirebase
     public void onFireBaseLoadDisciplineFailed(String message) {
     }
 
-    public void preferencesRecovery(){
+    /*public void preferencesRecovery(){
         DatabaseReference userProfileRef = firebaseRef
                 .child("users")
                 .child(idUserLogged)
@@ -252,7 +248,7 @@ public class SpecialClassActivity extends AppCompatActivity implements IFirebase
 
             }
         });
-    }
+    }*/
 
     private void classAddNew(String subjectEditTextToSave, String isSpecial, String editTextDateToSave,
                              String editTextHourToSave, String spinnerDurationToSave, String editTextClassroomToSave,
