@@ -274,7 +274,7 @@ public class NavMainActivity extends AppCompatActivity
 
                                             textDetails.setOnClickListener( view -> {
                                                 Intent classDetail = new Intent(getApplicationContext(), ClassDetailActivity.class);
-                                                classDetail.putExtra("ClassToOpen", objectToAction);
+                                                classDetail.putExtra("ClassToDetail", objectToAction);
                                                 startActivity(classDetail);
 
                                             });
@@ -356,16 +356,22 @@ public class NavMainActivity extends AppCompatActivity
                 final Classes objectToAction = classesList.get(position);
 
                 textDetails.setOnClickListener(view -> {
-                    startActivity(new Intent(getApplicationContext(), ClassDetailActivity.class));
+
+                    Intent intentDetail = new Intent(getApplicationContext(), ClassDetailActivity.class);
+                    intentDetail.putExtra("ClassToDetail", objectToAction);
+                    startActivity(intentDetail);
+                    dialog.dismiss();
                 });
 
                 textUpdate.setOnClickListener(view -> {
                     goToUpdateClass(objectToAction);
+                    dialog.dismiss();
                 });
 
                 textRemove.setOnClickListener(view -> {
 
                     classToDelete(objectToAction);
+                    dialog.dismiss();
 
                 });
 
@@ -411,7 +417,7 @@ public class NavMainActivity extends AppCompatActivity
     public void goToUpdateClass(Classes objectToAction) {
 
         Bundle dataToUpdate = new Bundle();
-        dataToUpdate.putSerializable("ClassToUpdate", objectToAction);
+        //dataToUpdate.putSerializable("ClassToUpdate", objectToAction);
 
         classUpdateFragment = new ClassUpdateFragment();
         classUpdateFragment.setArguments(dataToUpdate);

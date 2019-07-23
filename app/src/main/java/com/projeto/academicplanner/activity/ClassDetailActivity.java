@@ -1,5 +1,6 @@
 package com.projeto.academicplanner.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
@@ -38,8 +39,10 @@ public class ClassDetailActivity extends AppCompatActivity {
         firebaseRef = ConfigFirebase.getReferenciaFirebase();
         userIdLogged = ConfigFirebase.getUserId();
 
-        Bundle dataToShow = getIntent().getExtras();
-        Classes classToShow = (Classes) dataToShow.getSerializable("ClassToOpen");
+        initializingComponentes();
+
+        Intent intentGetParameters = getIntent();
+        Classes classToShow = intentGetParameters.getParcelableExtra("ClassToDetail");
 
         String hour = classToShow.getClassTime();
         String date = classToShow.getClassDate();
@@ -49,8 +52,6 @@ public class ClassDetailActivity extends AppCompatActivity {
         String discipline = classToShow.getNameDiscipline();
         String subject = classToShow.getSubject();
         String topicsAndContents = classToShow.getTopicsAndContents();
-
-        initializingComponentes();
 
         classType.setText("CLASS TYPE");
         classHour.setText(hour);
@@ -63,7 +64,7 @@ public class ClassDetailActivity extends AppCompatActivity {
         classTopicsAndContents.setText(topicsAndContents);
     }
 
-    private void initializingComponentes(){
+    private void initializingComponentes() {
 
         classType = findViewById(R.id.classType);
         classHour = findViewById(R.id.classHour);
@@ -75,5 +76,5 @@ public class ClassDetailActivity extends AppCompatActivity {
         classSubject = findViewById(R.id.classSubject);
         classTopicsAndContents = findViewById(R.id.classTopicsAndContents);
 
-    };
+    }
 }
