@@ -222,17 +222,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="5dp"
-            android:orientation="vertical"
-            android:paddingLeft="10dp"
-            android:paddingEnd="10dp"
-            android:paddingRight="10dp"
-            android:paddingBottom="10dp">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/textView3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
                 android:layout_weight="0"
                 android:background="@color/colorLightGray"
                 android:text="Add to discipline"
@@ -249,6 +245,7 @@
                 android:id="@+id/buttonAddIntoDiscipline"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
                 android:layout_weight="0"
                 android:text="Add" />
 
@@ -256,6 +253,7 @@
                 android:id="@+id/textView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
                 android:layout_weight="0"
                 android:background="@color/colorLightGray"
                 android:text="Listing subscribed disciplines"
@@ -265,6 +263,7 @@
                 android:id="@+id/recyclerStudentDiscipline"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:padding="2dp">
 

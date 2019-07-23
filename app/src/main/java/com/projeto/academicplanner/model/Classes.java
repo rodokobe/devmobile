@@ -10,7 +10,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.projeto.academicplanner.adapter.Adapter_Classes_Calendar;
-import com.projeto.academicplanner.adapter.Adapter_Classes_To_Filter;
 import com.projeto.academicplanner.helper.ConfigFirebase;
 
 import java.util.Collections;
@@ -89,7 +88,7 @@ public class Classes implements Parcelable {
 
     public void recovery(String idUserLogged, final List<Classes> classes, final Adapter_Classes_Calendar adapter) {
 
-        classesRef = firebaseRef
+        classesRef = firebaseRef.getRef()
                 .child("classes")
                 .child(idUserLogged);
 
@@ -122,7 +121,7 @@ public class Classes implements Parcelable {
 
     public void recoveryClassesInDiscipline(String idUserLogged, String idDisciplineParameter, final List<Classes> classes, final Adapter_Classes_Calendar adapter) {
 
-        classesRef = firebaseRef
+        classesRef = firebaseRef.getRef()
                 .child("disciplines")
                 .child(idUserLogged)
                 .child(idDisciplineParameter)
@@ -134,9 +133,8 @@ public class Classes implements Parcelable {
 
                 classes.clear();
 
-                for (DataSnapshot snap : dataSnapshot.getChildren()) {
-                    Classes classe = snap.getValue(Classes.class);
-                    classes.add(classe);
+                for (DataSnapshot dataSnapshotClasses : dataSnapshot.getChildren()) {
+
 
                 }
             }
@@ -147,9 +145,9 @@ public class Classes implements Parcelable {
         });
     }
 
-    public void recoverySimple(String idUserLogged, final List<Classes> classes, final Adapter_Classes_To_Filter adapter) {
+    public void recoverySimple(String idUserLogged, final List<Classes> classes, final Adapter_Classes_Calendar adapter) {
 
-        classesRef = firebaseRef
+        classesRef = firebaseRef.getRef()
                 .child("classes")
                 .child(idUserLogged);
 
@@ -159,9 +157,10 @@ public class Classes implements Parcelable {
 
                 classes.clear();
 
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                for (DataSnapshot dataSnapshotClasses : dataSnapshot.getChildren()) {
 
-                    classes.add(ds.getValue(Classes.class));
+                    Classes classe = dataSnapshotClasses.getValue(Classes.class);
+                    classes.add(classe);
 
                 }
 
