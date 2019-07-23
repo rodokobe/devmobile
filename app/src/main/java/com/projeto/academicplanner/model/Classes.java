@@ -10,6 +10,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.projeto.academicplanner.adapter.Adapter_Classes_Calendar;
+import com.projeto.academicplanner.adapter.Adapter_Classes_To_Filter;
 import com.projeto.academicplanner.helper.ConfigFirebase;
 
 import java.io.Serializable;
@@ -83,6 +84,39 @@ public class Classes implements Parcelable {
     };
 
     public void recovery(String idUserLogged, final List<Classes> classes, final Adapter_Classes_Calendar adapter) {
+
+        classesRef = firebaseRef
+                .child("classes")
+                .child(idUserLogged);
+
+        classesRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                classes.clear();
+
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+
+                    classes.add(ds.getValue(Classes.class));
+
+                }
+
+                //put the item added to the top
+                Collections.reverse(classes);
+                adapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+
+        });
+
+    }
+
+    public void recoverySimple(String idUserLogged, final List<Classes> classes, final Adapter_Classes_To_Filter adapter) {
 
         classesRef = firebaseRef
                 .child("classes")

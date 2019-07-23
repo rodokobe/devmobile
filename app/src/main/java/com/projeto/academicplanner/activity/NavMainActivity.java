@@ -39,6 +39,7 @@ import com.projeto.academicplanner.model.Discipline;
 import com.projeto.academicplanner.model.UserProfile;
 import com.squareup.picasso.Picasso;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -48,7 +49,7 @@ import devs.mulham.horizontalcalendar.HorizontalCalendar;
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener;
 
 public class NavMainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, Serializable {
 
     private FirebaseAuth auth;
     private FirebaseDatabase firebaseDatabase;
@@ -419,16 +420,11 @@ public class NavMainActivity extends AppCompatActivity
         Bundle dataToUpdate = new Bundle();
         //dataToUpdate.putSerializable("ClassToUpdate", objectToAction);
 
-        classUpdateFragment = new ClassUpdateFragment();
-        classUpdateFragment.setArguments(dataToUpdate);
-
         Intent intent = new Intent(getApplicationContext(), ClassMainActivity.class);
 
-        //intent.putExtra("to", classUpdateFragment);
+        intent.putExtra("ClassToUpdate", dataToUpdate);
 
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frmClassesAddEdit, classUpdateFragment);
-        transaction.commit();
+        startActivity(intent);
 
     }
 
