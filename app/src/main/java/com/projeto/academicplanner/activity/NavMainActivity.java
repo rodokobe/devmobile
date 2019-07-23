@@ -461,6 +461,10 @@ public class NavMainActivity extends AppCompatActivity
         startActivity(new Intent(this, ClassMainActivity.class));
     }
 
+    public void addSpecialClass(View view) {
+        startActivity(new Intent(this, SpecialClassActivity.class));
+    }
+
     private void initializingComponents() {
         nameText = findViewById(R.id.navNameText);
         recyclerEvents = findViewById(R.id.recyclerEvents);

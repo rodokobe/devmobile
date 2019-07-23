@@ -7,6 +7,10 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,12 +19,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -43,18 +43,18 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
+public class SpecialClassAddFragment extends Fragment implements IFirebaseLoadDoneDiscipline {
 
-public class ClassAddFragment extends Fragment implements IFirebaseLoadDoneDiscipline {
-
-    private SearchableSpinner spinnerDiscipline;
-    private EditText subjectEditText, editTextClassroom, editTextContent, editTextDate, editTextHour;
+    private SearchableSpinner spinnerDiscipline, spinnerSpecial;
+    private EditText editTextClassroom, editTextContent, editTextDate, editTextHour;
     private SearchableSpinner spinnerDuration;
-    private Button buttonClassAdd;
+    private Button buttonSpecialClassAdd;
 
-    private String idUserLogged, idUniversitySelected, nameUniversitySelected, idCourseSelected, nameCourseSelected,
+    private String idUserLogged, isSpecial, idUniversitySelected, nameUniversitySelected, idCourseSelected, nameCourseSelected,
             idDisciplineSelected, nameDisciplineSelected, idYearSelected, nameYearSelected, semester;
 
     private String[] numbers = new String[]{"1 hour", "2 hours", "3 hours", "4 hours", "5 hours", "6 hours", "7 hours", "8 hours"};
+    private String[] special = new String[]{"---", "Exame", "Exame Recurso", "Acompanhamento Trabalho", "Defesa Trabalho"};
 
     private DatabaseReference databaseDisciplineReference;
     private IFirebaseLoadDoneDiscipline iFirebaseLoadDoneDiscipline;
@@ -63,22 +63,23 @@ public class ClassAddFragment extends Fragment implements IFirebaseLoadDoneDisci
     private FirebaseAuth auth;
     private DatabaseReference firebaseRef;
 
-
-    public ClassAddFragment() {
+    public SpecialClassAddFragment() {
         // Required empty public constructor
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View addClass = inflater.inflate(R.layout.fragment_class_add, container, false);
+        View addSpecialClass = inflater.inflate(R.layout.fragment_special_class_add, container, false);
+
 
         auth = ConfigFirebase.getReferenciaAutenticacao();
         firebaseRef = ConfigFirebase.getReferenciaFirebase();
         idUserLogged = ConfigFirebase.getUserId();
 
-        initializingComponents(addClass);
+        initializingComponents(addSpecialClass);
 
         Calendar calendar = Calendar.getInstance();
         final int year = calendar.get(Calendar.YEAR);
@@ -130,18 +131,19 @@ public class ClassAddFragment extends Fragment implements IFirebaseLoadDoneDisci
         /**
          * Saving new class data
          */
-        buttonClassAdd.setOnClickListener(v -> {
+        buttonSpecialClassAdd.setOnClickListener(v -> {
 
-            String subjectEditTextToSave = subjectEditText.getText().toString();
+            String subjectEditTextToSave = spinnerSpecial.getSelectedItem().toString();
+            String isSpecial = "Sim";
             String editTextDateToSave = editTextDate.getText().toString();
             String editTextHourToSave = editTextHour.getText().toString();
             String editTextTimeDurationToSave = spinnerDuration.getSelectedItem().toString();
             toastMsgShort(editTextTimeDurationToSave);
             String editTextClassroomToSave = editTextClassroom.getText().toString();
-            String editTextContentToSave = editTextContent.getText().toString();
 
-            classAddNew(subjectEditTextToSave, editTextDateToSave, editTextHourToSave, editTextTimeDurationToSave, editTextClassroomToSave,
-                    editTextContentToSave, idUniversitySelected, nameUniversitySelected, idCourseSelected, nameCourseSelected, idDisciplineSelected,
+            classAddNew(subjectEditTextToSave, isSpecial, editTextDateToSave, editTextHourToSave,
+                    editTextTimeDurationToSave, editTextClassroomToSave, idUniversitySelected,
+                    nameUniversitySelected, idCourseSelected, nameCourseSelected, idDisciplineSelected,
                     nameDisciplineSelected, idYearSelected, nameYearSelected, semester);
         });
 
@@ -172,7 +174,7 @@ public class ClassAddFragment extends Fragment implements IFirebaseLoadDoneDisci
 
         preferencesRecovery();
 
-        return addClass;
+        return addSpecialClass;
     }
 
     //charge the spinner Discipline values
@@ -256,28 +258,26 @@ public class ClassAddFragment extends Fragment implements IFirebaseLoadDoneDisci
         });
     }
 
-    private void classAddNew(String subjectEditTextToSave, String editTextDateToSave, String
-            editTextHourToSave, String spinnerDurationToSave, String editTextClassroomToSave,
-                             String editTextContentToSave, String idUniversitySelected, String
-                                     nameUniversitySelected, String idCourseSelected, String nameCourseSelected,
-                             String idDisciplineSelected, String nameDisciplineSelected, String
-                                     idYearSelected, String nameYearSelected, String semester) {
+    private void classAddNew(String subjectEditTextToSave, String isSpecial, String editTextDateToSave,
+                             String editTextHourToSave, String spinnerDurationToSave, String editTextClassroomToSave,
+                             String idUniversitySelected, String nameUniversitySelected, String idCourseSelected,
+                             String nameCourseSelected, String idDisciplineSelected, String nameDisciplineSelected,
+                             String idYearSelected, String nameYearSelected, String semester) {
 
         if (!subjectEditTextToSave.isEmpty()) {
             if (!editTextDateToSave.isEmpty()) {
                 if (!editTextHourToSave.isEmpty()) {
                     if (!spinnerDurationToSave.isEmpty()) {
                         if (!editTextClassroomToSave.isEmpty()) {
-                            if (!editTextContentToSave.isEmpty()) {
 
                                 Classes classToSave = new Classes();
                                 classToSave.setIdUser(idUserLogged);
+                                classToSave.setIsSpecial(isSpecial);
                                 classToSave.setSubject(subjectEditTextToSave);
                                 classToSave.setClassDate(editTextDateToSave);
                                 classToSave.setClassTime(editTextHourToSave);
                                 classToSave.setTimeDuration(spinnerDurationToSave);
                                 classToSave.setClassroom(editTextClassroomToSave);
-                                classToSave.setTopicsAndContents(editTextContentToSave);
                                 classToSave.setIdUniversity(idUniversitySelected);
                                 classToSave.setNameUniversity(nameUniversitySelected);
                                 classToSave.setIdCourse(idCourseSelected);
@@ -290,12 +290,9 @@ public class ClassAddFragment extends Fragment implements IFirebaseLoadDoneDisci
 
                                 classToSave.save();
 
-                                toastMsgShort("Class " + classToSave.getSubject() + " added");
+                                toastMsgShort("Class " + classToSave.getTopicsAndContents() + " added");
                                 backToMain();
 
-                            } else {
-                                toastMsgShort("Enter a Class content");
-                            }
                         } else {
                             toastMsgShort("Enter a Class room");
                         }
@@ -327,19 +324,18 @@ public class ClassAddFragment extends Fragment implements IFirebaseLoadDoneDisci
     private void initializingComponents(View view) {
 
         spinnerDiscipline = view.findViewById(R.id.spinnerDiscipline);
-        subjectEditText = view.findViewById(R.id.subjectEditText);
-        editTextDate = view.findViewById(R.id.editTextDate);
+        spinnerSpecial = view.findViewById(R.id.spinnerSpecial);
 
+        editTextDate = view.findViewById(R.id.editTextDate);
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat dateOnly = new SimpleDateFormat("dd/MM/yyyy");
         editTextDate.setText(dateOnly.format(cal.getTime()));
 
         editTextHour = view.findViewById(R.id.editTextHour);
-        editTextHour.setText("19:00");
 
         editTextClassroom = view.findViewById(R.id.editTextClassroom);
         editTextContent = view.findViewById(R.id.editTextContent);
-        buttonClassAdd = view.findViewById(R.id.buttonClassAdd);
+        buttonSpecialClassAdd = view.findViewById(R.id.buttonSpecialClassAdd);
 
         spinnerDuration = view.findViewById(R.id.spinnerDuration);
 
@@ -354,6 +350,18 @@ public class ClassAddFragment extends Fragment implements IFirebaseLoadDoneDisci
         //data bind adapter with both spinners
         spinnerDuration.setAdapter(adapter);
         spinnerDuration.setSelection(3);
+
+        /**
+         * Setting Special Classes
+         */
+        String[] special = new String[]{"---", "Exame", "Exame Recurso", "Acompanhamento Trabalho", "Defesa Trabalho"};
+        List<String> specialList = new ArrayList<String>(Arrays.asList(special));
+        ArrayAdapter<String> adapterSpecial= new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, specialList);
+        //specify the layout to appear list items
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //data bind adapter with both spinners
+        spinnerSpecial.setAdapter(adapterSpecial);
+        spinnerSpecial.setSelection(0);
 
 
         /**
