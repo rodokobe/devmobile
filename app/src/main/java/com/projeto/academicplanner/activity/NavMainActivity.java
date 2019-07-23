@@ -84,6 +84,9 @@ public class NavMainActivity extends AppCompatActivity
 
         initializingComponents();
 
+        /**
+         * Initializing Google permission
+         */
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -191,6 +194,9 @@ public class NavMainActivity extends AppCompatActivity
         }
     }
 
+    /**
+     * Implementing calendar on main activity
+     */
     public void calendarListener() {
 
         horizontalCalendar.setCalendarListener(new HorizontalCalendarListener() {
@@ -325,109 +331,15 @@ public class NavMainActivity extends AppCompatActivity
         Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG).show();
     }
 
-    /*private void adapterConstructor() {
-
-        //recycler view configuration
-        layout = new LinearLayoutManager(getApplicationContext());
-        adapter = new Adapter_Classes_Calendar(classesList, getApplicationContext());
-        recyclerEvents.setAdapter(adapter);
-        recyclerEvents.setLayoutManager(layout);
-        recyclerEvents.setHasFixedSize(true);
-        Collections.reverse(classesList);
-        adapter.notifyDataSetChanged();
-
-        adapter.setOnItemClickListener(new Adapter_Classes_Calendar.ClickListener() {
-            @Override
-            public void onItemClick(Adapter_Classes_Calendar adapter_disciplines, View v, int position) {
-
-
-            }
-
-            @Override
-            public void onItemLongClick(Adapter_Classes_Calendar adapter_disciplines, View v, int position) {
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                View dialogView = getLayoutInflater().inflate(R.layout.dialog_rv_nav_main, null);
-
-                builder.setView(dialogView);
-                AlertDialog dialog = builder.create();
-                dialog.show();
-
-                TextView textDetails = dialogView.findViewById(R.id.textDetails);
-                TextView textUpdate = dialogView.findViewById(R.id.textUpdate);
-                TextView textRemove = dialogView.findViewById(R.id.textRemove);
-
-                final Classes objectToAction = classesList.get(position);
-
-                textDetails.setOnClickListener(view -> {
-
-                    Intent intentDetail = new Intent(getApplicationContext(), ClassDetailActivity.class);
-                    intentDetail.putExtra("ClassToDetail", objectToAction);
-                    startActivity(intentDetail);
-                    dialog.dismiss();
-                });
-
-                textUpdate.setOnClickListener(view -> {
-                    Intent intentUpdate = new Intent(getApplicationContext(), ClassUpdateActivity.class);
-                    intentUpdate.putExtra("ClassToUpdate", objectToAction);
-                    startActivity(intentUpdate);
-                    dialog.dismiss();
-                });
-
-                textRemove.setOnClickListener(view -> {
-
-                    objectToAction.delete();
-                    toastMsgLong("Class " + objectToAction.getSubject() + " has been removed!");
-                    adapter.notifyDataSetChanged();
-                    dialog.dismiss();
-
-                });
-
-            }
-        });
-
-   }
-
-    private void classToDelete(final Classes selectedToRemove) {
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
-
-        String name = selectedToRemove.getSubject();
-        String msg = "Are you sure, you want to delete the discipline " + name + "?";
-
-        builder.setTitle(msg);
-        builder.setPositiveButton(android.R.string.yes, (dialog, id) -> {
-
-            selectedToRemove.delete();
-            toastMsgLong("Discipline " + name + " has been removed!");
-            adapter.notifyDataSetChanged();
-            dialog.dismiss();
-
-            //call methods
-            //adapterConstructor();
-
-            //create object and fill recyclerViewCourses
-            Classes classes = new Classes();
-            classes.recovery(userIdLogged, classesList, adapter);
-
-        });
-
-        builder.setNegativeButton(android.R.string.no, (dialog, id) -> {
-            //method to cancel the delete operation
-            toastMsgLong("Action it was canceled");
-            dialog.dismiss();
-        });
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }*/
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+        /**
+         * Setting navigation menu items
+         */
         if (id == R.id.nav_events) {
             startActivity(new Intent(getApplicationContext(), NavMainActivity.class));
         } else if (id == R.id.nav_settings) {

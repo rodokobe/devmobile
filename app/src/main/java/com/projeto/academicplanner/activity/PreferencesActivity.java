@@ -19,11 +19,26 @@ public class PreferencesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preferences);
 
+        /**
+         * Calling Toolbar
+         */
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        /**
+         * Setting Title
+         */
         getSupportActionBar().setTitle("Preferences");
+
+        /**
+         * Enabling go to back on toolbar
+         */
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+
+        /**
+         * Charging a fragment
+         */
         showPreferencesFragment();
 
     }

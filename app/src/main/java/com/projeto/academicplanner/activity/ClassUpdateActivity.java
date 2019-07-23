@@ -177,7 +177,40 @@ public class ClassUpdateActivity extends AppCompatActivity {
 
                 Classes classes = new Classes();
 
-                if (isSpecialEvent.equals("Yes")) {
+                if (topicsAndContents == null) {
+                    classes.setIdUser(userIdLogged);
+                    classes.setClassDate(newClassDate);
+                    classes.setClassTime(newClassTime);
+                    classes.setSubject(newSubject);
+                    classes.setIdUniversity(idUniversity);
+                    classes.setIdDiscipline(idDiscipline);
+                    classes.setIdCourse(idCourse);
+                    classes.setIdClass(idClass);
+                    classes.setTimeDuration(duration);
+                    classes.setNameUniversity(university);
+                    classes.setNameCourse(course);
+                    classes.setNameDiscipline(discipline);
+                    classes.setNameYear(yearD);
+                    classes.setClassroom(classroom);
+                    classes.setSemester(semester1);
+                } else if (isSpecialEvent == null){
+                    classes.setIdUser(userIdLogged);
+                    classes.setClassDate(newClassDate);
+                    classes.setClassTime(newClassTime);
+                    classes.setSubject(newSubject);
+                    classes.setTopicsAndContents(editTextContent.getText().toString());
+                    classes.setIdUniversity(idUniversity);
+                    classes.setIdDiscipline(idDiscipline);
+                    classes.setIdCourse(idCourse);
+                    classes.setIdClass(idClass);
+                    classes.setTimeDuration(duration);
+                    classes.setNameUniversity(university);
+                    classes.setNameCourse(course);
+                    classes.setNameDiscipline(discipline);
+                    classes.setNameYear(yearD);
+                    classes.setClassroom(classroom);
+                    classes.setSemester(semester1);
+                } else if (isSpecialEvent.equals("Yes")) {
                     classes.setIdUser(userIdLogged);
                     classes.setClassDate(newClassDate);
                     classes.setClassTime(newClassTime);
@@ -195,43 +228,11 @@ public class ClassUpdateActivity extends AppCompatActivity {
                     classes.setClassroom(classroom);
                     classes.setSemester(semester1);
                     classes.setIsSpecialEvent(isSpecialEvent);
-                } else if (topicsAndContents == null) {
-                    classes.setIdUser(userIdLogged);
-                    classes.setClassDate(newClassDate);
-                    classes.setClassTime(newClassTime);
-                    classes.setSubject(newSubject);
-                    classes.setIdUniversity(idUniversity);
-                    classes.setIdDiscipline(idDiscipline);
-                    classes.setIdCourse(idCourse);
-                    classes.setIdClass(idClass);
-                    classes.setTimeDuration(duration);
-                    classes.setNameUniversity(university);
-                    classes.setNameCourse(course);
-                    classes.setNameDiscipline(discipline);
-                    classes.setNameYear(yearD);
-                    classes.setClassroom(classroom);
-                    classes.setSemester(semester1);
-                } else {
-                    classes.setIdUser(userIdLogged);
-                    classes.setClassDate(newClassDate);
-                    classes.setClassTime(newClassTime);
-                    classes.setSubject(newSubject);
-                    classes.setTopicsAndContents(editTextContent.getText().toString());
-                    classes.setIdUniversity(idUniversity);
-                    classes.setIdDiscipline(idDiscipline);
-                    classes.setIdCourse(idCourse);
-                    classes.setIdClass(idClass);
-                    classes.setTimeDuration(duration);
-                    classes.setNameUniversity(university);
-                    classes.setNameCourse(course);
-                    classes.setNameDiscipline(discipline);
-                    classes.setNameYear(yearD);
-                    classes.setClassroom(classroom);
-                    classes.setSemester(semester1);
                 }
+
                 classes.save();
 
-                if (topicsAndContents == null || !isSpecialEvent.equals("Yes")) {
+                if (topicsAndContents == null || isSpecialEvent == null) {
                     if (!date.equals(newClassDate) || !hour.equals(newClassTime)) {
                         allStudentsEmail(idDiscipline);
                         adminPeopleCourseEmail(idCourse);
