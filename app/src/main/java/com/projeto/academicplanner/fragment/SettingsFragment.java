@@ -1,16 +1,15 @@
 package com.projeto.academicplanner.fragment;
 
 
-import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.projeto.academicplanner.R;
 import com.projeto.academicplanner.activity.NavMainActivity;
@@ -20,7 +19,8 @@ import com.projeto.academicplanner.activity.NavMainActivity;
  */
 public class SettingsFragment extends Fragment {
 
-    private TextView homeActivity, yearCrudMain, universityCrudMain, coursesCrudMain, disciplinesCrudMain, eventsTypeCrudMain, studentsCrudMain, adminPeopleCrudMain;
+    private ImageView imageViewYears, imageViewUniversities, imageViewCourses, imageViewDisciplines, imageViewStudents, imageViewAdminPeople;
+    private TextView homeActivity;
 
     private NavMainActivity navMain;
     private YearMainFragment yearMain;
@@ -45,33 +45,31 @@ public class SettingsFragment extends Fragment {
         initializingComponents(v);
 
 
-        universityCrudMain.setOnClickListener( view -> {
+        imageViewYears.setOnClickListener( view -> {
+            goToYearMain(view);
+        });
+
+        imageViewUniversities.setOnClickListener( view -> {
             goToUniversityMain(view);
         });
 
-        universityCrudMain.setOnClickListener( view -> {
-            goToUniversityMain(view);
-        });
-
-        coursesCrudMain.setOnClickListener( view -> {
+        imageViewCourses.setOnClickListener( view -> {
                 goToCourseMain(view);
         });
 
-        disciplinesCrudMain.setOnClickListener( view -> {
+        imageViewDisciplines.setOnClickListener( view -> {
                 goToDisciplineMain(view);
         });
 
-        studentsCrudMain.setOnClickListener( view -> {
+        imageViewStudents.setOnClickListener( view -> {
             goToStudentMain(view);
         });
 
-        adminPeopleCrudMain.setOnClickListener( view -> {
+        imageViewAdminPeople.setOnClickListener( view -> {
             goToAdminPeopleMain(view);
         });
 
-        yearCrudMain.setOnClickListener( view -> {
-                goToYearMain(view);
-        });
+
 
         return v;
     }
@@ -133,12 +131,12 @@ public class SettingsFragment extends Fragment {
     }
 
     private void initializingComponents(View view){
-        yearCrudMain = view.findViewById(R.id.yearCrudMain);
-        universityCrudMain = view.findViewById(R.id.universityCrudMain);
-        coursesCrudMain = view.findViewById(R.id.coursesCrudMain);
-        disciplinesCrudMain = view.findViewById(R.id.disciplinesCrudMain);
-        studentsCrudMain = view.findViewById(R.id.studentsCrudMain);
-        adminPeopleCrudMain = view.findViewById(R.id.adminPeopleCrudMain);
+        imageViewYears = view.findViewById(R.id.imageViewYears);
+        imageViewUniversities = view.findViewById(R.id.imageViewUniversities);
+        imageViewCourses = view.findViewById(R.id.imageViewCourses);
+        imageViewDisciplines = view.findViewById(R.id.imageViewDisciplines);
+        imageViewStudents = view.findViewById(R.id.imageViewStudents);
+        imageViewAdminPeople = view.findViewById(R.id.imageViewAdminPeople);
     }
 
 }
