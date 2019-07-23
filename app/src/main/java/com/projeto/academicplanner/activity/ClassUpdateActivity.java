@@ -150,6 +150,10 @@ public class ClassUpdateActivity extends AppCompatActivity {
             timePickerDialog.show();
         });
 
+
+        /**
+         * Setting title do activity among Regular Class, Special Class and Special Event when Update
+         */
         if (topicsAndContents == null){
             editTextContent.setVisibility(View.GONE);
             textViewConteudo.setVisibility(View.GONE);
@@ -160,6 +164,10 @@ public class ClassUpdateActivity extends AppCompatActivity {
             getSupportActionBar().setTitle("Edit Special Event");
         }
 
+
+        /**
+         * Save new data
+         */
         buttonClassAdd.setOnClickListener(v -> {
             newClassDate = editTextDate.getText().toString();
             newClassTime = editTextHour.getText().toString();
@@ -222,9 +230,11 @@ public class ClassUpdateActivity extends AppCompatActivity {
             }
             classes.save();
 
-            if (!date.equals(newClassDate) || !hour.equals(newClassTime)) {
-                allStudentsEmail(idDiscipline);
-                adminPeopleCourseEmail(idCourse);
+            if (topicsAndContents == null || !isSpecialEvent.equals("Yes")) {
+                if (!date.equals(newClassDate) || !hour.equals(newClassTime)) {
+                    allStudentsEmail(idDiscipline);
+                    adminPeopleCourseEmail(idCourse);
+                }
             }
 
             toastMessageShort("Class has been updated");
@@ -233,6 +243,11 @@ public class ClassUpdateActivity extends AppCompatActivity {
         });
 
     }
+
+    /**
+     * Receives idCourse to send email only for administrative people assigned on course
+     * @param idCourse
+     */
 
     public void adminPeopleCourseEmail (String idCourse) {
 
@@ -261,6 +276,10 @@ public class ClassUpdateActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Receives idDiscipline to send email only for students subscribed on discipline
+     * @param idDiscipline
+     */
     public void allStudentsEmail(String idDiscipline) {
 
         DatabaseReference students = databaseDisciplineReference
@@ -286,6 +305,10 @@ public class ClassUpdateActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Email sender. Receives Student email or Administrative People email
+     * @param sendTo
+     */
     private void sendEmail (String sendTo) {
         //Getting content for email
 
@@ -307,10 +330,9 @@ public class ClassUpdateActivity extends AppCompatActivity {
                 Toast.LENGTH_SHORT).show();
     }
 
-    private void toastMessageLong(String msg) {
-        Toast.makeText( this, msg,
-                Toast.LENGTH_LONG).show();
-    }
+    /**
+     * to initialize components
+     */
 
     private void initializingComponentes() {
 
