@@ -9,7 +9,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
-import com.projeto.academicplanner.adapter.Adapter_Classes_Calendar;
+import com.projeto.academicplanner.adapter.Adapter_Classes_Main;
 import com.projeto.academicplanner.helper.ConfigFirebase;
 
 import java.util.Collections;
@@ -86,7 +86,7 @@ public class Classes implements Parcelable {
         }
     };
 
-    public void recovery(String idUserLogged, final List<Classes> classes, final Adapter_Classes_Calendar adapter) {
+    public void recovery(String idUserLogged, final List<Classes> classes, final Adapter_Classes_Main adapter) {
 
         classesRef = firebaseRef.getRef()
                 .child("classes")
@@ -119,7 +119,7 @@ public class Classes implements Parcelable {
 
     }
 
-    public void recoveryClassesInDiscipline(String idUserLogged, String idDisciplineParameter, final List<Classes> classes, final Adapter_Classes_Calendar adapter) {
+    public void recoveryClassesInDiscipline(String idUserLogged, String idDisciplineParameter, final List<Classes> classes, final Adapter_Classes_Main adapter) {
 
         classesRef = firebaseRef.getRef()
                 .child("disciplines")
@@ -145,7 +145,7 @@ public class Classes implements Parcelable {
         });
     }
 
-    public void recoverySimple(String idUserLogged, final List<Classes> classes, final Adapter_Classes_Calendar adapter) {
+    public void recoverySimple(String idUserLogged, final List<Classes> classes, final Adapter_Classes_Main adapter) {
 
         classesRef = firebaseRef.getRef()
                 .child("classes")

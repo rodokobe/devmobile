@@ -49,9 +49,10 @@ public class Discipline extends Course {
 
     public void saveObject(Discipline objectToDuplicate) {
 
-        disciplineRef = firebaseRef.getRef()
-                .child("disciplines");
-        disciplineRef.setValue(objectToDuplicate);
+        DatabaseReference disciplineRef = firebaseRef.getRef()
+                .child("disciplines")
+                .child(getIdUser());
+        disciplineRef.push().setValue(objectToDuplicate);
     }
 
 

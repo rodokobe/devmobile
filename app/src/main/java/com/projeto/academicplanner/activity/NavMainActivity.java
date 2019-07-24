@@ -30,7 +30,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.projeto.academicplanner.R;
-import com.projeto.academicplanner.adapter.Adapter_Classes_Calendar;
+import com.projeto.academicplanner.adapter.Adapter_Classes_Main;
 import com.projeto.academicplanner.helper.ConfigFirebase;
 import com.projeto.academicplanner.model.Classes;
 import com.projeto.academicplanner.model.Discipline;
@@ -58,7 +58,7 @@ public class NavMainActivity extends AppCompatActivity
     private List<Classes> classesList;
     private RecyclerView recyclerEvents;
     private RecyclerView.LayoutManager layout;
-    private Adapter_Classes_Calendar adapter;
+    private Adapter_Classes_Main adapter;
     private DatabaseReference databaseReference;
     private GoogleSignInClient mGoogleSignInClient;
 
@@ -253,20 +253,20 @@ public class NavMainActivity extends AppCompatActivity
                                         }
                                     }
 
-                                    adapter = new Adapter_Classes_Calendar(classesList, getApplicationContext());
+                                    adapter = new Adapter_Classes_Main(classesList, getApplicationContext());
                                     recyclerEvents.setAdapter(adapter);
                                     recyclerEvents.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                                     recyclerEvents.setHasFixedSize(true);
                                     Collections.reverse(classesList);
 
-                                    adapter.setOnItemClickListener(new Adapter_Classes_Calendar.ClickListener() {
+                                    adapter.setOnItemClickListener(new Adapter_Classes_Main.ClickListener() {
                                         @Override
-                                        public void onItemClick(Adapter_Classes_Calendar adapter_disciplines, View v, int position) {
+                                        public void onItemClick(Adapter_Classes_Main adapter_disciplines, View v, int position) {
 
                                         }
 
                                         @Override
-                                        public void onItemLongClick(Adapter_Classes_Calendar adapter_disciplines, View v, int position) {
+                                        public void onItemLongClick(Adapter_Classes_Main adapter_disciplines_main, View v, int position) {
                                             AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
                                             View dialogView = getLayoutInflater().inflate(R.layout.dialog_rv_nav_main, null);
 

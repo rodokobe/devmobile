@@ -14,13 +14,13 @@ import com.projeto.academicplanner.model.Classes;
 
 import java.util.List;
 
-public class Adapter_Classes_Calendar extends RecyclerView.Adapter<Adapter_Classes_Calendar.MyViewHolder>{
+public class Adapter_Classes_Main extends RecyclerView.Adapter<Adapter_Classes_Main.MyViewHolder>{
 
     private List<Classes> classes;
     private static ClickListener clickListener;
     private Context context;
 
-    public Adapter_Classes_Calendar(List<Classes> classes, Context context) {
+    public Adapter_Classes_Main(List<Classes> classes, Context context) {
 
         this.classes = classes;
         this.context = context;
@@ -33,7 +33,7 @@ public class Adapter_Classes_Calendar extends RecyclerView.Adapter<Adapter_Class
 
     @NonNull
     @Override
-    public Adapter_Classes_Calendar.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public Adapter_Classes_Main.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View itemList = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.lista_recycler_events_calendar, parent, false);
@@ -69,9 +69,9 @@ public class Adapter_Classes_Calendar extends RecyclerView.Adapter<Adapter_Class
         TextView classDate1;
         TextView classTime1;
         TextView classTimeDuration1;
-        Adapter_Classes_Calendar adapterRef;
+        Adapter_Classes_Main adapterRef;
 
-        public MyViewHolder(@NonNull View itemView, Adapter_Classes_Calendar ref) {
+        public MyViewHolder(@NonNull View itemView, Adapter_Classes_Main ref) {
             super(itemView);
 
             classSubject1 = itemView.findViewById(R.id.classSubject);
@@ -98,12 +98,12 @@ public class Adapter_Classes_Calendar extends RecyclerView.Adapter<Adapter_Class
     }
 
     public interface ClickListener {
-        void onItemClick(Adapter_Classes_Calendar adapter_classes_calendar, View v, int position);
-        void onItemLongClick(Adapter_Classes_Calendar adapter_classes_calendar, View v, int position);
+        void onItemClick(Adapter_Classes_Main adapter_disciplines, View v, int position);
+        void onItemLongClick(Adapter_Classes_Main adapter_disciplines_main, View v, int position);
     }
 
     public void setOnItemClickListener(ClickListener clickListener) {
-        Adapter_Classes_Calendar.clickListener = clickListener;
+        Adapter_Classes_Main.clickListener = clickListener;
     }
 
 }

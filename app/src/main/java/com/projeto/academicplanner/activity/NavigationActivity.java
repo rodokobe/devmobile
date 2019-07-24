@@ -1,8 +1,11 @@
 package com.projeto.academicplanner.activity;
 
+import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.projeto.academicplanner.R;
-import com.projeto.academicplanner.adapter.Adapter_Classes_Calendar;
+import com.projeto.academicplanner.adapter.Adapter_Classes_Main;
 import com.projeto.academicplanner.helper.ConfigFirebase;
 import com.projeto.academicplanner.model.Classes;
 
@@ -23,7 +26,7 @@ public class NavigationActivity extends AppCompatActivity {
     //recycler view variables
     private RecyclerView recyclerClasses;
     private RecyclerView.LayoutManager layout;
-    private Adapter_Classes_Calendar adapter;
+    private Adapter_Classes_Main adapter;
 
 
     //arrayList recycler
@@ -59,26 +62,63 @@ public class NavigationActivity extends AppCompatActivity {
 
     }
 
+
     private void adapterConstructor() {
 
         //recycler view configuration
         layout = new LinearLayoutManager(this);
-        adapter = new Adapter_Classes_Calendar(classesList, this);
+        adapter = new Adapter_Classes_Main(classesList, this);
         recyclerClasses.setAdapter(adapter);
         recyclerClasses.setLayoutManager(layout);
         recyclerClasses.setHasFixedSize(true);
 
-        adapter.setOnItemClickListener(new Adapter_Classes_Calendar.ClickListener() {
+        adapter.setOnItemClickListener(new Adapter_Classes_Main.ClickListener() {
 
             @Override
-            public void onItemClick(Adapter_Classes_Calendar adapter_disciplines, View v, int position) {
+            public void onItemClick(Adapter_Classes_Main adapter_disciplines, View v, int position) {
 
             }
 
             @Override
-            public void onItemLongClick(Adapter_Classes_Calendar adapter_disciplines, View v, int position) {
+            public void onItemLongClick(Adapter_Classes_Main adapter_disciplines_main, View v, int position) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                View dialogView = getLayoutInflater().inflate(R.layout.dialog_rv_nav_main, null);
+
+                builder.setView(dialogView);
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
+                TextView textDetails = dialogView.findViewById(R.id.textDetails);
+                TextView textUpdate = dialogView.findViewById(R.id.textUpdate);
+                TextView textRemove = dialogView.findViewById(R.id.textRemove);
+
+                final Classes objectToAction = classesList.get(position);
+
+                textDetails.setOnClickListener( view -> {
+                    Intent classDetail = new Intent(getApplicationContext(), ClassDetailActivity.class);
+                    classDetail.putExtra("ClassToDetail", objectToAction);
+                    startActivity(classDetail);
+                    dialog.dismiss();
+
+                });
+
+                textUpdate.setOnClickListener( view -> {
+                    Intent classUpdate = new Intent(getApplicationContext(), ClassUpdateActivity.class);
+                    classUpdate.putExtra("ClassToUpdate", objectToAction);
+                    startActivity(classUpdate);
+                    dialog.dismiss();
+                });
+
+                textRemove.setOnClickListener( view -> {
+                    objectToAction.delete();
+                    toastMsgLong("Class " + objectToAction.getSubject() + " has been removed!");
+                    adapter.notifyDataSetChanged();
+                    dialog.dismiss();
+
+                });
 
             }
+
         });
 
     }
@@ -107,25 +147,25 @@ public class NavigationActivity extends AppCompatActivity {
             }
 
         }
-        adapter = new Adapter_Classes_Calendar(classesList, this);
+        adapter = new Adapter_Classes_Main(classesList, this);
         recyclerClasses.setAdapter(adapter);
         recyclerClasses.setLayoutManager(layout);
         recyclerClasses.setHasFixedSize(true);
 
-        adapter.setOnItemClickListener(new Adapter_Classes_Calendar.ClickListener() {
+        adapter.setOnItemClickListener(new Adapter_Classes_Main.ClickListener() {
+
 
             @Override
-            public void onItemClick(Adapter_Classes_Calendar adapter_disciplines, View v, int position) {
+            public void onItemClick(Adapter_Classes_Main adapter_disciplines, View v, int position) {
 
             }
 
             @Override
-            public void onItemLongClick(Adapter_Classes_Calendar adapter_disciplines, View v, int position) {
+            public void onItemLongClick(Adapter_Classes_Main adapter_disciplines_main, View v, int position) {
 
             }
         });
 
     }
-
 
 }

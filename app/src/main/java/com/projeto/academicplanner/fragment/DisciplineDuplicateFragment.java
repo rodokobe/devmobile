@@ -28,7 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.projeto.academicplanner.Interface.IFirebaseLoadDoneCourse;
 import com.projeto.academicplanner.Interface.IFirebaseLoadDoneYears;
 import com.projeto.academicplanner.R;
-import com.projeto.academicplanner.adapter.Adapter_Classes_Calendar;
+import com.projeto.academicplanner.adapter.Adapter_Classes_Main;
 import com.projeto.academicplanner.helper.ConfigFirebase;
 import com.projeto.academicplanner.model.Classes;
 import com.projeto.academicplanner.model.Course;
@@ -58,7 +58,7 @@ public class DisciplineDuplicateFragment extends Fragment implements IFirebaseLo
     //recycler view variables
     private RecyclerView recyclerClasses;
     private RecyclerView.LayoutManager layout;
-    private Adapter_Classes_Calendar adapter;
+    private Adapter_Classes_Main adapter;
 
     public DisciplineDuplicateFragment() {
         // Required empty public constructor
@@ -243,20 +243,20 @@ public class DisciplineDuplicateFragment extends Fragment implements IFirebaseLo
     private void adapterConstructor() {
 
         layout = new LinearLayoutManager(getContext());
-        adapter = new Adapter_Classes_Calendar(classes, getContext());
+        adapter = new Adapter_Classes_Main(classes, getContext());
         recyclerClasses.setAdapter(adapter);
         recyclerClasses.setLayoutManager(layout);
         recyclerClasses.setHasFixedSize(true);
 
-        adapter.setOnItemClickListener(new Adapter_Classes_Calendar.ClickListener() {
+        adapter.setOnItemClickListener(new Adapter_Classes_Main.ClickListener() {
 
             @Override
-            public void onItemClick(Adapter_Classes_Calendar adapter_disciplines, View v, int position) {
+            public void onItemClick(Adapter_Classes_Main adapter_disciplines, View v, int position) {
 
             }
 
             @Override
-            public void onItemLongClick(Adapter_Classes_Calendar adapter_disciplines, View v, int position) {
+            public void onItemLongClick(Adapter_Classes_Main adapter_disciplines_main, View v, int position) {
 
             }
         });
