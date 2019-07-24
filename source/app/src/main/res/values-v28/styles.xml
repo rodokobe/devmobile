@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="editTextPadrao" parent="Theme.AppCompat.Light">
+
+        <item name="android:textColor">@color/colorGray</item>
+        <item name="android:textColorHint">@color/colorGray</item>
+        <item name="android:textColorLink">@color/colorGray</item>
+        <item name="android:textCursorDrawable">@color/colorGray</item>
+        <item name="android:outlineAmbientShadowColor">@color/colorGray</item>
+        <item name="android:outlineSpotShadowColor">@color/colorGray</item>
+        <item name="android:shadowColor">@color/colorGray</item>
+        <item name="android:background">@drawable/bg_edit_text</item>
+        <item name="android:textSize">16sp</item>
+
+    </style>
+
+    <style name="editTextPadrao2" parent="Theme.AppCompat.Light">
+
+        <item name="android:textColor">@color/colorGray</item>
+        <item name="android:textColorHint">@color/colorGray</item>
+        <item name="android:textColorLink">@color/colorGray</item>
+        <item name="android:textCursorDrawable">@color/colorGray</item>
+        <item name="android:outlineAmbientShadowColor">@color/colorGray</item>
+        <item name="android:outlineSpotShadowColor">@color/colorGray</item>
+        <item name="android:shadowColor">@color/colorGray</item>
+        <item name="android:background">@drawable/bg_edit_text</item>
+        <item name="android:textSize">16sp</item>
+
+    </style>
+</resources>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/ic_home"
+        android:icon="@drawable/ic_add_white_24dp"
+        android:title="University" />
+
+    <item android:id="@+id/ic_pesquisa"
+        android:icon="@drawable/ic_add_white_24dp"
+        android:title="Course" />
+
+    <item android:id="@+id/ic_psotagem"
+        android:icon="@drawable/ic_add_white_24dp"
+        android:title="Discipline" />
+
+
+    <item android:id="@+id/ic_perfil"
+        android:icon="@drawable/ic_add_white_24dp"
+        android:title="Event-Type" />
+
+
+</menu>
